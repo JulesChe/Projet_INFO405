@@ -27,7 +27,8 @@ public class testBDD extends JFrame{
 
     public static void main(String args[]) throws ClassNotFoundException, SQLException {
 
-        Logistique patrick = new Logistique("Patrick", 3);
+        Logistique patrick = new Logistique("Logistique","Patrick","testmdp", 3);
+
 
 
         patrick.ajoutGymnase("Saint Gymnase", "23h");

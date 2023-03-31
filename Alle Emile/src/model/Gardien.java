@@ -6,8 +6,8 @@ public class Gardien extends Utilisateur{
     private ArrayList<String> listeHabilitaion;
 
     // CONSTRUCTEUR
-    public Gardien(String nom, int niveau) {
-        super(nom,niveau);
+    public Gardien(String nom,String prenom,String mdp, int niveau) {
+        super(nom,prenom,mdp,niveau);
         ArrayList<String> listeHabilitaion = new ArrayList<String>();
     }
 

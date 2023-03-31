@@ -9,13 +9,14 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import crud.*;
+import ressource.PasswordHash;
 
 public class Logistique extends Utilisateur{
     // ATTRIBUTS
 
     // CONSTRUCTEUR
-    public Logistique(String nom, int niveau) {
-        super(nom,niveau);
+    public Logistique(String nom,String prenom,String mdp ,int niveau) {
+        super(nom,prenom,mdp,niveau);
     }
     SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
@@ -23,6 +24,7 @@ public class Logistique extends Utilisateur{
 
         Connection connection = null;
         try {
+
             // Charger le pilote JDBC
             Class.forName("com.mysql.cj.jdbc.Driver");
 
@@ -30,13 +32,16 @@ public class Logistique extends Utilisateur{
             connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/allezemile", "allezemile", "nT7");
             System.out.println("Connexion établie avec succès.");
 
-            // Créer un objet UtilisateurDAO
-            CrudCompteAssoDAO utilisateurDAO = new CrudCompteAssoDAO(connection);
+            // Créer un objet CrudCompteAssoDAO
+            CrudCompteAssoDAO associationDAO = new CrudCompteAssoDAO(connection);
 
-            // Ajouter un utilisateur
-            Association utilisateur1 = new Association(nom,mdp);
-            utilisateurDAO.create(utilisateur1);
-            System.out.println("Utilisateur ajouté avec succès.");
+            //Hachage du mdp
+            mdp = PasswordHash.getHashPassword(mdp);
+
+            // Ajouter une Association
+            Association association1 = new Association(nom,mdp);
+            associationDAO.create(association1);
+            System.out.println("Association ajouté avec succès.");
 
 
         } catch (ClassNotFoundException e) {
@@ -125,6 +130,10 @@ public class Logistique extends Utilisateur{
         }
     }
 
+
+    public void ajoutUtilisateur(){
+
+    }
 
 
     // METHODES

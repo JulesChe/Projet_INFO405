@@ -4,8 +4,8 @@ public class PO extends Utilisateur{
     // ATTRIBUTS
 
     // CONSTRUCTEUR
-    public PO(String nom, int niveau) {
-        super(nom,niveau);
+    public PO(String nom,String prenom,String mdp ,int niveau) {
+        super(nom,prenom,mdp,niveau);
     }
 
     // METHODES
