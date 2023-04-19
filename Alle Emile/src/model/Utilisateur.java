@@ -1,6 +1,6 @@
 package model;
 
-public abstract class Utilisateur {
+public class Utilisateur {
     // ATTRIBUTS
     private String nom;
     private int niveau;

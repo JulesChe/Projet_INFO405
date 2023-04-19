@@ -12,6 +12,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import model.ConnexionUtilisateur;
+import ressource.PasswordHash;
 
 public class ConnexionListener implements ActionListener{
 
@@ -31,15 +32,24 @@ public class ConnexionListener implements ActionListener{
         if (!tpseudo.getText().isEmpty() || !tpass.getText().isEmpty()) {
             connection = ConnexionUtilisateur.getConnect();
             try {
-                ps = connection.prepareStatement("SELECT nom FROM comptePersonnel WHERE nom=? AND mdp =?");
+                ps = connection.prepareStatement("SELECT nom,mdp FROM comptePersonnel WHERE nom=?");
                 ps.setString(1, tpseudo.getText());
-                ps.setString(2, tpass.getText());
                 rs = ps.executeQuery();
-                if (rs.next()) {
-                    JOptionPane.showMessageDialog(null, "Connexion réussi");
-                } else {
-                    JOptionPane.showMessageDialog(null, "Connexion refusée!");
+
+                while (rs.next()) {
+                    String hashMdp = rs.getString("mdp");
+                    if(PasswordHash.isPasswordValid(tpass.getText(),hashMdp)){
+                        JOptionPane.showMessageDialog(null, "Connexion réussi");
+                    }
+                    else {
+                        JOptionPane.showMessageDialog(null, "Connexion refusée!");
+                    }
                 }
+
+
+
+
+
 
             } catch (SQLException e1) {
                 e1.printStackTrace();

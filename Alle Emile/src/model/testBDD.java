@@ -29,7 +29,7 @@ public class testBDD extends JFrame{
 
         Logistique patrick = new Logistique("Logistique","Patrick","testmdp", 3);
 
-
+        patrick.ajoutUtilisateur("testHash","hachich","mdp",3);
 
         patrick.ajoutGymnase("Saint Gymnase", "23h");
 
