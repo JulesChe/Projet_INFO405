@@ -26,7 +26,9 @@ public class CrudDemandeDAO {
     }
 
     public void accepter(int i) throws SQLException {
-        ResultSet rs = connection.executeQuery("SELECT * FROM demande WHERE id = 'i'");
+        PreparedStatement pstmt = connection.prepareStatement("SELECT * FROM demande WHERE id = ?");
+        pstmt.setInt(1, i);
+        ResultSet rs = pstmt.executeQuery();
         HashMap<String, Object> rowData = null;
         if (rs.next()) {
             // récupérer les colonnes de la ligne dans les variables Java
@@ -42,14 +44,14 @@ public class CrudDemandeDAO {
         }
         rs.close();
 
-        PreparedStatement pstmt = connection.prepareStatement("INSERT INTO table_destination (col1, col2) VALUES (?, ?)");
+        PreparedStatement pstmt2 = connection.prepareStatement("INSERT INTO table_destination (col1, col2, col3, col4) VALUES (?, ?, ?, ?)");
 // insérer les valeurs stockées dans l'objet Java dans la table de destination
-        pstmt.setString(1, rowData.get("col1").toString());
-        pstmt.setString(2, rowData.get("col2").toString());
-        pstmt.setInt(3, (int) rowData.get("col3"));
-        pstmt.setInt(4, (int) rowData.get("col4"));
-        pstmt.executeUpdate();
-        pstmt.close();
+        pstmt2.setString(1, rowData.get("col1").toString());
+        pstmt2.setString(2, rowData.get("col2").toString());
+        pstmt2.setInt(3, (int) rowData.get("col3"));
+        pstmt2.setInt(4, (int) rowData.get("col4"));
+        pstmt2.executeUpdate();
+        pstmt2.close();
         connection.close();
     }
 
