@@ -28,10 +28,11 @@ public class testBDD extends JFrame{
     public static void main(String args[]) throws ClassNotFoundException, SQLException {
 
         Logistique patrick = new Logistique("Logistique","Patrick","testmdp", 3);
+        Association asso = new Association("test","mdp");
 
-        patrick.ajoutUtilisateur("testHash","hachich","mdp",3);
-
-        patrick.ajoutGymnase("Saint Gymnase", "23h");
+        //asso.demandeCreneau("2023/04/20 16:00:00","2023/04/20 18:00:00");
+        //patrick.accepterCreneau(1);
+        //patrick.pasAccepterCreneau(3);
 
      /*Planning test = new Planning();
 
