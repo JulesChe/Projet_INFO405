@@ -82,9 +82,7 @@ public class WeeklyAgendaController {
             dayPanel.add(new JScrollPane(hourPanel), BorderLayout.CENTER);
 
         }
-
-
-
+        
         view.getTasksPanel().revalidate();
         view.getTasksPanel().repaint();
 
@@ -131,11 +129,6 @@ public class WeeklyAgendaController {
             dialog.setVisible(true);
         });
     }
-
-
-
-
-
 
 }
 
