@@ -29,7 +29,7 @@ public class CrudDemandeDAO {
         PreparedStatement pstmt = connection.prepareStatement("SELECT * FROM demande WHERE id = ?");
         pstmt.setInt(1, i);
         ResultSet rs = pstmt.executeQuery();
-        HashMap<String, Object> rowData = null;
+        HashMap<String, Object> rowData = new HashMap<String, Object>();
         if (rs.next()) {
             // récupérer les colonnes de la ligne dans les variables Java
             String col1 = rs.getString("debut");
@@ -44,7 +44,7 @@ public class CrudDemandeDAO {
         }
         rs.close();
 
-        PreparedStatement pstmt2 = connection.prepareStatement("INSERT INTO table_destination (col1, col2, col3, col4) VALUES (?, ?, ?, ?)");
+        PreparedStatement pstmt2 = connection.prepareStatement("INSERT INTO creneau (debut, fin, id_asso, id_gardien) VALUES (?, ?, ?, ?)");
 // insérer les valeurs stockées dans l'objet Java dans la table de destination
         pstmt2.setString(1, rowData.get("col1").toString());
         pstmt2.setString(2, rowData.get("col2").toString());
@@ -52,12 +52,17 @@ public class CrudDemandeDAO {
         pstmt2.setInt(4, (int) rowData.get("col4"));
         pstmt2.executeUpdate();
         pstmt2.close();
-        connection.close();
+
+        String sql = "DELETE FROM demande WHERE id = ?";
+        PreparedStatement pstmt3 = connection.prepareStatement(sql);
+        pstmt3.setInt(1, i);
+        pstmt3.executeUpdate();
     }
 
     public void supprimer (int i) throws SQLException{
-        PreparedStatement preparedStatement = null;
-        preparedStatement = connection.prepareStatement("DELETE FROM demande WHERE id = 'i'");
-        preparedStatement.executeUpdate();
+        String sql = "DELETE FROM demande WHERE id = ?";
+        PreparedStatement pstmt3 = connection.prepareStatement(sql);
+        pstmt3.setInt(1, i);
+        pstmt3.executeUpdate();
     }
 }
