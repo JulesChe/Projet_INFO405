@@ -1,8 +1,10 @@
 package model;
 
 import javax.swing.*;
+import java.text.DateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -23,6 +25,10 @@ public class WeeklyAgendaModel {
 
     public WeeklyAgendaModel() {
         startOfWeek = LocalDate.now().with(java.time.DayOfWeek.MONDAY);
+        daysTimeSlots = new ArrayList<>();
+        for (int i = 0; i < WEEK_DAYS.length; i++) {
+            daysTimeSlots.add(new DefaultListModel<String>());
+        }
     }
 
     public LocalDate getStartOfWeek() {
@@ -60,6 +66,10 @@ public class WeeklyAgendaModel {
         return WEEK_DAYS[index];
     }
 
+    public List<DefaultListModel<String>> getDaysTimeSlots() {
+        return daysTimeSlots;
+    }
+
     public String getFormattedDateAt(int index) {
         if (index < 0 || index >= 7) {
             throw new IllegalArgumentException("Invalid index for date");
@@ -81,12 +91,9 @@ public class WeeklyAgendaModel {
                 break;
             }
         }
-        taskListModel.add(index, newTimeSlot + " - ");
+        taskListModel.add(index, newTimeSlot + " - " + endTime);
+
     }
-
-
-
-
 
 
 

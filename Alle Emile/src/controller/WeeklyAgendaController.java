@@ -23,7 +23,9 @@ public class WeeklyAgendaController {
 
         // Initialise l'affichage
         updateWeekLabel();
+        updateViewTimeSlots();
         updateTasksPanel();
+
     }
 
     private class PreviousWeekButtonListener implements ActionListener {
@@ -31,6 +33,7 @@ public class WeeklyAgendaController {
         public void actionPerformed(ActionEvent e) {
             model.goToPreviousWeek();
             updateWeekLabel();
+
             updateTasksPanel();
         }
     }
@@ -40,6 +43,7 @@ public class WeeklyAgendaController {
         public void actionPerformed(ActionEvent e) {
             model.goToNextWeek();
             updateWeekLabel();
+
             updateTasksPanel();
         }
     }
@@ -51,9 +55,24 @@ public class WeeklyAgendaController {
         view.setWeekLabel(weekText);
     }
 
-    private void updateTasksPanel() {
+
+    private void updateViewTimeSlots() {
         view.getTasksPanel().removeAll();
 
+        for (int dayIndex = 0; dayIndex < model.getWeekDays().length; dayIndex++) {
+            JList<String> timeSlotList = new JList<>(model.getDaysTimeSlots().get(dayIndex));
+            JScrollPane scrollPane = new JScrollPane(timeSlotList);
+            scrollPane.setBorder(new TitledBorder(model.getWeekDay(dayIndex)));
+            view.getTasksPanel().add(scrollPane);
+        }
+
+        view.getTasksPanel().revalidate();
+        view.getTasksPanel().repaint();
+    }
+    private void updateTasksPanel() {
+
+
+        view.getTasksPanel().removeAll();
 
 
         JPanel mainPanel = new JPanel(new BorderLayout());
@@ -61,8 +80,7 @@ public class WeeklyAgendaController {
 
         view.getTasksPanel().add(mainPanel);
 
-
-
+        // Création de la grille avec heures etc
         for (int i = 0; i < 7; i++) {
             JPanel dayPanel = new JPanel(new BorderLayout());
             String dayTitle = model.getWeekDay(i) + " " + model.getFormattedDateAt(i);
@@ -80,9 +98,17 @@ public class WeeklyAgendaController {
             }
 
             dayPanel.add(new JScrollPane(hourPanel), BorderLayout.CENTER);
+            dayPanel.setBorder(new TitledBorder(dayTitle));
+            view.getTasksPanel().add(dayPanel);
+
+            DefaultListModel<String> taskListModel = model.getDaysTimeSlots().get(i);
+            JList<String> timeSlotList = new JList<>(taskListModel);
+            timeSlotList.setCellRenderer(new TimeSlotCellRenderer());
+            JScrollPane scrollPane = new JScrollPane(timeSlotList);
+            dayPanel.add(scrollPane, BorderLayout.CENTER);
 
         }
-        
+
         view.getTasksPanel().revalidate();
         view.getTasksPanel().repaint();
 
@@ -131,6 +157,3 @@ public class WeeklyAgendaController {
     }
 
 }
-
-
-

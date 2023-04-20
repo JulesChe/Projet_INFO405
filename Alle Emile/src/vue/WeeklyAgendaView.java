@@ -1,5 +1,7 @@
 package vue;
 
+import model.WeeklyAgendaModel;
+
 import javax.swing.*;
 
 import javax.swing.*;
@@ -12,6 +14,8 @@ public class WeeklyAgendaView {
     public JFrame frame;
     private JLabel weekLabel;
     private JPanel tasksPanel;
+
+    private WeeklyAgendaModel modele;
 
     public WeeklyAgendaView() {
         initComponents();
@@ -33,6 +37,8 @@ public class WeeklyAgendaView {
 
         tasksPanel = new JPanel(new GridLayout(1, 7));
         frame.getContentPane().add(tasksPanel, BorderLayout.CENTER);
+
+
     }
 
     public void setWeekLabel(String weekText) {
@@ -70,4 +76,6 @@ public class WeeklyAgendaView {
     public JFrame getFrame() {
         return frame;
     }
+
+
 }
