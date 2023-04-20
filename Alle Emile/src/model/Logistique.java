@@ -147,9 +147,11 @@ public class Logistique extends Utilisateur{
             //Hashage du mot de passe
             mdp = PasswordHash.getHashPassword(mdp);
 
-            // Ajouter un gymnase
+            // Ajouter un utilisateur
             Utilisateur utilisateur1 = new Utilisateur(nom, prenom, mdp, niveau);
             utilisateurDAO.create(utilisateur1);
+
+            utilisateurDAO.setId(utilisateur1);
             System.out.println("Personnel ajouté avec succès.");
 
 

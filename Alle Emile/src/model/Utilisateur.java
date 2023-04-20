@@ -2,6 +2,7 @@ package model;
 
 public class Utilisateur {
     // ATTRIBUTS
+    private int id;
     private String nom;
     private int niveau;
     private String prenom;
@@ -11,7 +12,7 @@ public class Utilisateur {
     public Utilisateur(String nom,String prenom,String mdp, int niveau){
         this.nom = nom;
         this.niveau = niveau;
-        this.prenom=prenom;
+        this.prenom= prenom;
         this.mdp = mdp;
     }
 
@@ -22,6 +23,14 @@ public class Utilisateur {
 
     public int getNiveau() {
         return niveau;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getNom() {
