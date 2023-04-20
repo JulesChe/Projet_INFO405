@@ -1,5 +1,9 @@
 package model;
+import java.time.*;
+import java.time.format.DateTimeFormatter;
+import java.time.format.TextStyle;
 import java.util.Date;
+import java.util.Locale;
 
 public class Creneau {
     // ATTRIBUTS
@@ -29,5 +33,12 @@ public class Creneau {
         this.dateFin = dateFin;
     }
 
+    public String getDayOfWeek() {
+        // Créer un objet LocalDateTime en parsant la chaîne de caractères
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm");
+        LocalDateTime dateTime = LocalDateTime.parse(dateDebut, formatter);
 
+        // Récupérer le jour de la semaine sous forme d'une chaîne de caractères
+        return dateTime.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.getDefault());
+    }
 }
