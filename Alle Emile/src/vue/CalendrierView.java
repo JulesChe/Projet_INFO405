@@ -18,6 +18,14 @@ public class CalendrierView {
         String[] columnNames = {"Horaire", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi"};
         DefaultTableModel tableModel = new DefaultTableModel(columnNames, 0);
         eventsTable = new JTable(tableModel);
+        eventsTable.setRowHeight(50); // Hauteur des lignes ajustée ici
+
+        // Ajustement de la largeur des colonnes
+        eventsTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        for (int i = 0; i < eventsTable.getColumnCount(); i++) {
+            eventsTable.getColumnModel().getColumn(i).setPreferredWidth(150);
+        }
+
         JScrollPane scrollPane = new JScrollPane(eventsTable);
         frame.add(scrollPane, BorderLayout.CENTER);
 
