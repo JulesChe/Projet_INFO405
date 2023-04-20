@@ -36,11 +36,17 @@ public class CrudUtilisateurDAO {
 
     public void ajouterHabilitation(Gymnase g, Utilisateur u) throws SQLException{
         PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO `GymnaseComptePersonnel`(`id_gardien`, `nom_gymnase`) VALUES (?,?)");
-        preparedStatement.setInt(1, 1);
+        preparedStatement.setInt(1, u.getId());
         preparedStatement.setString(2, g.getNom());
         preparedStatement.executeUpdate();
     }
 
+    public void supprimerHabilitation(Gymnase g, Utilisateur u) throws SQLException {
+        PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM `GymnaseComptePersonnel` WHERE id_gardien = (?) AND nom_gymnase = (?)");
+        preparedStatement.setInt(1, u.getId());
+        preparedStatement.setString(2, g.getNom());
+        preparedStatement.executeUpdate();
+    }
 
 
 }
