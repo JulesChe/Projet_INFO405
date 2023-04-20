@@ -1,4 +1,10 @@
 package model;
+import crud.CrudCreneauDAO;
+import crud.CrudDemandeDAO;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class Association{
@@ -43,7 +49,41 @@ public class Association{
     }
 
 
+    public void demandeCreneau(String dateDebut, String dateFin) {
 
+        Connection connection = null;
+        try {
+
+            // Charger le pilote JDBC
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            // Etablir la connexion avec la base de données
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/allezemile", "allezemile", "nT7");
+            System.out.println("Connexion établie avec succès.");
+
+            // Créer un objet UtilisateurDAO
+            CrudDemandeDAO utilisateurDAO = new CrudDemandeDAO(connection);
+
+            // Ajouter un creneau
+            Creneau creneau1 = new Creneau(dateDebut,dateFin);
+            utilisateurDAO.demande(creneau1);
+            System.out.println("Créneau ajouté avec succès.");
+
+
+        } catch (ClassNotFoundException e) {
+            System.err.println("Pilote JDBC introuvable.");
+        } catch (SQLException e) {
+            System.err.println("Erreur lors de la connexion à la base de données : " + e.getMessage());
+        } finally {
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    System.err.println("Erreur lors de la fermeture de la connexion : " + e.getMessage());
+                }
+            }
+        }
+    }
 
 
     /*public Gardien getGardien(Creneau c) {
