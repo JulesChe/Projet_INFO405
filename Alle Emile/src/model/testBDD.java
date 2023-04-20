@@ -34,11 +34,11 @@ public class testBDD extends JFrame{
         //patrick.accepterCreneau(1);
         //patrick.pasAccepterCreneau(3);
 
-     /*Planning test = new Planning();
+        Planning test = new Planning();
 
         test.getAllCreneaux();
         System.out.println(test.toStringCreneaux());
-
+/*
 
         //Scanner scanner = new Scanner(System.in);
 
