@@ -169,6 +169,76 @@ public class Logistique extends Utilisateur{
 
     }
 
+    public void accepterCreneau(int id) {
+
+        Connection connection = null;
+        try {
+
+            // Charger le pilote JDBC
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            // Etablir la connexion avec la base de données
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/allezemile", "allezemile", "nT7");
+            System.out.println("Connexion établie avec succès.");
+
+            // Créer un objet UtilisateurDAO
+            CrudDemandeDAO utilisateurDAO = new CrudDemandeDAO(connection);
+
+            // Accepter un creneau
+            utilisateurDAO.accepter(id);
+            System.out.println("Créneau accepter avec succès.");
+
+
+        } catch (ClassNotFoundException e) {
+            System.err.println("Pilote JDBC introuvable.");
+        } catch (SQLException e) {
+            System.err.println("Erreur lors de la connexion à la base de données : " + e.getMessage());
+        } finally {
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    System.err.println("Erreur lors de la fermeture de la connexion : " + e.getMessage());
+                }
+            }
+        }
+    }
+
+    public void pasAccepterCreneau(int id) {
+
+        Connection connection = null;
+        try {
+
+            // Charger le pilote JDBC
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            // Etablir la connexion avec la base de données
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/allezemile", "allezemile", "nT7");
+            System.out.println("Connexion établie avec succès.");
+
+            // Créer un objet UtilisateurDAO
+            CrudDemandeDAO utilisateurDAO = new CrudDemandeDAO(connection);
+
+            // Accepter un creneau
+            utilisateurDAO.supprimer(id);
+            System.out.println("Demande de créneau supprimer avec succès.");
+
+
+        } catch (ClassNotFoundException e) {
+            System.err.println("Pilote JDBC introuvable.");
+        } catch (SQLException e) {
+            System.err.println("Erreur lors de la connexion à la base de données : " + e.getMessage());
+        } finally {
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    System.err.println("Erreur lors de la fermeture de la connexion : " + e.getMessage());
+                }
+            }
+        }
+    }
+
 
     // METHODES
 	/*
