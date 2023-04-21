@@ -32,7 +32,7 @@ public class WeeklyAgendaApp {
             try {
                 WeeklyAgendaModel modele = new WeeklyAgendaModel();
                 WeeklyAgendaView view = new WeeklyAgendaView();
-                WeeklyAgendaController controller = new WeeklyAgendaController(modele, view);
+                WeeklyAgendaController controller = new WeeklyAgendaController(view, modele);
                 Login viewCo = new Login();
 
                 modele.insertTimeSlot(0, "08:00", "09:00","Badminton");

@@ -45,7 +45,7 @@ public class ConnexionListener implements ActionListener{
                         JOptionPane.showMessageDialog(null, "Connexion réussi");
                         WeeklyAgendaModel modele = new WeeklyAgendaModel();
                         WeeklyAgendaView view = new WeeklyAgendaView();
-                        WeeklyAgendaController controller = new WeeklyAgendaController(modele, view);
+                        WeeklyAgendaController controller = new WeeklyAgendaController(view, modele);
                         view.frame.setVisible(true);
 
                         // Créer une instance de WeeklyAgendaApp et lancer l'application

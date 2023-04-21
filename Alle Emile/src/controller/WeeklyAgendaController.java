@@ -13,21 +13,32 @@ public class WeeklyAgendaController {
     private WeeklyAgendaModel model;
     private WeeklyAgendaView view;
 
-    public WeeklyAgendaController(WeeklyAgendaModel model, WeeklyAgendaView view) {
-        this.model = model;
+    public WeeklyAgendaController(WeeklyAgendaView view, WeeklyAgendaModel model) {
         this.view = view;
+        this.model = model;
 
-        // Ajoutez des listeners aux éléments d'interface utilisateur
-        view.addPreviousWeekButtonActionListener(new PreviousWeekButtonListener());
-        view.addNextWeekButtonActionListener(new NextWeekButtonListener());
-
-        // Initialise l'affichage
         updateWeekLabel();
-        updateViewTimeSlots();
         updateTasksPanel();
 
+        addPreviousWeekButtonActionListener();
+        addNextWeekButtonActionListener();
     }
 
+    private void addPreviousWeekButtonActionListener() {
+        view.getPreviousWeekButton().addActionListener(e -> {
+            model.goToPreviousWeek();
+            updateWeekLabel();
+            updateTasksPanel();
+        });
+    }
+
+    private void addNextWeekButtonActionListener() {
+        view.getNextWeekButton().addActionListener(e -> {
+            model.goToNextWeek();
+            updateWeekLabel();
+            updateTasksPanel();
+        });
+    }
     public WeeklyAgendaModel getModel() {
 
         return model;
