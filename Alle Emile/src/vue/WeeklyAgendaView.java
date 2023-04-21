@@ -27,15 +27,8 @@ public class WeeklyAgendaView {
         initComponents();
     }
 
-    private void initComponents() {
-        frame = new JFrame("Agenda hebdomadaire");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(1200, 800);
-        frame.getContentPane().setLayout(new BorderLayout(0, 0));
 
-        // Création d'un JTabbedPane
-        tabbedPane = new JTabbedPane();
-
+    private void creerGrille(JTabbedPane tabbedPane) {
         // Ajout de l'onglet "Emploi du temps"
         JPanel agendaPanel = new JPanel(new BorderLayout());
         agendaPanel.setBorder(new TitledBorder("Emploi du temps"));
@@ -71,11 +64,18 @@ public class WeeklyAgendaView {
 
         tabbedPane.addTab("Emploi du temps", null, agendaPanel, "Emploi du temps");
 
+        // Création d'un JTabbedPane
+
+    }
 
 
 
 
-
+    private void initComponents() {
+        frame = new JFrame("Agenda hebdomadaire");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(1200, 800);
+        frame.getContentPane().setLayout(new BorderLayout(0, 0));
         // Ajout de l'onglet "Demande de créneau"
 
         Planning p = new Planning();
@@ -99,16 +99,22 @@ public class WeeklyAgendaView {
         String[] columnNames = {"Demandes des associations"};
         JTable table = new JTable(data, columnNames);
 
-// Ajoutez le JTable à un JScrollPane pour permettre le défilement si nécessaire
+        // Ajoutez le JTable à un JScrollPane pour permettre le défilement si nécessaire
         JScrollPane scrollPane = new JScrollPane(table);
 
-// Ajoutez le JScrollPane au JPanel créé à l'étape 1
+        // Ajoutez le JScrollPane au JPanel créé à l'étape 1
         requestPanelB.add(scrollPane, BorderLayout.CENTER);
 
-// Ajoutez le JPanel à l'onglet "Demande de créneau" du JTabbedPane
+
+
+
+        tabbedPane = new JTabbedPane();
+
+        creerGrille(tabbedPane);
+
+
+        // Ajoutez le JPanel à l'onglet "Demande de créneau" du JTabbedPane
         tabbedPane.addTab("Demande de créneau", null, requestPanelB, "Demande de créneau");
-
-
 
         // Ajout de l'onglet "Incidents"
         JPanel incidentPanel = new JPanel();
@@ -117,6 +123,12 @@ public class WeeklyAgendaView {
 
         frame.getContentPane().add(tabbedPane, BorderLayout.CENTER);
     }
+
+
+
+
+
+
 
 
 
