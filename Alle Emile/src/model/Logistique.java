@@ -20,6 +20,77 @@ public class Logistique extends Utilisateur{
     }
     SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
+    public void modifierCreneau(String debut, String fin){
+
+        Connection connection = null;
+        try {
+
+            // Charger le pilote JDBC
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            // Etablir la connexion avec la base de données
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/allezemile", "allezemile", "nT7");
+            System.out.println("Connexion établie avec succès.");
+
+            // Créer un objet CrudCompteAssoDAO
+            CrudCreneauDAO creneauDAO = new CrudCreneauDAO(connection);
+
+            // Ajouter une Association
+            Creneau creneau = new Creneau(debut,fin);
+            creneauDAO.modifier(creneau,debut,fin);
+            System.out.println("Creneau supprimer avec succès.");
+
+
+        } catch (ClassNotFoundException e) {
+            System.err.println("Pilote JDBC introuvable.");
+        } catch (SQLException e) {
+            System.err.println("Erreur lors de la connexion à la base de données : " + e.getMessage());
+        } finally {
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    System.err.println("Erreur lors de la fermeture de la connexion : " + e.getMessage());
+                }
+            }
+        }
+
+    }
+    public void supprimerCreneau(String debut, String fin){
+
+        Connection connection = null;
+        try {
+
+            // Charger le pilote JDBC
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            // Etablir la connexion avec la base de données
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/allezemile", "allezemile", "nT7");
+            System.out.println("Connexion établie avec succès.");
+
+            // Créer un objet CrudCompteAssoDAO
+            CrudCreneauDAO creneauDAO = new CrudCreneauDAO(connection);
+
+            // Ajouter une Association
+            Creneau creneau = new Creneau(debut,fin);
+            creneauDAO.supprimer(creneau);
+            System.out.println("Creneau supprimer avec succès.");
+
+
+        } catch (ClassNotFoundException e) {
+            System.err.println("Pilote JDBC introuvable.");
+        } catch (SQLException e) {
+            System.err.println("Erreur lors de la connexion à la base de données : " + e.getMessage());
+        } finally {
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    System.err.println("Erreur lors de la fermeture de la connexion : " + e.getMessage());
+                }
+            }
+        }
+    }
     public void ajoutAssociation(String nom, String mdp) {
 
         Connection connection = null;
