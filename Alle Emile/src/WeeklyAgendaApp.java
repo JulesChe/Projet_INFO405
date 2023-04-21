@@ -1,7 +1,9 @@
 import controller.WeeklyAgendaController;
 import model.WeeklyAgendaModel;
+import vue.Login;
 import vue.WeeklyAgendaView;
 
+import javax.security.auth.login.LoginContext;
 import java.awt.*;
 
 public class WeeklyAgendaApp {
@@ -31,14 +33,15 @@ public class WeeklyAgendaApp {
                 WeeklyAgendaModel modele = new WeeklyAgendaModel();
                 WeeklyAgendaView view = new WeeklyAgendaView();
                 WeeklyAgendaController controller = new WeeklyAgendaController(modele, view);
-
+                Login viewCo = new Login();
 
                 modele.insertTimeSlot(0, "08:00", "09:00","Badminton");
                 modele.insertTimeSlot(1, "14:00", "15:00","Tennis");
                 modele.insertTimeSlot(1, "08:00", "09:00","Basketball");
 
+                viewCo.setVisible(true);
 
-                view.frame.setVisible(true);
+                //view.frame.setVisible(true);
 
             } catch (Exception e) {
                 e.printStackTrace();

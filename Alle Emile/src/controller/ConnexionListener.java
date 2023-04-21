@@ -43,7 +43,10 @@ public class ConnexionListener implements ActionListener{
                     String hashMdp = rs.getString("mdp");
                     if(PasswordHash.isPasswordValid(tpass.getText(),hashMdp)){
                         JOptionPane.showMessageDialog(null, "Connexion réussi");
-
+                        WeeklyAgendaModel modele = new WeeklyAgendaModel();
+                        WeeklyAgendaView view = new WeeklyAgendaView();
+                        WeeklyAgendaController controller = new WeeklyAgendaController(modele, view);
+                        view.frame.setVisible(true);
 
                         // Créer une instance de WeeklyAgendaApp et lancer l'application
 
