@@ -1,5 +1,7 @@
 package vue;
 
+import model.Creneau;
+import model.Planning;
 import model.WeeklyAgendaModel;
 
 import javax.swing.*;
@@ -75,9 +77,38 @@ public class WeeklyAgendaView {
 
 
         // Ajout de l'onglet "Demande de créneau"
-        JPanel requestPanel = new JPanel();
-        requestPanel.setBorder(new TitledBorder("Demande de créneau"));
-        tabbedPane.addTab("Demande de créneau", null, requestPanel, "Demande de créneau");
+
+        Planning p = new Planning();
+        p.getAllCreneaux("demande");
+        // Créez un JPanel pour contenir le tableau et les autres éléments de l'onglet
+        JPanel requestPanelB = new JPanel(new BorderLayout());
+
+        // Créez un tableau JTable
+        int taille = p.getTaille();
+        int rowCount = taille; // nombre de lignes du tableau
+        int columnCount = 1; // nombre de colonnes du tableau
+        Object[][] data = new Object[rowCount][columnCount];
+
+        // remplir le tableau avec les données
+        for (int i = 0; i < rowCount; i++) {
+            for (int j = 0; j < columnCount; j++) {
+                Creneau c = p.getListeCreneaux().get(i);
+                data[i][0] = "Début : "+c.getDateDebut() + "   Fin : " + c.getDateDebut() + (i + 1);
+            }
+        }
+        String[] columnNames = {"Demandes des associations"};
+        JTable table = new JTable(data, columnNames);
+
+// Ajoutez le JTable à un JScrollPane pour permettre le défilement si nécessaire
+        JScrollPane scrollPane = new JScrollPane(table);
+
+// Ajoutez le JScrollPane au JPanel créé à l'étape 1
+        requestPanelB.add(scrollPane, BorderLayout.CENTER);
+
+// Ajoutez le JPanel à l'onglet "Demande de créneau" du JTabbedPane
+        tabbedPane.addTab("Demande de créneau", null, requestPanelB, "Demande de créneau");
+
+
 
         // Ajout de l'onglet "Incidents"
         JPanel incidentPanel = new JPanel();

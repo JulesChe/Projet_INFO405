@@ -63,4 +63,12 @@ public class Planning {
         }
         return res;
     }
+
+    public int getTaille(){
+        return listeCreneaux.size();
+    }
+
+    public ArrayList<Creneau> getListeCreneaux() {
+        return listeCreneaux;
+    }
 }
