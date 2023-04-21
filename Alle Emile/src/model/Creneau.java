@@ -9,11 +9,22 @@ public class Creneau {
     // ATTRIBUTS
     private String dateDebut;
     private String dateFin;
+    private int id;
 
     // CONSTRUCTEUR
     public Creneau(String dateDebut, String dateFin) {
         this.dateDebut = dateDebut;
         this.dateFin = dateFin;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public Creneau(String dateDebut, String dateFin, int id) {
+        this.dateDebut = dateDebut;
+        this.dateFin = dateFin;
+        this.id = id;
     }
 
     // METHODES
