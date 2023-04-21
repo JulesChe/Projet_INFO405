@@ -8,6 +8,7 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class WeeklyAgendaView {
@@ -122,15 +123,147 @@ public class WeeklyAgendaView {
         // Ajoutez le JPanel à l'onglet "Demande de créneau" du JTabbedPane
         tabbedPane.addTab("Demande de créneau", null, requestPanelB, "Demande de créneau");
 
-        // Ajout de l'onglet "gymnasePanel"
         JPanel associationPanel = new JPanel();
-        associationPanel.setBorder(new TitledBorder("Association"));
+
+        // Création d'un modèle de liste pour stocker les noms des associations
+        DefaultListModel<String> listModel = new DefaultListModel<String>();
+
+        // Création d'une liste à partir du modèle
+        JList<String> associationList = new JList<String>(listModel);
+
+        // Ajout des noms d'associations à la liste (remplacez ce code par votre propre logique de récupération des noms d'associations)
+        listModel.addElement("AS Badminton");
+        listModel.addElement("AS Basket");
+        listModel.addElement("AS Foot");
+
+
+        // Ajout de la liste au panneau avec un titre
+        associationPanel.add(new JLabel("Associations existantes :"));
+        associationPanel.add(new JScrollPane(associationList));
+
+        // Création des champs de texte et du bouton pour ajouter une nouvelle association
+        JTextField nameField = new JTextField(20);
+        JPasswordField passwordField = new JPasswordField(20);
+        JButton submitButton = new JButton("Créer l'association");
+
+        // Ajout d'un gestionnaire d'événements pour le bouton
+        submitButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Code pour créer l'association avec les valeurs des champs de texte
+                String name = nameField.getText();
+                String password = new String(passwordField.getPassword());
+
+                // Ajout du nom de la nouvelle association à la liste
+                listModel.addElement(name);
+
+                // Code pour créer l'association (à remplacer par votre propre logique)
+                System.out.println("Nouvelle association créée : " + name + ", mot de passe : " + password);
+
+                // Réinitialisation des champs de texte
+                nameField.setText("");
+                passwordField.setText("");
+            }
+        });
+
+        // Ajout des champs de texte et du bouton au panneau
+        associationPanel.add(new JLabel("Nom de la nouvelle association :"));
+        associationPanel.add(nameField);
+        associationPanel.add(new JLabel("Mot de passe :"));
+        associationPanel.add(passwordField);
+        associationPanel.add(submitButton);
+
+        // Ajout du panneau à l'onglet
         tabbedPane.addTab("Association", null, associationPanel, "Association");
 
-        // Ajout de l'onglet "gymnasePanel"
+
+
+
+
+
         JPanel gymnasePanel = new JPanel();
-        gymnasePanel.setBorder(new TitledBorder("Gymnase"));
+
+// Création d'un modèle de liste pour stocker les gymnases
+        DefaultListModel<String> listModel2 = new DefaultListModel<String>();
+
+// Création d'une liste à partir du modèle
+        JList<String> gymnaseList = new JList<String>(listModel2);
+
+// Ajout des gymnases à la liste (remplacez ce code par votre propre logique de récupération des gymnases)
+        listModel2.addElement("Gymnase 1 - Paris");
+        listModel2.addElement("Gymnase 2 - Marseille");
+        listModel2.addElement("Gymnase 3 - Lyon");
+
+// Ajout de la liste au panneau avec un titre
+        gymnasePanel.add(new JLabel("Liste des gymnases :"));
+        gymnasePanel.add(new JScrollPane(gymnaseList));
+
+// Création des champs de texte et du bouton pour ajouter un nouveau gymnase
+        JTextField nameField2 = new JTextField(20);
+        JTextField locationField = new JTextField(20);
+        JButton addButton = new JButton("Ajouter un gymnase");
+
+// Ajout d'un gestionnaire d'événements pour le bouton
+        addButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Code pour ajouter un nouveau gymnase avec les valeurs des champs de texte
+                String name = nameField2.getText();
+                String location = locationField.getText();
+
+                // Ajout du nouveau gymnase à la liste
+                listModel2.addElement(name + " - " + location);
+
+                // Code pour ajouter le gymnase (à remplacer par votre propre logique)
+                System.out.println("Nouveau gymnase ajouté : " + name + " - " + location);
+
+                // Réinitialisation des champs de texte
+                nameField2.setText("");
+                locationField.setText("");
+            }
+        });
+
+// Création des champs de texte et du bouton pour supprimer un gymnase
+        JTextField deleteField = new JTextField(20);
+        JButton deleteButton = new JButton("Supprimer un gymnase");
+
+// Ajout d'un gestionnaire d'événements pour le bouton
+        deleteButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Code pour supprimer le gymnase avec le nom spécifié
+                String name = deleteField.getText();
+                int index = listModel2.indexOf(name);
+                if (index >= 0) {
+                    listModel2.removeElementAt(index);
+
+                    // Code pour supprimer le gymnase (à remplacer par votre propre logique)
+                    System.out.println("Gymnase supprimé : " + name);
+                } else {
+                    // Le gymnase n'existe pas dans la liste
+                    System.out.println("Le gymnase " + name + " n'existe pas.");
+                }
+
+                // Réinitialisation du champ de texte
+                deleteField.setText("");
+            }
+        });
+
+// Ajout des champs de texte et des boutons au panneau
+        gymnasePanel.add(new JLabel("Nom du nouveau gymnase :"));
+        gymnasePanel.add(nameField2);
+        gymnasePanel.add(new JLabel("Lieu :"));
+        gymnasePanel.add(locationField);
+        gymnasePanel.add(addButton);
+        gymnasePanel.add(new JLabel("Nom du gymnase à supprimer :"));
+        gymnasePanel.add(deleteField);
+        gymnasePanel.add(deleteButton);
+
+// Ajout du panneau à l'onglet
         tabbedPane.addTab("Gymnase", null, gymnasePanel, "Gymnase");
+
+
+
 
         // Ajout de l'onglet "Incidents"
         JPanel incidentPanel = new JPanel();
