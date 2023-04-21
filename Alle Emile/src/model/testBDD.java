@@ -30,7 +30,10 @@ public class testBDD extends JFrame{
         Logistique patrick = new Logistique("Logistique","Patrick","testmdp", 3);
         Association asso = new Association("test","mdp");
 
-        //asso.demandeCreneau("2023/04/20 16:00:00","2023/04/20 18:00:00");
+        asso.demandeCreneau("2023/04/20 16:00:00","2023/04/20 18:00:00");
+        asso.demandeCreneau("2023/04/21 14:00:00","2023/04/20 16:00:00");
+        asso.demandeCreneau("2023/04/22 09:00:00","2023/04/20 11:00:00");
+
         //patrick.accepterCreneau(1);
         //patrick.pasAccepterCreneau(3);
 

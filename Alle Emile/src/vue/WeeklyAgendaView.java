@@ -93,7 +93,7 @@ public class WeeklyAgendaView {
         for (int i = 0; i < rowCount; i++) {
             for (int j = 0; j < columnCount; j++) {
                 Creneau c = p.getListeCreneaux().get(i);
-                data[i][0] = "Début : "+c.getDateDebut() + "   Fin : " + c.getDateDebut() + " Asso : "+c.getId();
+                data[i][0] = "Début : "+c.getDateDebut() + "   Fin : " + c.getDateDebut() + " Asso : "+c.getAsso();
             }
         }
         String[] columnNames = {"Demandes des associations"};

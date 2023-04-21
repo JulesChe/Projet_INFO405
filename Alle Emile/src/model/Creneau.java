@@ -9,7 +9,7 @@ public class Creneau {
     // ATTRIBUTS
     private String dateDebut;
     private String dateFin;
-    private int id;
+    private String asso;
 
     // CONSTRUCTEUR
     public Creneau(String dateDebut, String dateFin) {
@@ -17,14 +17,11 @@ public class Creneau {
         this.dateFin = dateFin;
     }
 
-    public int getId() {
-        return id;
-    }
 
-    public Creneau(String dateDebut, String dateFin, int id) {
+    public Creneau(String dateDebut, String dateFin, String asso) {
         this.dateDebut = dateDebut;
         this.dateFin = dateFin;
-        this.id = id;
+        this.asso = asso;
     }
 
     // METHODES
@@ -51,5 +48,9 @@ public class Creneau {
 
         // Récupérer le jour de la semaine sous forme d'une chaîne de caractères
         return dateTime.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.getDefault());
+    }
+
+    public String getAsso() {
+        return asso;
     }
 }
