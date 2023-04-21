@@ -18,7 +18,7 @@ public class Planning {
     }
 
     // METHODES
-    public void getAllCreneaux(){
+    public void getAllCreneaux(String table){
         Connection connection = null;
         try {
             // Charger le pilote JDBC
@@ -32,7 +32,7 @@ public class Planning {
             CrudPlanningDAO utilisateurDAO = new CrudPlanningDAO(connection);
 
             // Récupérer tous les créneaux
-            ArrayList<Creneau> listeCreneauxBis = utilisateurDAO.getCreneauxFromTable(connection,"creneau");
+            ArrayList<Creneau> listeCreneauxBis = utilisateurDAO.getCreneauxFromTable(connection,table);
             listeCreneaux = listeCreneauxBis;
             System.out.println("Créneaux récupérer avec succès avec succès.");
 
