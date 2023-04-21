@@ -78,7 +78,7 @@ public class WeeklyAgendaModel {
         return DATE_FORMATTER.format(date);
     }
 
-    public void insertTimeSlot(int dayIndex, String newTimeSlot, String endTime) {
+    public void insertTimeSlot(int dayIndex, String newTimeSlot, String endTime, String taskDescription) {
         if (dayIndex < 0 || dayIndex >= 7) {
             throw new IllegalArgumentException("Index invalide pour le jour");
         }
@@ -91,7 +91,8 @@ public class WeeklyAgendaModel {
                 break;
             }
         }
-        taskListModel.add(index, newTimeSlot + " - " + endTime);
+        taskListModel.add(index, newTimeSlot + " - " + endTime + " : " + taskDescription);
+
 
     }
 

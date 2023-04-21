@@ -12,7 +12,9 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import model.ConnexionUtilisateur;
+import model.WeeklyAgendaModel;
 import ressource.PasswordHash;
+import vue.WeeklyAgendaView;
 
 public class ConnexionListener implements ActionListener{
 
@@ -21,6 +23,7 @@ public class ConnexionListener implements ActionListener{
     private Connection connection = null;
     private JTextField tpseudo;
     private JPasswordField tpass;
+
 
     public ConnexionListener(JTextField tpseudo, JPasswordField tpass) {
         this.tpseudo = tpseudo;
@@ -40,6 +43,10 @@ public class ConnexionListener implements ActionListener{
                     String hashMdp = rs.getString("mdp");
                     if(PasswordHash.isPasswordValid(tpass.getText(),hashMdp)){
                         JOptionPane.showMessageDialog(null, "Connexion réussi");
+
+
+                        // Créer une instance de WeeklyAgendaApp et lancer l'application
+
                     }
                     else {
                         JOptionPane.showMessageDialog(null, "Connexion refusée!");

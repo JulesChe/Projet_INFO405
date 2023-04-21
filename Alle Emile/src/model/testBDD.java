@@ -30,14 +30,16 @@ public class testBDD extends JFrame{
         Logistique patrick = new Logistique("Logistique","Patrick","testmdp", 3);
         Association asso = new Association("test","mdp");
 
+        patrick.ajoutUtilisateur("test","test","mdp",3);
+
         //asso.demandeCreneau("2023/04/20 16:00:00","2023/04/20 18:00:00");
         //patrick.accepterCreneau(1);
         //patrick.pasAccepterCreneau(3);
 
-        Planning test = new Planning();
+       /* Planning test = new Planning();
 
         test.getAllCreneaux();
-        System.out.println(test.toStringCreneaux());
+        System.out.println(test.toStringCreneaux());*/
 /*
 
         //Scanner scanner = new Scanner(System.in);

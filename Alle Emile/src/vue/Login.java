@@ -13,6 +13,7 @@ import java.sql.*;
 
 
 public class Login extends JFrame {
+
     JLabel auth;
     JLabel pseudo;
     JLabel password;

@@ -28,6 +28,16 @@ public class WeeklyAgendaController {
 
     }
 
+    public WeeklyAgendaModel getModel() {
+
+        return model;
+    }
+
+    public WeeklyAgendaView getView() {
+        return view;
+    }
+
+
     private class PreviousWeekButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -124,9 +134,13 @@ public class WeeklyAgendaController {
             JDialog dialog = new JDialog(view.getFrame(), "Ajouter créneau", true);
             dialog.setLayout(new GridLayout(4, 2));
 
+
+
             dialog.add(new JLabel("Jour:"));
             JComboBox<String> dayComboBox = new JComboBox<>(model.getWeekDays());
             dialog.add(dayComboBox);
+
+
 
             dialog.add(new JLabel("Heure de début (format 24h, ex: 19:00):"));
             JTextField startTimeField = new JTextField();
@@ -136,13 +150,18 @@ public class WeeklyAgendaController {
             JTextField endTimeField = new JTextField();
             dialog.add(endTimeField);
 
+            dialog.add(new JLabel("Description de la tâche :"));
+            JTextField taskDescriptionField = new JTextField();
+            dialog.add(taskDescriptionField);
+
             JButton addButton = new JButton("Ajouter");
             addButton.addActionListener(addEvent -> {
                 int selectedDay = dayComboBox.getSelectedIndex();
                 String startTime = startTimeField.getText();
                 String endTime = endTimeField.getText();
-                if (!startTime.isEmpty() && !endTime.isEmpty()) {
-                    model.insertTimeSlot(selectedDay, startTime, endTime);
+                String taskDescription = taskDescriptionField.getText();
+                if (!startTime.isEmpty() && !endTime.isEmpty() && !taskDescription.isEmpty()) {
+                    model.insertTimeSlot(selectedDay, startTime, endTime,taskDescription);
                     updateTasksPanel();
                     dialog.dispose();
                 }
