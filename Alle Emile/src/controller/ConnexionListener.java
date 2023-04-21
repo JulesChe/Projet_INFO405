@@ -14,10 +14,12 @@ import javax.swing.JTextField;
 import model.ConnexionUtilisateur;
 import model.WeeklyAgendaModel;
 import ressource.PasswordHash;
+import vue.Login;
 import vue.WeeklyAgendaView;
 
 public class ConnexionListener implements ActionListener{
 
+    private Login login;
     private PreparedStatement ps = null;
     private ResultSet rs = null;
     private Connection connection = null;
@@ -25,9 +27,10 @@ public class ConnexionListener implements ActionListener{
     private JPasswordField tpass;
 
 
-    public ConnexionListener(JTextField tpseudo, JPasswordField tpass) {
+    public ConnexionListener(JTextField tpseudo, JPasswordField tpass, Login login) {
         this.tpseudo = tpseudo;
         this.tpass = tpass;
+        this.login = login;
     }
 
     @Override
@@ -46,7 +49,13 @@ public class ConnexionListener implements ActionListener{
                         WeeklyAgendaModel modele = new WeeklyAgendaModel();
                         WeeklyAgendaView view = new WeeklyAgendaView();
                         WeeklyAgendaController controller = new WeeklyAgendaController(view, modele);
+
+                        modele.insertTimeSlot(0, "08:00", "09:00","Badminton");
+                        modele.insertTimeSlot(1, "14:00", "15:00","Tennis");
+                        modele.insertTimeSlot(1, "08:00", "09:00","Basketball");
+                        login.dispose();
                         view.frame.setVisible(true);
+
 
                         // Créer une instance de WeeklyAgendaApp et lancer l'application
 

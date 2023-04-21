@@ -50,7 +50,7 @@ public class Login extends JFrame {
         panel.add(tpseudo);
         panel.add(tpass);
         panel.add(button);
-        button.addActionListener(new ConnexionListener(tpseudo,tpass));
+        button.addActionListener(new ConnexionListener(tpseudo,tpass,this));
 
         this.setVisible(true);
         this.setLocationRelativeTo(null);
