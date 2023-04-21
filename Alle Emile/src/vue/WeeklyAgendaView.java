@@ -28,7 +28,7 @@ public class WeeklyAgendaView {
     }
 
 
-    private void creerGrille(JTabbedPane tabbedPane) {
+    private void creerAgenda(JTabbedPane tabbedPane) {
         // Ajout de l'onglet "Emploi du temps"
         JPanel agendaPanel = new JPanel(new BorderLayout());
         agendaPanel.setBorder(new TitledBorder("Emploi du temps"));
@@ -110,11 +110,21 @@ public class WeeklyAgendaView {
 
         tabbedPane = new JTabbedPane();
 
-        creerGrille(tabbedPane);
+        creerAgenda(tabbedPane);
 
 
         // Ajoutez le JPanel à l'onglet "Demande de créneau" du JTabbedPane
         tabbedPane.addTab("Demande de créneau", null, requestPanelB, "Demande de créneau");
+
+        // Ajout de l'onglet "gymnasePanel"
+        JPanel associationPanel = new JPanel();
+        associationPanel.setBorder(new TitledBorder("Association"));
+        tabbedPane.addTab("Association", null, associationPanel, "Association");
+
+        // Ajout de l'onglet "gymnasePanel"
+        JPanel gymnasePanel = new JPanel();
+        gymnasePanel.setBorder(new TitledBorder("Gymnase"));
+        tabbedPane.addTab("Gymnase", null, gymnasePanel, "Gymnase");
 
         // Ajout de l'onglet "Incidents"
         JPanel incidentPanel = new JPanel();
