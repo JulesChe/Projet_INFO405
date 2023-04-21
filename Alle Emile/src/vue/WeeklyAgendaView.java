@@ -93,7 +93,7 @@ public class WeeklyAgendaView {
         for (int i = 0; i < rowCount; i++) {
             for (int j = 0; j < columnCount; j++) {
                 Creneau c = p.getListeCreneaux().get(i);
-                data[i][0] = "Début : "+c.getDateDebut() + "   Fin : " + c.getDateDebut() + " Asso : "+c.getAsso();
+                data[i][j] = "Début : " + c.getDateDebut() + "   Fin : " + c.getDateDebut() + " Asso : " + c.getAsso();
             }
         }
         String[] columnNames = {"Demandes des associations"};
@@ -102,10 +102,16 @@ public class WeeklyAgendaView {
         // Ajoutez le JTable à un JScrollPane pour permettre le défilement si nécessaire
         JScrollPane scrollPane = new JScrollPane(table);
 
+        //Boutton pour accepter et refuser des demandes
+        JButton boutonAdd = new JButton("Accepter");
+        JButton boutonDel = new JButton("Refuser");
+
         // Ajoutez le JScrollPane au JPanel créé à l'étape 1
         requestPanelB.add(scrollPane, BorderLayout.CENTER);
-
-
+        JPanel acceptButton = new JPanel(new BorderLayout());
+        requestPanelB.add(acceptButton,BorderLayout.SOUTH);
+        acceptButton.add(boutonAdd,BorderLayout.NORTH);
+        acceptButton.add(boutonDel,BorderLayout.SOUTH);
 
 
         tabbedPane = new JTabbedPane();
