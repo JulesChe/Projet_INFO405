@@ -34,6 +34,7 @@ public class Login extends JFrame {
         JPanel panelAsso = new JPanel(null);
 
         auth = new JLabel("Connexion Association");
+        auth.setBounds(50, 10, 400, 70);
         auth.setFont(fauth);
         panelAsso.add(auth);
 
@@ -74,6 +75,7 @@ public class Login extends JFrame {
         JPanel panelPerso = new JPanel(null);
 
         auth = new JLabel("Connexion Personnel");
+        auth.setBounds(50, 10, 400, 70);
         auth.setFont(fauth);
 
         panelPerso.add(auth);
