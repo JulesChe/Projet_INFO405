@@ -1,7 +1,6 @@
 package model;
 
 import javax.swing.*;
-import java.text.DateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -9,9 +8,6 @@ import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.text.ParseException;
 
 import java.time.temporal.ChronoUnit;
 
@@ -29,14 +25,16 @@ public class WeeklyAgendaModel {
 
     private Association associationLog;
 
+    private Utilisateur utilisateurLog;
 
-    public WeeklyAgendaModel(Association associationLog) {
+    public WeeklyAgendaModel(Association associationLog, Utilisateur utilisateurLog) {
         startOfWeek = LocalDate.now().with(java.time.DayOfWeek.MONDAY);
         daysTimeSlots = new ArrayList<>();
         for (int i = 0; i < WEEK_DAYS.length; i++) {
             daysTimeSlots.add(new DefaultListModel<String>());
         }
         this.associationLog = associationLog;
+        this.utilisateurLog = utilisateurLog;
     }
 
     public LocalDate getStartOfWeek() {
@@ -134,5 +132,19 @@ public class WeeklyAgendaModel {
 
     public Association getAssociationLog() {
         return associationLog;
+    }
+
+    public Utilisateur getUtilisateurLog() {
+        return utilisateurLog;
+    }
+
+    public boolean isAssociationLog(){
+
+        return this.getAssociationLog() != null;
+    }
+
+    public boolean isPersonnelLog(){
+
+        return this.getUtilisateurLog() != null;
     }
 }

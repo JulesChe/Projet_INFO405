@@ -48,7 +48,7 @@ public class ConnexionListenerAssociation implements ActionListener {
                     if(PasswordHash.isPasswordValid(tpass.getText(),hashMdp)){
                         JOptionPane.showMessageDialog(null, "Connexion réussi");
                         Association associationLog = new Association(tpseudo.getText(),tpass.getText());
-                        WeeklyAgendaModel modele = new WeeklyAgendaModel(associationLog);
+                        WeeklyAgendaModel modele = new WeeklyAgendaModel(associationLog, null);
                         WeeklyAgendaView view = new WeeklyAgendaView(modele);
                         WeeklyAgendaController controller = new WeeklyAgendaController(view, modele);
                         login.dispose();

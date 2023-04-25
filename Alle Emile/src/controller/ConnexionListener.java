@@ -13,6 +13,7 @@ import javax.swing.JTextField;
 
 import model.Association;
 import model.ConnexionUtilisateur;
+import model.Utilisateur;
 import model.WeeklyAgendaModel;
 import ressource.PasswordHash;
 import vue.Login;
@@ -39,7 +40,7 @@ public class ConnexionListener implements ActionListener{
         if (!tpseudo.getText().isEmpty() || !tpass.getText().isEmpty()) {
             connection = ConnexionUtilisateur.getConnect();
             try {
-                ps = connection.prepareStatement("SELECT nom,mdp FROM comptePersonnel WHERE nom=?");
+                ps = connection.prepareStatement("SELECT nom,mdp,grade FROM comptePersonnel WHERE nom=?");
                 ps.setString(1, tpseudo.getText());
                 rs = ps.executeQuery();
 
@@ -47,8 +48,8 @@ public class ConnexionListener implements ActionListener{
                     String hashMdp = rs.getString("mdp");
                     if(PasswordHash.isPasswordValid(tpass.getText(),hashMdp)){
                         JOptionPane.showMessageDialog(null, "Connexion réussi");
-                        Association associationTestErr = new Association("testerr","mdp");
-                        WeeklyAgendaModel modele = new WeeklyAgendaModel(null);
+                        Utilisateur utilisateur = new Utilisateur(tpseudo.getText(),"prenom",tpass.getText(),rs.getInt("grade"));
+                        WeeklyAgendaModel modele = new WeeklyAgendaModel(null,utilisateur);
 
                         WeeklyAgendaView view = new WeeklyAgendaView(modele);
                         WeeklyAgendaController controller = new WeeklyAgendaController(view, modele);

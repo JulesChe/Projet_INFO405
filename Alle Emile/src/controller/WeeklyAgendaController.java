@@ -9,7 +9,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class WeeklyAgendaController {
     private WeeklyAgendaModel model;
@@ -147,7 +146,8 @@ public class WeeklyAgendaController {
         p.getSemaine(lundiWeek);
         ArrayList<Creneau> listeCreneaux = p.listeCreneaux;
         //Ajoutes tous les créneaux de la semaine
-        WeeklyAgendaModel modele = new WeeklyAgendaModel(null);
+        WeeklyAgendaModel modele = new WeeklyAgendaModel(null, null);
+
         Logistique patrick = new Logistique("Logistique","Patrick","testmdp", 3);
 
         for (Creneau creneau : listeCreneaux) {
