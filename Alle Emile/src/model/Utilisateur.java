@@ -16,6 +16,10 @@ public class Utilisateur {
         this.mdp = mdp;
     }
 
+    public Utilisateur(){
+
+    }
+
     // METHODE
     public void setNom(String nom) {
         this.nom = nom;

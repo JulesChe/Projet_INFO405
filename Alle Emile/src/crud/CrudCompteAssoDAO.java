@@ -1,9 +1,11 @@
 package crud;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 
 import model.Association;
+import model.Creneau;
 
 public class CrudCompteAssoDAO {
 
@@ -21,6 +23,24 @@ public class CrudCompteAssoDAO {
         preparedStatement.executeUpdate();
     }
 
+    public ArrayList<Association> getAssoFromTable(Connection connection) throws SQLException {
+        ArrayList<Association> resultList = new ArrayList<>();
 
+        String selectSQL = "SELECT `nom` FROM `compteAsso` WHERE 1";
+
+        PreparedStatement preparedStatement = connection.prepareStatement(selectSQL);
+
+        ResultSet rs = preparedStatement.executeQuery();
+
+        while (rs.next()) {
+            Association association = new Association(rs.getString("nom"));
+            resultList.add(association);
+        }
+
+        rs.close();
+        preparedStatement.close();
+
+        return resultList;
+    }
 
 }

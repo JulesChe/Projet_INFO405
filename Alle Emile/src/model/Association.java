@@ -1,6 +1,8 @@
 package model;
+import crud.CrudCompteAssoDAO;
 import crud.CrudCreneauDAO;
 import crud.CrudDemandeDAO;
+import crud.CrudPlanningDAO;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -11,6 +13,7 @@ public class Association{
     // ATTRIBUTS
     private int nbLicence;
     private ArrayList<Creneau> listeCreneaux; // liste des créneaux de l'utilisateur
+
     private String sport;
     private String mdp;
     private String nom;
@@ -21,6 +24,12 @@ public class Association{
         this.mdp = mdp;
         ArrayList<Creneau> listeCreneaux = new ArrayList<Creneau>();
     }
+    public Association(String nom) {
+        this.nom = nom;
+        this.mdp = "";
+        ArrayList<Creneau> listeCreneaux = new ArrayList<Creneau>();
+    }
+
 
     // METHODES
 
@@ -94,4 +103,45 @@ public class Association{
 
     }
     */
+
+    public ArrayList<Association> getAllAsso() {
+        Connection connection = null;
+        ArrayList<Association> res = null;
+        try {
+            // Charger le pilote JDBC
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            // Etablir la connexion avec la base de données
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/allezemile", "allezemile", "nT7");
+            System.out.println("Connexion établie avec succès.");
+
+            // Créer un objet UtilisateurDAO
+            CrudCompteAssoDAO assoDAO = new CrudCompteAssoDAO(connection);
+
+            // Récupérer tous les créneaux
+            res = assoDAO.getAssoFromTable(connection);
+
+            System.out.println("Association récupérer avec succès.");
+
+
+        } catch (ClassNotFoundException e) {
+            System.err.println("Pilote JDBC introuvable.");
+        } catch (SQLException e) {
+            System.err.println("Erreur lors de la connexion à la base de données : " + e.getMessage());
+        } finally {
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    System.err.println("Erreur lors de la fermeture de la connexion : " + e.getMessage());
+                }
+            }
+        }
+
+        return res;
+
+    }
+
+
+
 }

@@ -18,6 +18,8 @@ public class Logistique extends Utilisateur{
     public Logistique(String nom,String prenom,String mdp ,int niveau) {
         super(nom,prenom,mdp,niveau);
     }
+
+    public Logistique(){}
     SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     public void modifierCreneau(String debut, String fin){

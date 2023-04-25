@@ -1,5 +1,8 @@
 package vue;
 
+import controller.AjouterAssociationListener;
+import crud.CrudCompteAssoDAO;
+import model.Association;
 import model.Creneau;
 import model.Planning;
 import model.WeeklyAgendaModel;
@@ -10,6 +13,9 @@ import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class WeeklyAgendaView {
     public JFrame frame;
@@ -24,7 +30,7 @@ public class WeeklyAgendaView {
 
     private WeeklyAgendaModel modele;
 
-    public WeeklyAgendaView() {
+    public WeeklyAgendaView() throws SQLException {
         initComponents();
     }
 
@@ -65,14 +71,13 @@ public class WeeklyAgendaView {
 
         tabbedPane.addTab("Emploi du temps", null, agendaPanel, "Emploi du temps");
 
-        // Création d'un JTabbedPane
 
     }
 
 
 
 
-    private void initComponents() {
+    private void initComponents() throws SQLException {
         frame = new JFrame("Agenda hebdomadaire");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(1200, 800);
@@ -123,64 +128,27 @@ public class WeeklyAgendaView {
         // Ajoutez le JPanel à l'onglet "Demande de créneau" du JTabbedPane
         tabbedPane.addTab("Demande de créneau", null, requestPanelB, "Demande de créneau");
 
-        JPanel associationPanel = new JPanel();
 
-        // Création d'un modèle de liste pour stocker les noms des associations
-        DefaultListModel<String> listModel = new DefaultListModel<String>();
-
-        // Création d'une liste à partir du modèle
-        JList<String> associationList = new JList<String>(listModel);
-
-        // Ajout des noms d'associations à la liste (remplacez ce code par votre propre logique de récupération des noms d'associations)
-        listModel.addElement("AS Badminton");
-        listModel.addElement("AS Basket");
-        listModel.addElement("AS Foot");
+        vueAssociation();
 
 
-        // Ajout de la liste au panneau avec un titre
-        associationPanel.add(new JLabel("Associations existantes :"));
-        associationPanel.add(new JScrollPane(associationList));
 
-        // Création des champs de texte et du bouton pour ajouter une nouvelle association
-        JTextField nameField = new JTextField(20);
-        JPasswordField passwordField = new JPasswordField(20);
-        JButton submitButton = new JButton("Créer l'association");
-
-        // Ajout d'un gestionnaire d'événements pour le bouton
-        submitButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Code pour créer l'association avec les valeurs des champs de texte
-                String name = nameField.getText();
-                String password = new String(passwordField.getPassword());
-
-                // Ajout du nom de la nouvelle association à la liste
-                listModel.addElement(name);
-
-                // Code pour créer l'association (à remplacer par votre propre logique)
-                System.out.println("Nouvelle association créée : " + name + ", mot de passe : " + password);
-
-                // Réinitialisation des champs de texte
-                nameField.setText("");
-                passwordField.setText("");
-            }
-        });
-
-        // Ajout des champs de texte et du bouton au panneau
-        associationPanel.add(new JLabel("Nom de la nouvelle association :"));
-        associationPanel.add(nameField);
-        associationPanel.add(new JLabel("Mot de passe :"));
-        associationPanel.add(passwordField);
-        associationPanel.add(submitButton);
-
-        // Ajout du panneau à l'onglet
-        tabbedPane.addTab("Association", null, associationPanel, "Association");
+        vueGymnase();
 
 
 
 
+        // Ajout de l'onglet "Incidents"
+        JPanel incidentPanel = new JPanel();
+        incidentPanel.setBorder(new TitledBorder("Incidents"));
+        tabbedPane.addTab("Incidents", null, incidentPanel, "Incidents");
+
+        frame.getContentPane().add(tabbedPane, BorderLayout.CENTER);
+    }
 
 
+
+    private void vueGymnase(){
         JPanel gymnasePanel = new JPanel();
 
 // Création d'un modèle de liste pour stocker les gymnases
@@ -262,21 +230,60 @@ public class WeeklyAgendaView {
 // Ajout du panneau à l'onglet
         tabbedPane.addTab("Gymnase", null, gymnasePanel, "Gymnase");
 
-
-
-
-        // Ajout de l'onglet "Incidents"
-        JPanel incidentPanel = new JPanel();
-        incidentPanel.setBorder(new TitledBorder("Incidents"));
-        tabbedPane.addTab("Incidents", null, incidentPanel, "Incidents");
-
-        frame.getContentPane().add(tabbedPane, BorderLayout.CENTER);
     }
 
+    private void vueAssociation() throws SQLException {
+
+        Connection connection = null;
+
+        JPanel associationPanel = new JPanel();
+
+        // Création d'un modèle de liste pour stocker les noms des associations
+        DefaultListModel<String> listModel = new DefaultListModel<String>();
+
+        CrudCompteAssoDAO assoDAO = new CrudCompteAssoDAO(connection);
+
+
+        Association a = new Association("recupNom");
+
+        ArrayList<Association> listAsso = a.getAllAsso();
+
+        for (int i = 0; i < listAsso.size(); i++) {
+            listModel.addElement(listAsso.get(i).getNom());
+        }
+
+
+        // Création d'une liste à partir du modèle
+        JList<String> associationList = new JList<String>(listModel);
+
+        // Ajout de la liste au panneau avec un titre
+        associationPanel.add(new JLabel("Associations existantes :"));
+        associationPanel.add(new JScrollPane(associationList));
+
+        // Création des champs de texte et du bouton pour ajouter une nouvelle association
+        JTextField nameField = new JTextField(20);
+        JPasswordField passwordField = new JPasswordField(20);
+        JButton submitButton = new JButton("Créer l'association");
+
+        // Ajout d'un gestionnaire d'événements pour le bouton
+        submitButton.addActionListener(new AjouterAssociationListener(nameField,passwordField,listModel));
+
+        // Ajout des champs de texte et du bouton au panneau
+        associationPanel.add(new JLabel("Nom de la nouvelle association :"));
+        associationPanel.add(nameField);
+        associationPanel.add(new JLabel("Mot de passe :"));
+        associationPanel.add(passwordField);
+        associationPanel.add(submitButton);
+
+        // Ajout du panneau à l'onglet
+        tabbedPane.addTab("Association", null, associationPanel, "Association");
 
 
 
 
+
+
+    }
 
 
 
