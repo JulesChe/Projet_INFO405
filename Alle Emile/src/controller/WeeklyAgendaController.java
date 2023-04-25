@@ -146,10 +146,8 @@ public class WeeklyAgendaController {
         Planning p = new Planning();
         Creneau c1 = new Creneau(p.getDateDuJour(),p.getDateDuJour());
         String lundiWeek = c1.formatDate(model.getFormattedStartDate());
-        System.out.println(lundiWeek);
         p.getSemaine(lundiWeek);
         ArrayList<Creneau> listeCreneaux = p.listeCreneaux;
-        System.out.println(p.toStringCreneaux());
         //Ajoutes tous les créneaux de la semaine
         WeeklyAgendaModel modele = new WeeklyAgendaModel();
         Logistique patrick = new Logistique("Logistique","Patrick","testmdp", 3);
