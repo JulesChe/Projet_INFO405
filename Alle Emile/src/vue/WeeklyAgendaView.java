@@ -146,6 +146,9 @@ public class WeeklyAgendaView {
     }
 
 
+    private void demanderCreneau(){
+
+    }
 
     private void vueGymnase(){
         JPanel gymnasePanel = new JPanel();
