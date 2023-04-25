@@ -23,6 +23,20 @@ public class CrudCompteAssoDAO {
         preparedStatement.executeUpdate();
     }
 
+    public int selectId(Association association) throws SQLException {
+        PreparedStatement preparedStatement = connection.prepareStatement("SELECT `id` FROM `compteAsso` WHERE nom = ?");
+        preparedStatement.setString(1, association.getNom());
+
+        ResultSet rs = preparedStatement.executeQuery();
+        int res = -1;
+        if(rs.next()) {
+            res = rs.getInt("id");
+        }
+
+        return res;
+    }
+
+
     public ArrayList<Association> getAssoFromTable(Connection connection) throws SQLException {
         ArrayList<Association> resultList = new ArrayList<>();
 

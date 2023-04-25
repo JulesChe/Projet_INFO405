@@ -15,13 +15,11 @@ public class WeeklyAgendaController {
     private WeeklyAgendaModel model;
     private WeeklyAgendaView view;
 
-    private Association associationLog;
 
 
-    public WeeklyAgendaController(WeeklyAgendaView view, WeeklyAgendaModel model, Association associationLog) {
+    public WeeklyAgendaController(WeeklyAgendaView view, WeeklyAgendaModel model) {
         this.view = view;
         this.model = model;
-        this.associationLog = associationLog;
 
         updateWeekLabel();
         updateTasksPanel();
@@ -149,7 +147,7 @@ public class WeeklyAgendaController {
         p.getSemaine(lundiWeek);
         ArrayList<Creneau> listeCreneaux = p.listeCreneaux;
         //Ajoutes tous les créneaux de la semaine
-        WeeklyAgendaModel modele = new WeeklyAgendaModel();
+        WeeklyAgendaModel modele = new WeeklyAgendaModel(null);
         Logistique patrick = new Logistique("Logistique","Patrick","testmdp", 3);
 
         for (Creneau creneau : listeCreneaux) {
@@ -228,5 +226,6 @@ public class WeeklyAgendaController {
             dialog.setVisible(true);
         });
     }
+
 
 }

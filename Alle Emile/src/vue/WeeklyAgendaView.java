@@ -1,6 +1,8 @@
 package vue;
 
 import controller.AjouterAssociationListener;
+import controller.DemandeCreneauListener;
+import controller.WeeklyAgendaController;
 import crud.CrudCompteAssoDAO;
 import model.Association;
 import model.Creneau;
@@ -30,8 +32,10 @@ public class WeeklyAgendaView {
 
     private WeeklyAgendaModel modele;
 
-    public WeeklyAgendaView() throws SQLException {
+    public WeeklyAgendaView(WeeklyAgendaModel modele) throws SQLException {
+        this.modele = modele;
         initComponents();
+
     }
 
 
@@ -146,13 +150,25 @@ public class WeeklyAgendaView {
 
 
     private void vueDemanderCreneau(){
+        System.out.println(modele);
 
         JPanel demandeCreneauPanel = new JPanel();
 
-        // Création des champs de texte et du bouton pour ajouter une nouvelle association
-        JTextField nameField = new JTextField(20);
-        JPasswordField passwordField = new JPasswordField(20);
+        JLabel dateDebut = new JLabel("Veuillez insérer une date de debut :");
+
+        JLabel dateFin = new JLabel("Veuillez insérer une date de fin :");
+
+        JTextField dateDebutText = new JTextField(20);
+        JTextField dateFinText = new JTextField(20);
+
         JButton submitButton = new JButton("Demander un creneau");
+        submitButton.addActionListener(new DemandeCreneauListener(modele.getAssociationLog(),dateDebutText,dateFinText));
+
+        demandeCreneauPanel.add(dateDebut);
+        demandeCreneauPanel.add(dateDebutText);
+        demandeCreneauPanel.add(dateFin);
+        demandeCreneauPanel.add(dateFinText);
+        demandeCreneauPanel.add(submitButton);
 
 
 

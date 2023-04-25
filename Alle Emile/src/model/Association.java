@@ -57,6 +57,46 @@ public class Association{
         this.mdp = mdp;
     }
 
+    public int getID(){
+        int id = -1;
+        Connection connection = null;
+        try {
+
+            // Charger le pilote JDBC
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            // Etablir la connexion avec la base de données
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/allezemile", "allezemile", "nT7");
+            System.out.println("Connexion établie avec succès.");
+
+
+
+            // Créer un objet UtilisateurDAO
+            CrudCompteAssoDAO assoDAO = new CrudCompteAssoDAO(connection);
+
+            // Ajouter un creneau
+
+            id = assoDAO.selectId(this);
+
+            System.out.println("ID Association trouvé avec succès.");
+
+
+        } catch (ClassNotFoundException e) {
+            System.err.println("Pilote JDBC introuvable.");
+        } catch (SQLException e) {
+            System.err.println("Erreur lors de la connexion à la base de données : " + e.getMessage());
+        } finally {
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    System.err.println("Erreur lors de la fermeture de la connexion : " + e.getMessage());
+                }
+            }
+        }
+
+        return id;
+    }
 
     public void demandeCreneau(String dateDebut, String dateFin) {
 
@@ -70,12 +110,16 @@ public class Association{
             connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/allezemile", "allezemile", "nT7");
             System.out.println("Connexion établie avec succès.");
 
+
+
             // Créer un objet UtilisateurDAO
             CrudDemandeDAO utilisateurDAO = new CrudDemandeDAO(connection);
 
+            int idAsso = this.getID();
+
             // Ajouter un creneau
             Creneau creneau1 = new Creneau(dateDebut,dateFin);
-            utilisateurDAO.demande(creneau1);
+            utilisateurDAO.demande(creneau1,idAsso);
             System.out.println("Créneau ajouté avec succès.");
 
 

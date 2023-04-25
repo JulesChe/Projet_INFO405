@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import model.Association;
 import model.ConnexionUtilisateur;
 import model.WeeklyAgendaModel;
 import ressource.PasswordHash;
@@ -46,9 +47,11 @@ public class ConnexionListener implements ActionListener{
                     String hashMdp = rs.getString("mdp");
                     if(PasswordHash.isPasswordValid(tpass.getText(),hashMdp)){
                         JOptionPane.showMessageDialog(null, "Connexion réussi");
-                        WeeklyAgendaModel modele = new WeeklyAgendaModel();
-                        WeeklyAgendaView view = new WeeklyAgendaView();
-                        WeeklyAgendaController controller = new WeeklyAgendaController(view, modele,null);
+                        Association associationTestErr = new Association("testerr","mdp");
+                        WeeklyAgendaModel modele = new WeeklyAgendaModel(null);
+
+                        WeeklyAgendaView view = new WeeklyAgendaView(modele);
+                        WeeklyAgendaController controller = new WeeklyAgendaController(view, modele);
 
                         login.dispose();
                         view.frame.setVisible(true);

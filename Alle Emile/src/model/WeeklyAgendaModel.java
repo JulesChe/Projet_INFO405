@@ -27,14 +27,16 @@ public class WeeklyAgendaModel {
 
     private List<DefaultListModel<String>> daysTimeSlots;
 
+    private Association associationLog;
 
 
-    public WeeklyAgendaModel() {
+    public WeeklyAgendaModel(Association associationLog) {
         startOfWeek = LocalDate.now().with(java.time.DayOfWeek.MONDAY);
         daysTimeSlots = new ArrayList<>();
         for (int i = 0; i < WEEK_DAYS.length; i++) {
             daysTimeSlots.add(new DefaultListModel<String>());
         }
+        this.associationLog = associationLog;
     }
 
     public LocalDate getStartOfWeek() {
@@ -130,5 +132,7 @@ public class WeeklyAgendaModel {
         }
     }
 
-
+    public Association getAssociationLog() {
+        return associationLog;
+    }
 }
