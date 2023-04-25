@@ -50,7 +50,48 @@ public class Creneau {
         return dateTime.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.getDefault());
     }
 
+    public int nbJour(String jour){
+        int res = -1;
+        if(jour.equals("lundi")){
+            res = 0;
+        }
+        else if (jour.equals("mardi")){
+            res = 1;
+        }
+        else if (jour.equals("mercredi")){
+            res = 2;
+        }
+        else if (jour.equals("jeudi")){
+            res = 3;
+        }
+        else if (jour.equals("vendredi")){
+            res = 4;
+        }
+        else if (jour.equals("samedi")){
+            res = 5;
+        }
+        else if (jour.equals("dimanche")){
+            res = 6;
+        }
+        return res;
+
+    }
+
     public String getAsso() {
         return asso;
+    }
+
+    public static String getDebutSemaine() {
+        LocalDate aujourdHui = LocalDate.now();
+        LocalDate lundi = aujourdHui.with(DayOfWeek.MONDAY);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+        return lundi.format(formatter);
+    }
+
+    public static String ajouter7Jours(String date) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+        LocalDate localDate = LocalDate.parse(date, formatter);
+        LocalDate localDatePlus7Jours = localDate.plusDays(7);
+        return localDatePlus7Jours.format(formatter);
     }
 }

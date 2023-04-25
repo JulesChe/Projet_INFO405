@@ -1,5 +1,7 @@
 package controller;
 
+import model.Creneau;
+import model.Logistique;
 import model.WeeklyAgendaModel;
 import vue.WeeklyAgendaView;
 
@@ -8,6 +10,7 @@ import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Collections;
 
 public class WeeklyAgendaController {
     private WeeklyAgendaModel model;
@@ -147,9 +150,9 @@ public class WeeklyAgendaController {
 
 
 
-            dialog.add(new JLabel("Jour:"));
-            JComboBox<String> dayComboBox = new JComboBox<>(model.getWeekDays());
-            dialog.add(dayComboBox);
+            dialog.add(new JLabel("Jour (format : yyyy/mm/dd) :"));
+            JTextField dateField = new JTextField();
+            dialog.add(dateField);
 
 
 
@@ -167,15 +170,27 @@ public class WeeklyAgendaController {
 
             JButton addButton = new JButton("Ajouter");
             addButton.addActionListener(addEvent -> {
-                int selectedDay = dayComboBox.getSelectedIndex();
+                String dateTime = dateField.getText();
                 String startTime = startTimeField.getText();
                 String endTime = endTimeField.getText();
+
+                String dateDebut = dateTime+" "+startTime;
+                String dateFin = dateTime+" "+endTime;
+                Creneau c = new Creneau(dateDebut,dateFin);
+                String jour = c.getDayOfWeek();
+                int selectedDay = c.nbJour(jour);
+                System.out.println(selectedDay);
+
                 String taskDescription = taskDescriptionField.getText();
                 if (!startTime.isEmpty() && !endTime.isEmpty() && !taskDescription.isEmpty()) {
                     model.insertTimeSlot(selectedDay, startTime, endTime,taskDescription);
                     updateTasksPanel();
                     dialog.dispose();
                 }
+
+                Logistique patrick = new Logistique("Logistique","Patrick","testmdp", 3);
+                patrick.ajoutCreneau(dateDebut,dateFin);
+
             });
             dialog.add(new JLabel());
             dialog.add(addButton);

@@ -28,19 +28,23 @@ public class testBDD extends JFrame{
     public static void main(String args[]) throws ClassNotFoundException, SQLException {
 
         Logistique patrick = new Logistique("Logistique","Patrick","testmdp", 3);
-        Association asso = new Association("test","mdp");
+        /*Association asso = new Association("test","mdp");
 
         asso.demandeCreneau("2023/04/20 16:00:00","2023/04/20 18:00:00");
         asso.demandeCreneau("2023/04/21 14:00:00","2023/04/20 16:00:00");
-        asso.demandeCreneau("2023/04/22 09:00:00","2023/04/20 11:00:00");
+        asso.demandeCreneau("2023/04/22 09:00:00","2023/04/20 11:00:00");*/
 
         //patrick.accepterCreneau(1);
         //patrick.pasAccepterCreneau(3);
-
+        Creneau c = new Creneau("2023/04/25 16:00","2023/04/25 18:00");
+        //String lundi = c.getDebutSemaine();
         Planning test = new Planning();
 
-        test.getAllCreneaux("demande");
-        System.out.println(test.toStringCreneaux());
+        test.getSemaine("2023/04/24");
+        System.out.println("créneaux : "+test.toStringCreneaux());
+
+
+        //System.out.println(c.getDebutSemaine());
 /*
 
         //Scanner scanner = new Scanner(System.in);
