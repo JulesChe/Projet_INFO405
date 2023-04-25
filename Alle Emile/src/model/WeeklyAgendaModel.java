@@ -3,10 +3,15 @@ package model;
 import javax.swing.*;
 import java.text.DateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.text.ParseException;
 
 import java.time.temporal.ChronoUnit;
 
@@ -79,6 +84,27 @@ public class WeeklyAgendaModel {
         return DATE_FORMATTER.format(date);
     }
 
+
+    public static String obtenirHeureMinute(String dateString) {
+        // Formatter pour parser la chaîne
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+        try {
+            // Conversion de la chaîne en objet LocalDateTime
+            LocalDateTime dateTime = LocalDateTime.parse(dateString, formatter);
+
+            // Extraction de l'heure et des minutes sous forme de chaîne de caractères
+            String timeString = dateTime.format(DateTimeFormatter.ofPattern("HH:mm"));
+
+            // Retour de l'heure et des minutes
+            return timeString;
+        } catch (DateTimeParseException e) {
+            // Gestion de l'exception si la chaîne n'est pas au format attendu
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public void insertTimeSlot(int dayIndex, String newTimeSlot, String endTime, String taskDescription) {
         if (dayIndex < 0 || dayIndex >= 7) {
             throw new IllegalArgumentException("Index invalide pour le jour");
@@ -92,7 +118,7 @@ public class WeeklyAgendaModel {
                 break;
             }
         }
-        taskListModel.add(index, newTimeSlot + " - " + endTime + " : " + taskDescription);
+        taskListModel.add(index, this.obtenirHeureMinute(newTimeSlot) + " - " + this.obtenirHeureMinute(endTime) + " : " + taskDescription);
 
 
     }
