@@ -2,6 +2,7 @@ package controller;
 
 import model.Creneau;
 import model.Logistique;
+import model.Planning;
 import model.WeeklyAgendaModel;
 import vue.WeeklyAgendaView;
 
@@ -10,11 +11,13 @@ import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Collections;
 
 public class WeeklyAgendaController {
     private WeeklyAgendaModel model;
     private WeeklyAgendaView view;
+
 
     public WeeklyAgendaController(WeeklyAgendaView view, WeeklyAgendaModel model) {
         this.view = view;
@@ -136,6 +139,26 @@ public class WeeklyAgendaController {
         view.getTasksPanel().revalidate();
         view.getTasksPanel().repaint();
 
+        //Récupère les créneaux de la semaine
+        Planning p = new Planning();
+        Creneau c1 = new Creneau(p.getDateDuJour(),p.getDateDuJour());
+        p.getSemaine(c1.getDebutSemaine());
+        ArrayList<Creneau> listeCreneaux = p.listeCreneaux;
+
+        //Ajoutes tous les créneaux de la semaine
+        WeeklyAgendaModel modele = new WeeklyAgendaModel();
+        modele.insertTimeSlot(0, "08:00", "09:00","Badminton");
+        Logistique patrick = new Logistique("Logistique","Patrick","testmdp", 3);
+
+        for (Creneau creneau : listeCreneaux) {
+            String jourActuel = creneau.getDayOfWeekSec();
+            int jourFini = creneau.nbJour(jourActuel);
+            String debutCren = creneau.getDateDebut();
+            String finCren = creneau.getDateFin();
+            String asso = creneau.getAsso();
+            model.insertTimeSlot(jourFini, debutCren, finCren,asso);
+        }
+
         // Créer un panneau pour le bouton "Ajouter créneau"
         JPanel addTimeSlotPanel = new JPanel();
         view.getFrame().getContentPane().add(addTimeSlotPanel, BorderLayout.SOUTH);
@@ -188,7 +211,7 @@ public class WeeklyAgendaController {
                     dialog.dispose();
                 }
 
-                Logistique patrick = new Logistique("Logistique","Patrick","testmdp", 3);
+
                 patrick.ajoutCreneau(dateDebut,dateFin);
 
             });

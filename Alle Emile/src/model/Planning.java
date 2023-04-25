@@ -3,6 +3,8 @@ package model;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -106,5 +108,11 @@ public class Planning {
 
     public ArrayList<Creneau> getListeCreneaux() {
         return listeCreneaux;
+    }
+
+    public static String getDateDuJour() {
+        LocalDate aujourdHui = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+        return aujourdHui.format(formatter);
     }
 }

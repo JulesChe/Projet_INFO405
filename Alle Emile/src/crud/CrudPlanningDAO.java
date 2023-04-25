@@ -40,7 +40,7 @@ public class CrudPlanningDAO {
         Creneau c = new Creneau(debutLundi,debutLundi);
         String finLundi = c.ajouter7Jours(lundi)+" 00:00";
 
-        String selectSQL = "SELECT demande.id, demande.debut, demande.fin, compteAsso.nom AS nom_asso FROM demande JOIN compteAsso ON demande.id_asso = compteAsso.id WHERE demande.fin >= ? AND demande.fin <= ?";
+        String selectSQL = "SELECT creneau.id, creneau.debut, creneau.fin, compteAsso.nom AS nom_asso FROM creneau JOIN compteAsso ON creneau.id_asso = compteAsso.id WHERE creneau.fin >= ? AND creneau.fin <= ?";
 
         PreparedStatement preparedStatement = connection.prepareStatement(selectSQL);
         preparedStatement.setString(1, debutLundi);
