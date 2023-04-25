@@ -23,6 +23,7 @@ public class WeeklyAgendaModel {
     private List<DefaultListModel<String>> daysTimeSlots;
 
 
+
     public WeeklyAgendaModel() {
         startOfWeek = LocalDate.now().with(java.time.DayOfWeek.MONDAY);
         daysTimeSlots = new ArrayList<>();
@@ -96,6 +97,12 @@ public class WeeklyAgendaModel {
 
     }
 
+    public void clearDaysTimeSlots() {
+        daysTimeSlots = new ArrayList<>();
+        for (int i = 0; i < WEEK_DAYS.length; i++) {
+            daysTimeSlots.add(new DefaultListModel<String>());
+        }
+    }
 
 
 }

@@ -59,6 +59,13 @@ public class Creneau {
         return dateTime.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.getDefault());
     }
 
+    public static String formatDate(String inputDate) {
+        DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("dd MMMM yyyy", Locale.FRENCH);
+        LocalDate date = LocalDate.parse(inputDate, inputFormatter);
+        DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+        return date.format(outputFormatter);
+    }
+
     public int nbJour(String jour){
         int res = -1;
         if(jour.equals("lundi")){

@@ -35,7 +35,9 @@ public class WeeklyAgendaController {
             model.goToPreviousWeek();
             updateWeekLabel();
             updateTasksPanel();
+
         });
+
     }
 
     private void addNextWeekButtonActionListener() {
@@ -97,7 +99,7 @@ public class WeeklyAgendaController {
         view.getTasksPanel().repaint();
     }
     private void updateTasksPanel() {
-
+        model.clearDaysTimeSlots();
 
         view.getTasksPanel().removeAll();
 
@@ -139,15 +141,17 @@ public class WeeklyAgendaController {
         view.getTasksPanel().revalidate();
         view.getTasksPanel().repaint();
 
+
         //Récupère les créneaux de la semaine
         Planning p = new Planning();
         Creneau c1 = new Creneau(p.getDateDuJour(),p.getDateDuJour());
-        p.getSemaine(c1.getDebutSemaine());
+        String lundiWeek = c1.formatDate(model.getFormattedStartDate());
+        System.out.println(lundiWeek);
+        p.getSemaine(lundiWeek);
         ArrayList<Creneau> listeCreneaux = p.listeCreneaux;
-
+        System.out.println(p.toStringCreneaux());
         //Ajoutes tous les créneaux de la semaine
         WeeklyAgendaModel modele = new WeeklyAgendaModel();
-        modele.insertTimeSlot(0, "08:00", "09:00","Badminton");
         Logistique patrick = new Logistique("Logistique","Patrick","testmdp", 3);
 
         for (Creneau creneau : listeCreneaux) {
@@ -158,6 +162,9 @@ public class WeeklyAgendaController {
             String asso = creneau.getAsso();
             model.insertTimeSlot(jourFini, debutCren, finCren,asso);
         }
+
+        view.getTasksPanel().revalidate();
+        view.getTasksPanel().repaint();
 
         // Créer un panneau pour le bouton "Ajouter créneau"
         JPanel addTimeSlotPanel = new JPanel();
