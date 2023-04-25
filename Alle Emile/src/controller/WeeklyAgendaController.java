@@ -1,9 +1,6 @@
 package controller;
 
-import model.Creneau;
-import model.Logistique;
-import model.Planning;
-import model.WeeklyAgendaModel;
+import model.*;
 import vue.WeeklyAgendaView;
 
 import javax.swing.*;
@@ -18,10 +15,13 @@ public class WeeklyAgendaController {
     private WeeklyAgendaModel model;
     private WeeklyAgendaView view;
 
+    private Association associationLog;
 
-    public WeeklyAgendaController(WeeklyAgendaView view, WeeklyAgendaModel model) {
+
+    public WeeklyAgendaController(WeeklyAgendaView view, WeeklyAgendaModel model, Association associationLog) {
         this.view = view;
         this.model = model;
+        this.associationLog = associationLog;
 
         updateWeekLabel();
         updateTasksPanel();

@@ -130,10 +130,9 @@ public class WeeklyAgendaView {
 
         vueAssociation();
 
-
-
         vueGymnase();
 
+        vueDemanderCreneau();
 
 
 
@@ -146,7 +145,21 @@ public class WeeklyAgendaView {
     }
 
 
-    private void demanderCreneau(){
+    private void vueDemanderCreneau(){
+
+        JPanel demandeCreneauPanel = new JPanel();
+
+        // Création des champs de texte et du bouton pour ajouter une nouvelle association
+        JTextField nameField = new JTextField(20);
+        JPasswordField passwordField = new JPasswordField(20);
+        JButton submitButton = new JButton("Demander un creneau");
+
+
+
+        // Ajout du panneau à l'onglet
+        tabbedPane.addTab("Demander un creneau", null, demandeCreneauPanel, "Demander un creneau");
+
+
 
     }
 

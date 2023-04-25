@@ -1,5 +1,6 @@
 package controller;
 
+import model.Association;
 import model.ConnexionUtilisateur;
 import model.WeeklyAgendaModel;
 import ressource.PasswordHash;
@@ -38,7 +39,7 @@ public class ConnexionListenerAssociation implements ActionListener {
         if (!tpseudo.getText().isEmpty() || !tpass.getText().isEmpty()) {
             connection = ConnexionUtilisateur.getConnect();
             try {
-                ps = connection.prepareStatement("SELECT nom,mdp FROM comptePersonnel WHERE nom=?");
+                ps = connection.prepareStatement("SELECT nom,mdp FROM compteAsso WHERE nom=?");
                 ps.setString(1, tpseudo.getText());
                 rs = ps.executeQuery();
 
@@ -46,9 +47,10 @@ public class ConnexionListenerAssociation implements ActionListener {
                     String hashMdp = rs.getString("mdp");
                     if(PasswordHash.isPasswordValid(tpass.getText(),hashMdp)){
                         JOptionPane.showMessageDialog(null, "Connexion réussi");
+                        Association associationLog = new Association(tpseudo.getText(),tpass.getText());
                         WeeklyAgendaModel modele = new WeeklyAgendaModel();
                         WeeklyAgendaView view = new WeeklyAgendaView();
-                        WeeklyAgendaController controller = new WeeklyAgendaController(view, modele);
+                        WeeklyAgendaController controller = new WeeklyAgendaController(view, modele, associationLog);
 
                         login.dispose();
                         view.frame.setVisible(true);

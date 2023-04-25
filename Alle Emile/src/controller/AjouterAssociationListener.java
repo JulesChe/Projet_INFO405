@@ -1,5 +1,6 @@
 package controller;
 
+import model.Association;
 import model.Logistique;
 
 import javax.swing.*;
@@ -37,5 +38,7 @@ public class AjouterAssociationListener implements ActionListener {
         // Réinitialisation des champs de texte
         nameField.setText("");
         passwordField.setText("");
+
+
     }
 }

@@ -48,7 +48,7 @@ public class ConnexionListener implements ActionListener{
                         JOptionPane.showMessageDialog(null, "Connexion réussi");
                         WeeklyAgendaModel modele = new WeeklyAgendaModel();
                         WeeklyAgendaView view = new WeeklyAgendaView();
-                        WeeklyAgendaController controller = new WeeklyAgendaController(view, modele);
+                        WeeklyAgendaController controller = new WeeklyAgendaController(view, modele,null);
 
                         login.dispose();
                         view.frame.setVisible(true);

@@ -30,9 +30,7 @@ public class WeeklyAgendaApp {
     public static void main(String[] args) {
         EventQueue.invokeLater(() -> {
             try {
-                WeeklyAgendaModel modele = new WeeklyAgendaModel();
-                WeeklyAgendaView view = new WeeklyAgendaView();
-                WeeklyAgendaController controller = new WeeklyAgendaController(view, modele);
+
                 Login viewCo = new Login();
 
                 //modele.insertTimeSlot(0, "08:00", "09:00","Badminton");
