@@ -83,7 +83,6 @@ public class WeeklyAgendaView {
         frame.setSize(1200, 800);
         frame.getContentPane().setLayout(new BorderLayout(0, 0));
         // Ajout de l'onglet "Demande de créneau"
-
         Planning p = new Planning();
         p.getAllCreneaux("demande");
         // Créez un JPanel pour contenir le tableau et les autres éléments de l'onglet
