@@ -25,7 +25,9 @@ public class DemandeCreneauListener implements ActionListener {
         String dateDebut = dateDebutText.getText();
         String dateFin = dateFinText.getText();
 
-        associationLog.demandeCreneau(dateDebut,dateFin);
+        if(!dateDebut.isEmpty() && !dateFin.isEmpty()){
+            associationLog.demandeCreneau(dateDebut,dateFin);
+        }
         dateDebutText.setText("");
         dateFinText.setText("");
     }
