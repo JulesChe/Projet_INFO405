@@ -3,6 +3,7 @@ package vue;
 import javax.swing.*;
 
 import controller.ConnexionListener;
+import controller.ConnexionListenerAssociation;
 import model.ConnexionUtilisateur;
 
 import java.awt.*;
@@ -57,7 +58,7 @@ public class Login extends JFrame {
         button.setBounds(190, 250, 100, 40);
         button.setBackground(Color.white);
         button.setForeground(Color.blue);
-        button.addActionListener(new ConnexionListener(tpseudo,tpass,this));
+        button.addActionListener(new ConnexionListenerAssociation(tpseudo,tpass,this));
 
 
         panelAsso.add(pseudo);
