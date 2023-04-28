@@ -4,10 +4,8 @@ import controller.AjouterAssociationListener;
 import controller.DemandeCreneauListener;
 import controller.WeeklyAgendaController;
 import crud.CrudCompteAssoDAO;
-import model.Association;
-import model.Creneau;
-import model.Planning;
-import model.WeeklyAgendaModel;
+import crud.CrudGymnaseDAO;
+import model.*;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -16,8 +14,10 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class WeeklyAgendaView {
     public JFrame frame;
@@ -203,9 +203,24 @@ public class WeeklyAgendaView {
             JList<String> gymnaseList = new JList<String>(listModel2);
 
             // Ajout des gymnases à la liste (remplacez ce code par votre propre logique de récupération des gymnases)
-            listModel2.addElement("Gymnase 1 - Paris");
-            listModel2.addElement("Gymnase 2 - Marseille");
-            listModel2.addElement("Gymnase 3 - Lyon");
+            try {
+                Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/allezemile", "allezemile", "nT7");
+                CrudGymnaseDAO getGym = new CrudGymnaseDAO(conn);
+                try {
+                    Iterator<Gymnase> iter = getGym.getGymnase().iterator();
+                    while (iter.hasNext()){
+                        Gymnase gymnase = iter.next();
+                        String name = gymnase.getNom();
+                        String lieux = gymnase.getLieux();
+                        listModel2.addElement(name + " - " + lieux);
+                    }
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
+
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
 
             // Ajout de la liste au panneau avec un titre
             gymnasePanel.add(new JLabel("Liste des gymnases :"));
@@ -225,6 +240,19 @@ public class WeeklyAgendaView {
                     String location = locationField.getText();
 
                     // Ajout du nouveau gymnase à la liste
+                    try {
+                        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/allezemile", "allezemile", "nT7");
+                        Gymnase g = new Gymnase(name,location);
+                        CrudGymnaseDAO gym = new CrudGymnaseDAO(conn);
+                        try {
+                            gym.create(g);
+                        } catch (SQLException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    } catch (SQLException ex) {
+                        throw new RuntimeException(ex);
+                    }
+
                     listModel2.addElement(name + " - " + location);
 
                     // Code pour ajouter le gymnase (à remplacer par votre propre logique)
