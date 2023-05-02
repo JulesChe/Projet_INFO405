@@ -36,12 +36,18 @@ public class testBDD extends JFrame{
 
         //patrick.accepterCreneau(1);
         //patrick.pasAccepterCreneau(3);
-        Creneau c = new Creneau("2023/04/25 16:00","2023/04/25 18:00");
-        //String lundi = c.getDebutSemaine();
-        Planning test = new Planning();
 
-        test.getSemaine("2023/04/24");
-        System.out.println("créneaux : "+test.toStringCreneaux());
+        Creneau c = new Creneau("2023/05/02 16:00","2023/05/02 18:00");
+
+        //patrick.ajoutCreneau("2023/05/02 16:00","2023/05/02 18:00");
+        //patrick.accepterCreneau(15);
+        System.out.println(patrick.getIDAsso("AS FOOT"));
+
+        //String lundi = c.getDebutSemaine();
+        //Planning test = new Planning();
+
+        //test.getSemaine("2023/04/24");
+        //System.out.println("créneaux : "+test.toStringCreneaux());
 
 
         //System.out.println(c.getDebutSemaine());

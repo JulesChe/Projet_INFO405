@@ -76,7 +76,7 @@ public class Association{
 
             // Ajouter un creneau
 
-            id = assoDAO.selectId(this);
+            id = assoDAO.selectId(this.getNom());
 
             System.out.println("ID Association trouvé avec succès.");
 

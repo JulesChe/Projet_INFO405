@@ -23,9 +23,9 @@ public class CrudCompteAssoDAO {
         preparedStatement.executeUpdate();
     }
 
-    public int selectId(Association association) throws SQLException {
+    public int selectId(String nom) throws SQLException {
         PreparedStatement preparedStatement = connection.prepareStatement("SELECT `id` FROM `compteAsso` WHERE nom = ?");
-        preparedStatement.setString(1, association.getNom());
+        preparedStatement.setString(1, nom);
 
         ResultSet rs = preparedStatement.executeQuery();
         int res = -1;

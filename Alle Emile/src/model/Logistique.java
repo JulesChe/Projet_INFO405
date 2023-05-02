@@ -132,7 +132,7 @@ public class Logistique extends Utilisateur{
         }
     }
 
-    public void ajoutCreneau(String dateDebut, String dateFin) {
+    public void ajoutCreneau(String dateDebut, String dateFin, int idAsso,String gymnase) {
 
         Connection connection = null;
         try {
@@ -149,7 +149,7 @@ public class Logistique extends Utilisateur{
 
             // Ajouter un creneau
             Creneau creneau1 = new Creneau(dateDebut,dateFin);
-            utilisateurDAO.create(creneau1);
+            utilisateurDAO.create(creneau1,idAsso,gymnase);
             System.out.println("Créneau ajouté avec succès.");
 
 
@@ -242,6 +242,47 @@ public class Logistique extends Utilisateur{
             }
         }
 
+    }
+
+    public int getIDAsso(String nom){
+        int id = -1;
+        Connection connection = null;
+        try {
+
+            // Charger le pilote JDBC
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            // Etablir la connexion avec la base de données
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/allezemile", "allezemile", "nT7");
+            System.out.println("Connexion établie avec succès.");
+
+
+
+            // Créer un objet UtilisateurDAO
+            CrudCompteAssoDAO assoDAO = new CrudCompteAssoDAO(connection);
+
+            // Ajouter un creneau
+
+            id = assoDAO.selectId(nom);
+
+            System.out.println("ID Association trouvé avec succès.");
+
+
+        } catch (ClassNotFoundException e) {
+            System.err.println("Pilote JDBC introuvable.");
+        } catch (SQLException e) {
+            System.err.println("Erreur lors de la connexion à la base de données : " + e.getMessage());
+        } finally {
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    System.err.println("Erreur lors de la fermeture de la connexion : " + e.getMessage());
+                }
+            }
+        }
+
+        return id;
     }
 
     public void accepterCreneau(int id) {

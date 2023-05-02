@@ -14,13 +14,14 @@ public class CrudCreneauDAO {
         this.connection = connection;
     }
 
-    public void create(Creneau c) throws SQLException {
+    public void create(Creneau c, int idAsso, String gymnase) throws SQLException {
         PreparedStatement preparedStatement = null;
-        preparedStatement = connection.prepareStatement("INSERT INTO creneau (debut, fin, id_asso, id_gardien) VALUES (?, ?, ?, ?)");
+        preparedStatement = connection.prepareStatement("INSERT INTO creneau (debut, fin, id_asso, id_gardien,nom_gymnase) VALUES (?, ?, ?, ?,?)");
         preparedStatement.setString(1, c.getDateDebut());
         preparedStatement.setString(2, c.getDateFin());
-        preparedStatement.setInt(3, 1);
+        preparedStatement.setInt(3, idAsso);
         preparedStatement.setInt(4, 1);
+        preparedStatement.setString(5, gymnase);
         preparedStatement.executeUpdate();
     }
 

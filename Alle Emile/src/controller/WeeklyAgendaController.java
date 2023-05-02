@@ -190,15 +190,20 @@ public class WeeklyAgendaController {
             JTextField endTimeField = new JTextField();
             dialog.add(endTimeField);
 
-            dialog.add(new JLabel("Description de la tâche :"));
+            dialog.add(new JLabel("Nom de l'asso :"));
             JTextField taskDescriptionField = new JTextField();
             dialog.add(taskDescriptionField);
+
+            dialog.add(new JLabel("Gymnase :"));
+            JTextField gymnaseField = new JTextField();
+            dialog.add(gymnaseField);
 
             JButton addButton = new JButton("Ajouter");
             addButton.addActionListener(addEvent -> {
                 String dateTime = dateField.getText();
                 String startTime = startTimeField.getText();
                 String endTime = endTimeField.getText();
+                String gymnase = gymnaseField.getText();
 
                 String dateDebut = dateTime+" "+startTime;
                 String dateFin = dateTime+" "+endTime;
@@ -213,9 +218,9 @@ public class WeeklyAgendaController {
                     updateTasksPanel();
                     dialog.dispose();
                 }
+                int idAsso = patrick.getIDAsso(taskDescription);
 
-
-                patrick.ajoutCreneau(dateDebut,dateFin);
+                patrick.ajoutCreneau(dateDebut,dateFin,idAsso,gymnase);
 
             });
             dialog.add(new JLabel());

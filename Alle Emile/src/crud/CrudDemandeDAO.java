@@ -44,12 +44,13 @@ public class CrudDemandeDAO {
         }
         rs.close();
 
-        PreparedStatement pstmt2 = connection.prepareStatement("INSERT INTO creneau (debut, fin, id_asso, id_gardien) VALUES (?, ?, ?, ?)");
+        PreparedStatement pstmt2 = connection.prepareStatement("INSERT INTO creneau (debut, fin, id_asso, id_gardien, nom_gymnase) VALUES (?, ?, ?, ?, ?)");
         // insérer les valeurs stockées dans l'objet Java dans la table de destination
         pstmt2.setString(1, rowData.get("col1").toString());
         pstmt2.setString(2, rowData.get("col2").toString());
         pstmt2.setInt(3, (int) rowData.get("col3"));
         pstmt2.setInt(4, (int) rowData.get("col4"));
+        pstmt2.setString(5, "Gymnase 4");
         pstmt2.executeUpdate();
         pstmt2.close();
 
