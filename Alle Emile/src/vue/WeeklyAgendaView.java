@@ -211,8 +211,7 @@ public class WeeklyAgendaView {
                     while (iter.hasNext()){
                         Gymnase gymnase = iter.next();
                         String name = gymnase.getNom();
-                        String lieux = gymnase.getLieux();
-                        listModel2.addElement(name + " - " + lieux);
+                        listModel2.addElement(name);
                     }
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
@@ -277,6 +276,18 @@ public class WeeklyAgendaView {
                     int index = listModel2.indexOf(name);
                     if (index >= 0) {
                         listModel2.removeElementAt(index);
+
+                        try {
+                            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/allezemile", "allezemile", "nT7");
+                            CrudGymnaseDAO gym = new CrudGymnaseDAO(conn);
+                            try {
+                                gym.delete(name);
+                            } catch (SQLException ex) {
+                                throw new RuntimeException(ex);
+                            }
+                        } catch (SQLException ex) {
+                            throw new RuntimeException(ex);
+                        }
 
                         // Code pour supprimer le gymnase (à remplacer par votre propre logique)
                         System.out.println("Gymnase supprimé : " + name);

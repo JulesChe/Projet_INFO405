@@ -39,4 +39,10 @@ public class CrudGymnaseDAO {
         return resultList;
     }
 
+    public void delete(String s) throws SQLException {
+        PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM `gymnase` WHERE nom = ?");
+        preparedStatement.setString(1, s);
+        preparedStatement.executeUpdate();
+    }
+
 }
