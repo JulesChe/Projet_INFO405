@@ -1,5 +1,6 @@
 package model;
 import java.sql.*;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -25,7 +26,7 @@ public class testBDD extends JFrame{
         System.exit(99);
     }
 
-    public static void main(String args[]) throws ClassNotFoundException, SQLException {
+    public static void main(String args[]) throws ClassNotFoundException, SQLException, ParseException {
 
         Logistique patrick = new Logistique("Logistique","Patrick","testmdp", 3);
         /*Association asso = new Association("test","mdp");
@@ -43,15 +44,15 @@ public class testBDD extends JFrame{
         //patrick.accepterCreneau(15);
         //System.out.println(patrick.getIDAsso("AS FOOT"));
 
-        Map<Integer, List<Creneau>> gardiensCreneaux = patrick.getCreneauxGardien();
+        //Map<Integer, List<Creneau>> gardiensCreneaux = patrick.getCreneauxGardien();
 
-        for (Map.Entry<Integer, List<Creneau>> entry : gardiensCreneaux.entrySet()) {
+        /*for (Map.Entry<Integer, List<Creneau>> entry : gardiensCreneaux.entrySet()) {
             System.out.println("Gardien ID: " + entry.getKey());
             System.out.println("Créneaux :");
             for (Creneau creneau : entry.getValue()) {
                 System.out.println(creneau);
             }
-        }
+        }*/
 
         //String lundi = c.getDebutSemaine();
         //Planning test = new Planning();
@@ -76,5 +77,9 @@ public class testBDD extends JFrame{
         patrick.ajoutCreneau(dateD,dateF); */
 
         //patrick.ajoutCreneau("GPROUTE", "tata");
+
+        Gardien emilien = new Gardien("TEST", "test","vzera",1);
+        System.out.print(emilien.toStringCreneaux(emilien.tabIndispo(emilien.getIndispo(1))));
     }
+
 }

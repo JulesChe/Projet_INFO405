@@ -1,4 +1,6 @@
 package model;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.format.TextStyle;
@@ -126,6 +128,14 @@ public class Creneau {
 
     public void setId_gardien(int id_gardien) {
         this.id_gardien = id_gardien;
+    }
+
+    public static String transformDate(String dateString) throws ParseException {
+        SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = sdf1.parse(dateString);
+        SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+        String newDateString = sdf2.format(date);
+        return newDateString;
     }
 
     @Override
