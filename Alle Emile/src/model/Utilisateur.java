@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Utilisateur {
     // ATTRIBUTS
@@ -9,6 +10,9 @@ public class Utilisateur {
     private int niveau;
     private String prenom;
     private String mdp;
+
+    private List<Creneau> indisponibilites;
+
 
     // CONSTRUCTEURS
     public Utilisateur(String nom,String prenom,String mdp, int niveau){
@@ -23,6 +27,18 @@ public class Utilisateur {
     }
 
     // METHODE
+
+    public List<Creneau> getIndisponibilites() {
+        return indisponibilites;
+    }
+
+    public void setIndisponibilites(List<Creneau> indisponibilites) {
+        this.indisponibilites = indisponibilites;
+    }
+
+    public void addIndisponibilite(Creneau creneau) {
+        this.indisponibilites.add(creneau);
+    }
     public void setNom(String nom) {
         this.nom = nom;
     }
