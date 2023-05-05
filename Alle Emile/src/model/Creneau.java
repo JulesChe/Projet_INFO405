@@ -11,12 +11,21 @@ public class Creneau {
     private String dateFin;
     private String asso;
 
+
+
+    private int id;
+
+    private int id_gardien;
+
     // CONSTRUCTEUR
     public Creneau(String dateDebut, String dateFin) {
         this.dateDebut = dateDebut;
         this.dateFin = dateFin;
     }
 
+    public Creneau() {
+
+    }
 
     public Creneau(String dateDebut, String dateFin, String asso) {
         this.dateDebut = dateDebut;
@@ -109,5 +118,23 @@ public class Creneau {
         LocalDate localDate = LocalDate.parse(date, formatter);
         LocalDate localDatePlus7Jours = localDate.plusDays(7);
         return localDatePlus7Jours.format(formatter);
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setId_gardien(int id_gardien) {
+        this.id_gardien = id_gardien;
+    }
+
+    @Override
+    public String toString() {
+        return "Creneau{" +
+                "id = " + id +
+                ", idGardien = " + id_gardien +
+                ", Debut = " + dateDebut +
+                ", Fin = " + dateFin +
+                '}';
     }
 }

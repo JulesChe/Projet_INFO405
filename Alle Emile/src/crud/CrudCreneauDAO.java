@@ -1,6 +1,10 @@
 package crud;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 import model.Creneau;
@@ -43,5 +47,30 @@ public class CrudCreneauDAO {
         pstmt3.setString(3, c.getDateDebut());
         pstmt3.setString(4, c.getDateFin());
         pstmt3.executeUpdate();
+    }
+
+
+    public Map<Integer, List<Creneau>> getAllGardiensCreneaux() throws SQLException {
+        Map<Integer, List<Creneau>> result = new HashMap<>();
+        String query = "SELECT * FROM creneau ORDER BY id_gardien";
+
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        while (resultSet.next()) {
+            int idGardien = resultSet.getInt("id_gardien");
+            Creneau creneau = new Creneau();
+
+            creneau.setId(resultSet.getInt("id"));
+            creneau.setId_gardien(idGardien);
+            creneau.setDateDebut(String.valueOf(resultSet.getTimestamp("debut")));
+            creneau.setDateFin(String.valueOf(resultSet.getTimestamp("fin")));
+
+            result.computeIfAbsent(idGardien, k -> new ArrayList<>()).add(creneau);
+        }
+
+        resultSet.close();
+
+        return result;
     }
 }

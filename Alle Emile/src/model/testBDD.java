@@ -1,15 +1,15 @@
 package model;
 import java.sql.*;
 import java.text.SimpleDateFormat;
-import java.util.Scanner;
-
-import java.util.Date;
+import java.util.*;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 
 import crud.CrudCompteAssoDAO;
+import crud.CrudCreneauDAO;
 
+import java.util.Date;
 import java.util.Scanner;
 
 public class testBDD extends JFrame{
@@ -41,7 +41,17 @@ public class testBDD extends JFrame{
 
         //patrick.ajoutCreneau("2023/05/02 16:00","2023/05/02 18:00");
         //patrick.accepterCreneau(15);
-        System.out.println(patrick.getIDAsso("AS FOOT"));
+        //System.out.println(patrick.getIDAsso("AS FOOT"));
+
+        Map<Integer, List<Creneau>> gardiensCreneaux = patrick.getCreneauxGardien();
+
+        for (Map.Entry<Integer, List<Creneau>> entry : gardiensCreneaux.entrySet()) {
+            System.out.println("Gardien ID: " + entry.getKey());
+            System.out.println("Créneaux :");
+            for (Creneau creneau : entry.getValue()) {
+                System.out.println(creneau);
+            }
+        }
 
         //String lundi = c.getDebutSemaine();
         //Planning test = new Planning();
