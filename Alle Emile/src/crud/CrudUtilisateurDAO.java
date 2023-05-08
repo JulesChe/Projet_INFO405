@@ -3,10 +3,8 @@ package crud;
 import model.Gymnase;
 import model.Utilisateur;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
 
 public class CrudUtilisateurDAO {
 
@@ -48,6 +46,30 @@ public class CrudUtilisateurDAO {
         preparedStatement.executeUpdate();
     }
 
+    public ArrayList<Integer> getIdAllPerso() throws SQLException{
+        // Création de la requête SQL
+        String query = "SELECT id FROM comptePersonnel";
+
+        // Création de l'objet Statement pour exécuter la requête
+        Statement stmt = connection.createStatement();
+
+        // Exécution de la requête
+        ResultSet rs = stmt.executeQuery(query);
+
+        // Parcours des résultats et ajout des identifiants à l'ArrayList
+        ArrayList<Integer> ids = new ArrayList<>();
+        while (rs.next()) {
+            int id = rs.getInt("id");
+            ids.add(id);
+        }
+
+        // Fermeture des ressources
+        rs.close();
+        stmt.close();
+        connection.close();
+
+        return ids;
+    }
 
 
 }

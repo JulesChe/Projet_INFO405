@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -355,6 +356,44 @@ public class Logistique extends Utilisateur{
                 }
             }
         }
+    }
+
+    public ArrayList<Integer> getAllIdPerso() {
+
+        Connection connection = null;
+        ArrayList<Integer> resultList = null;
+        try {
+
+            // Charger le pilote JDBC
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            // Etablir la connexion avec la base de données
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/allezemile", "allezemile", "nT7");
+            System.out.println("Connexion établie avec succès.");
+
+            // Créer un objet UtilisateurDAO
+            CrudUtilisateurDAO utilisateurDAO = new CrudUtilisateurDAO(connection);
+
+            // Accepter un creneau
+            resultList = new ArrayList<>();
+            resultList = utilisateurDAO.getIdAllPerso();
+            System.out.println("Demande de créneau supprimer avec succès.");
+
+
+        } catch (ClassNotFoundException e) {
+            System.err.println("Pilote JDBC introuvable.");
+        } catch (SQLException e) {
+            System.err.println("Erreur lors de la connexion à la base de données : " + e.getMessage());
+        } finally {
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    System.err.println("Erreur lors de la fermeture de la connexion : " + e.getMessage());
+                }
+            }
+        }
+        return resultList;
     }
 
 
