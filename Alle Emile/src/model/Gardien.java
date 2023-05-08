@@ -7,6 +7,8 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -137,6 +139,22 @@ public class Gardien extends Utilisateur{
                 Creneau c1 = new Creneau(dateDebut,dateFin);
                 res.add(c1);
                 debut = sdf.parse(dateFin);
+            }
+        }
+        return res;
+    }
+
+    public static boolean isBetween8and20(String dateString) {
+        LocalDateTime date = LocalDateTime.parse(dateString, DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm"));
+        int hour = date.getHour();
+        return hour >= 8 && hour < 20;
+    }
+
+    public ArrayList<Creneau> IndispoVac(ArrayList<Creneau> listeCreneaux){
+        ArrayList<Creneau> res = new ArrayList<Creneau>();
+        for (Creneau c : listeCreneaux){
+            if (this.isBetween8and20(c.getDateDebut())){
+                res.add(c);
             }
         }
         return res;

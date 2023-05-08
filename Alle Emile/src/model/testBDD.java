@@ -79,7 +79,7 @@ public class testBDD extends JFrame{
         //patrick.ajoutCreneau("GPROUTE", "tata");
 
         Gardien emilien = new Gardien("TEST", "test","vzera",1);
-        System.out.print(emilien.toStringCreneaux(emilien.tabIndispo(emilien.getIndispo(1))));
+        System.out.print(emilien.toStringCreneaux(emilien.IndispoVac(emilien.tabIndispo(emilien.getIndispo(1)))));
     }
 
 }
