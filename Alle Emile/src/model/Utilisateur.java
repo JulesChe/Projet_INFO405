@@ -37,7 +37,7 @@ public class Utilisateur {
     }
 
     public void setIndisponibilites(ArrayList<Creneau> indisponibilites) {
-        this.indisponibilites = indisponibilites;
+        this.indisponibilites = sortCreneaux(indisponibilites);
     }
 
     public ArrayList<Creneau> sortCreneaux(ArrayList<Creneau> creneaux) {

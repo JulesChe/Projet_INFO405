@@ -178,8 +178,8 @@ public class Gardien extends Utilisateur{
         return res;
     }
 
-    public Map<Integer, List<Creneau>> getCreneauxGardien() {
-        Map<Integer, List<Creneau>> gardiensCreneaux = null;
+    public Map<Integer, ArrayList<Creneau>> getCreneauxGardien() {
+        Map<Integer, ArrayList<Creneau>> gardiensCreneaux = null;
         Connection connection = null;
         try {
             // Charger le pilote JDBC

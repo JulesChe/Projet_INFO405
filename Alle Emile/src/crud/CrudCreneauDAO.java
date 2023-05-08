@@ -53,8 +53,8 @@ public class CrudCreneauDAO {
     }
 
 
-    public Map<Integer, List<Creneau>> getAllGardiensCreneaux() throws SQLException, ParseException {
-        Map<Integer, List<Creneau>> result = new HashMap<>();
+    public Map<Integer, ArrayList<Creneau>> getAllGardiensCreneaux() throws SQLException, ParseException {
+        Map<Integer, ArrayList<Creneau>> result = new HashMap<>();
         String query = "SELECT * FROM creneau ORDER BY id_gardien";
 
         PreparedStatement preparedStatement = connection.prepareStatement(query);

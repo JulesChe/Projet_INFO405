@@ -82,7 +82,7 @@ public class testBDD extends JFrame{
 
         Gardien emilien = new Gardien("TEST", "test","vzera",1);
 
-        Map<Integer, List<Creneau>> gardiensCreneaux = emilien.getCreneauxGardien();
+        Map<Integer, ArrayList<Creneau>> gardiensCreneaux = emilien.getCreneauxGardien();
 
         ArrayList<Creneau> lc = emilien.IndispoPersoFinal(1);
 
@@ -93,7 +93,7 @@ public class testBDD extends JFrame{
         }
 
 
-        emilien.setIndisponibilites(emilien.sortCreneaux((ArrayList<Creneau>) gardiensCreneaux.get(1)));
+        emilien.setIndisponibilites(gardiensCreneaux.get(1));
 
         System.out.print(emilien.getIndisponibilites());
     }
