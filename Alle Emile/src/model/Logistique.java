@@ -397,7 +397,7 @@ public class Logistique extends Utilisateur{
 
 
 
-    public ArrayList<String> getMeilleurDispo(String jour) throws ParseException {
+    public ArrayList<String> getMeilleurCreneau(String jour) throws ParseException {
 
         ArrayList<String> res = new ArrayList<>();
 
@@ -450,6 +450,19 @@ public class Logistique extends Utilisateur{
         return result;
     }
 
+
+    public HashMap<String, Integer> getMeilleurDispo(String jour) throws ParseException {
+
+        HashMap<String, Integer> res = new HashMap<>();
+
+        ArrayList<String> listcreneau = getMeilleurCreneau(jour);
+
+        res = getMostFrequentHours(listcreneau);
+
+        return res;
+
+
+    }
 
 
     // METHODES

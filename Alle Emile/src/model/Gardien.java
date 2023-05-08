@@ -218,7 +218,7 @@ public class Gardien extends Utilisateur{
         Map<Integer, ArrayList<Creneau>> gardiensCreneaux = null;
         gardiensCreneaux = this.getCreneauxGardien();
 
-        ArrayList<Creneau> res = new ArrayList<>();
+
 
         //J'ajoute les indisponibilités en plus des creneaux
         for (Creneau creneau : this.IndispoPersoFinal(idGardien)) {
@@ -234,7 +234,6 @@ public class Gardien extends Utilisateur{
 
 
 
-        res = gardiensCreneaux.get(idGardien);
 
 
     }

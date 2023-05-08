@@ -2,6 +2,7 @@ package vue;
 
 import controller.AjouterAssociationListener;
 import controller.DemandeCreneauListener;
+import controller.MeilleurReunionListener;
 import controller.WeeklyAgendaController;
 import crud.CrudCompteAssoDAO;
 import crud.CrudGymnaseDAO;
@@ -101,6 +102,8 @@ public class WeeklyAgendaView {
 
         vueIncidents();
 
+        vueReunion();
+
         frame.getContentPane().add(tabbedPane, BorderLayout.CENTER);
     }
 
@@ -113,6 +116,31 @@ public class WeeklyAgendaView {
             tabbedPane.addTab("Incidents", null, incidentPanel, "Incidents");
         }
 
+    }
+
+
+    private void vueReunion(){
+
+        if(modele.isPersonnelLog()){
+            // Ajout de l'onglet "Reunion"
+
+            JPanel reunionPanel = new JPanel();
+
+            reunionPanel.setBorder(new TitledBorder("Reunion"));
+
+            JTextField dateReu = new JTextField(20);
+
+            JButton boutonAdd = new JButton("Proposer une reunion");
+
+            boutonAdd.addActionListener(new MeilleurReunionListener(dateReu,reunionPanel));
+
+            reunionPanel.add(dateReu);
+            reunionPanel.add(boutonAdd);
+
+            tabbedPane.addTab("Reunion", null, reunionPanel, "Reunion");
+
+
+        }
     }
 
     private void vueDemandeDeCreneau(){
