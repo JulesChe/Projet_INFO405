@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
@@ -217,29 +218,31 @@ public class Gardien extends Utilisateur{
         return dateTime1.toLocalDate().isEqual(dateTime2.toLocalDate());
     }
 
-    public ArrayList<Creneau> dispoJour(String jour){
+    public ArrayList<String> getCreneauxLibres(String jour) {
+        ArrayList<Creneau> creneaux = (ArrayList<Creneau>) this.getIndisponibilites();
+        ArrayList<String> creneauxLibres = new ArrayList<String>();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm");
 
-        ArrayList<String> listeJour = new ArrayList<String>();
-        for (String h : this.getTabJour()){
-            listeJour.add(jour+" "+h);
+        for (LocalTime heure = LocalTime.of(8, 0); heure.isBefore(LocalTime.of(20, 0)); heure = heure.plusHours(1)) {
+            LocalDateTime creneauDebut = LocalDateTime.parse(jour + " " + heure.toString(), formatter);
+            LocalDateTime creneauFin = creneauDebut.plusHours(1);
+
+            boolean creneauLibre = true;
+            for (Creneau c : creneaux) {
+                LocalDateTime cDebut = LocalDateTime.parse(c.getDateDebut(), formatter);
+                LocalDateTime cFin = LocalDateTime.parse(c.getDateFin(), formatter);
+                if (cDebut.isBefore(creneauFin) && cFin.isAfter(creneauDebut)) {
+                    creneauLibre = false;
+                    break;
+                }
+            }
+
+            if (creneauLibre) {
+                creneauxLibres.add(formatter.format(creneauDebut));
+            }
         }
 
-        ArrayList<Creneau> res = new ArrayList<Creneau>();
-        boolean existe = false;
-        boolean valable = false;
-
-        for (Creneau c : this.getIndisponibilites()){
-            for (String s : listeJour){
-
-            }
-            if (existe==false && valable){
-                System.out.print("date ajoutée");
-                res.add(c);
-            }
-            valable = false;
-            existe = false;
-        }
-        return res;
+        return creneauxLibres;
     }
 
 
