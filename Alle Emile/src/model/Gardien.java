@@ -209,14 +209,6 @@ public class Gardien extends Utilisateur{
         return gardiensCreneaux;
     }
 
-    public boolean memeJour(String date1, String date2) {
-        // Conversion des chaînes de caractères en objets LocalDateTime
-        LocalDateTime dateTime1 = LocalDateTime.parse(date1, DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm"));
-        LocalDateTime dateTime2 = LocalDateTime.parse(date2, DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm"));
-
-        // Vérification si les deux dates ont le même jour
-        return dateTime1.toLocalDate().isEqual(dateTime2.toLocalDate());
-    }
 
     public ArrayList<String> getCreneauxLibres(String jour) {
         ArrayList<Creneau> creneaux = (ArrayList<Creneau>) this.getIndisponibilites();
