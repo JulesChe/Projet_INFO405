@@ -39,6 +39,7 @@ public class testBDD extends JFrame{
         //patrick.pasAccepterCreneau(3);
 
         Creneau c = new Creneau("2023/05/02 16:00","2023/05/02 18:00");
+        //System.out.print(c.getDateDebut());
 
         //patrick.ajoutCreneau("2023/05/02 16:00","2023/05/02 18:00");
         //patrick.accepterCreneau(15);
@@ -95,7 +96,9 @@ public class testBDD extends JFrame{
 
         emilien.setIndisponibilites(gardiensCreneaux.get(1));
 
-        System.out.print(emilien.getIndisponibilites());
+        //System.out.print(emilien.getIndisponibilites());
+
+        System.out.print(emilien.dispoJour("2023/05/07"));
     }
 
 }

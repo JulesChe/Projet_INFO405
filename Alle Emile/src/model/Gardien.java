@@ -208,6 +208,39 @@ public class Gardien extends Utilisateur{
         return gardiensCreneaux;
     }
 
+    public boolean memeJour(String date1, String date2) {
+        // Conversion des chaînes de caractères en objets LocalDateTime
+        LocalDateTime dateTime1 = LocalDateTime.parse(date1, DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm"));
+        LocalDateTime dateTime2 = LocalDateTime.parse(date2, DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm"));
+
+        // Vérification si les deux dates ont le même jour
+        return dateTime1.toLocalDate().isEqual(dateTime2.toLocalDate());
+    }
+
+    public ArrayList<Creneau> dispoJour(String jour){
+
+        ArrayList<String> listeJour = new ArrayList<String>();
+        for (String h : this.getTabJour()){
+            listeJour.add(jour+" "+h);
+        }
+
+        ArrayList<Creneau> res = new ArrayList<Creneau>();
+        boolean existe = false;
+        boolean valable = false;
+
+        for (Creneau c : this.getIndisponibilites()){
+            for (String s : listeJour){
+
+            }
+            if (existe==false && valable){
+                System.out.print("date ajoutée");
+                res.add(c);
+            }
+            valable = false;
+            existe = false;
+        }
+        return res;
+    }
 
 
 
