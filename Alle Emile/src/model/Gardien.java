@@ -21,6 +21,10 @@ public class Gardien extends Utilisateur{
         super(nom,prenom,mdp,niveau);
     }
 
+    public Gardien(){
+
+    }
+
     // METHODES
 
 
@@ -207,6 +211,30 @@ public class Gardien extends Utilisateur{
             }
         }
         return gardiensCreneaux;
+    }
+
+    public ArrayList<Creneau> setAllIndispoGardien(int idGardien) throws ParseException {
+
+        Map<Integer, ArrayList<Creneau>> gardiensCreneaux = null;
+        gardiensCreneaux = this.getCreneauxGardien();
+
+        ArrayList<Creneau> res = new ArrayList<>();
+
+        //J'ajoute les indisponibilités en plus des creneaux
+        for (Creneau creneau : this.IndispoPersoFinal(idGardien)) {
+
+            gardiensCreneaux.get(idGardien).add(creneau);
+
+
+        }
+
+        // Ajout de la liste d'indispo à l'instance
+        this.setIndisponibilites(gardiensCreneaux.get(idGardien));
+
+        res = gardiensCreneaux.get(idGardien);
+
+        return res;
+
     }
 
 

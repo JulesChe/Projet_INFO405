@@ -94,13 +94,15 @@ public class testBDD extends JFrame{
         }
 
 
-        emilien.setIndisponibilites(gardiensCreneaux.get(1));
+        //emilien.setIndisponibilites(gardiensCreneaux.get(1));
 
         //System.out.print(emilien.memeJour("2023/05/05 16:00", "2023/05/10 18:00"));
 
         //System.out.print(emilien.getIndisponibilites());
 
-        System.out.print(emilien.getCreneauxLibres("2023/05/07"));
+        //System.out.print(emilien.getCreneauxLibres("2023/05/07"));
+
+        System.out.print(patrick.getMeilleurDispo("2023/05/07"));
 
 
     }

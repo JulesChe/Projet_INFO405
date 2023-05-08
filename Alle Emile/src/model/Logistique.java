@@ -398,6 +398,31 @@ public class Logistique extends Utilisateur{
 
 
 
+    public ArrayList<String> getMeilleurDispo(String jour) throws ParseException {
+
+        ArrayList<String> res = new ArrayList<>();
+
+        ArrayList<Integer> allIdGardien = this.getAllIdPerso();
+
+        for(int id : allIdGardien){
+
+            Gardien g = new Gardien();
+
+            System.out.println(g.setAllIndispoGardien(id));
+
+
+            ArrayList<String> resInt = g.getCreneauxLibres(jour);
+
+            for(String s : resInt){
+
+                res.add(s);
+            }
+
+        }
+
+
+        return res;
+    }
 
     // METHODES
 	/*
