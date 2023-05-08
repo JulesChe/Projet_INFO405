@@ -1,0 +1,219 @@
+JFDML JFormDesigner: "8.0.4.0.266" Java: "17.0.3" encoding: "UTF-8"
+
+new FormModel {
+	contentType: "form/swing"
+	root: new FormRoot {
+		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class java.awt.BorderLayout ) ) {
+			name: "WIN"
+			"minimumSize": new java.awt.Dimension( 1000, 600 )
+			"foreground": sfield java.awt.SystemColor menu
+			"title": "Agenda Collaboratif"
+			add( new FormContainer( "javax.swing.JTabbedPane", new FormLayoutManager( class javax.swing.JTabbedPane ) ) {
+				name: "C1"
+				add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.BorderLayout ) ) {
+					name: "AG"
+					add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.BorderLayout ) ) {
+						name: "Nav"
+						add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
+							name: "scrollPane1"
+							add( new FormComponent( "javax.swing.JTree" ) {
+								name: "Arborescence"
+								"minimumSize": new java.awt.Dimension( 100, 0 )
+							} )
+						}, new FormLayoutConstraints( class java.lang.String ) {
+							"value": "Center"
+						} )
+					}, new FormLayoutConstraints( class java.lang.String ) {
+						"value": "West"
+					} )
+					add( new FormContainer( "javax.swing.JDesktopPane", new FormLayoutManager( class javax.swing.JDesktopPane ) ) {
+						name: "Frame"
+						add( new FormContainer( "javax.swing.JInternalFrame", new FormLayoutManager( class java.awt.BorderLayout ) ) {
+							name: "Calendrier1"
+							"visible": true
+							"closable": true
+							"maximum": true
+							"maximizable": true
+							"resizable": true
+							"preferredSize": new java.awt.Dimension( 500, 500 )
+							"title": "Gymnase1"
+							add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.BorderLayout ) ) {
+								name: "jpC1"
+								add( new FormContainer( "javax.swing.JTabbedPane", new FormLayoutManager( class javax.swing.JTabbedPane ) ) {
+									name: "tPC1"
+									add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.BorderLayout ) ) {
+										name: "AGC1"
+										"border": new javax.swing.border.TitledBorder( "Emploi du temps" )
+										add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.BorderLayout ) ) {
+											name: "NavAGC1"
+											add( new FormComponent( "javax.swing.JButton" ) {
+												name: "button_semaine_prec"
+												"text": "Semane précédente"
+											}, new FormLayoutConstraints( class java.lang.String ) {
+												"value": "West"
+											} )
+											add( new FormComponent( "javax.swing.JButton" ) {
+												name: "button_semaine_suiv"
+												"text": "Semaine suivante"
+											}, new FormLayoutConstraints( class java.lang.String ) {
+												"value": "East"
+											} )
+											add( new FormComponent( "javax.swing.JLabel" ) {
+												name: "weekLabel"
+												"text": "text"
+											}, new FormLayoutConstraints( class java.lang.String ) {
+												"value": "Center"
+											} )
+										}, new FormLayoutConstraints( class java.lang.String ) {
+											"value": "North"
+										} )
+										add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridLayout ) {
+											"columns": 7
+										} ) {
+											name: "Agenda"
+										}, new FormLayoutConstraints( class java.lang.String ) {
+											"value": "Center"
+										} )
+										add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.FlowLayout ) ) {
+											name: "PAjouter_creneau"
+											add( new FormComponent( "javax.swing.JButton" ) {
+												name: "button_ajouter_creneau"
+												"text": "Ajouter créneau"
+											} )
+										}, new FormLayoutConstraints( class java.lang.String ) {
+											"value": "South"
+										} )
+									}, new FormLayoutConstraints( null ) {
+										"title": "Agenda"
+									} )
+									add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.BorderLayout ) ) {
+										name: "DCG1"
+										add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
+											name: "scrollPane2"
+											add( new FormComponent( "javax.swing.JTable" ) {
+												name: "table1"
+												"cellSelectionEnabled": true
+											} )
+										}, new FormLayoutConstraints( class java.lang.String ) {
+											"value": "Center"
+										} )
+									}, new FormLayoutConstraints( null ) {
+										"title": "Demande Créneau"
+									} )
+									add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.BorderLayout ) ) {
+										name: "INC1"
+										add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
+											name: "scrollPane3"
+											add( new FormComponent( "javax.swing.JTable" ) {
+												name: "table2"
+											} )
+										}, new FormLayoutConstraints( class java.lang.String ) {
+											"value": "Center"
+										} )
+									}, new FormLayoutConstraints( null ) {
+										"title": "Incident"
+									} )
+								}, new FormLayoutConstraints( class java.lang.String ) {
+									"value": "Center"
+								} )
+							}, new FormLayoutConstraints( class java.lang.String ) {
+								"value": "Center"
+							} )
+						}, new FormLayoutConstraints( null ) {
+							"x": 0
+							"y": 0
+							"width": 800
+							"height": 505
+						} )
+					}, new FormLayoutConstraints( class java.lang.String ) {
+						"value": "Center"
+					} )
+				}, new FormLayoutConstraints( null ) {
+					"title": "Calendrier"
+				} )
+				add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.BorderLayout ) ) {
+					name: "AS"
+				}, new FormLayoutConstraints( null ) {
+					"title": "Association"
+				} )
+				add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.BorderLayout ) ) {
+					name: "GY"
+				}, new FormLayoutConstraints( null ) {
+					"title": "Gymnase"
+				} )
+			}, new FormLayoutConstraints( class java.lang.String ) {
+				"value": "Center"
+			} )
+			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.FlowLayout ) {
+				"alignment": 0
+			} ) {
+				name: "Menu"
+				"opaque": false
+				add( new FormContainer( "javax.swing.JMenuBar", new FormLayoutManager( class javax.swing.JMenuBar ) ) {
+					name: "menuBar1"
+					add( new FormContainer( "javax.swing.JMenu", new FormLayoutManager( class javax.swing.JMenu ) ) {
+						name: "menu3"
+						"text": "Fichier"
+						add( new FormComponent( "javax.swing.JMenuItem" ) {
+							name: "menuItem1"
+							"text": "Element1"
+						} )
+					} )
+					add( new FormContainer( "javax.swing.JMenu", new FormLayoutManager( class javax.swing.JMenu ) ) {
+						name: "menu6"
+						"text": "Modifer"
+						add( new FormContainer( "javax.swing.JMenu", new FormLayoutManager( class javax.swing.JMenu ) ) {
+							name: "menu7"
+							"text": "Vue"
+							add( new FormContainer( "javax.swing.JMenu", new FormLayoutManager( class javax.swing.JMenu ) ) {
+								name: "menu8"
+								"text": "Disposition"
+								add( new FormComponent( "javax.swing.JMenuItem" ) {
+									name: "menuItem2"
+									"text": "1"
+								} )
+								add( new FormComponent( "javax.swing.JMenuItem" ) {
+									name: "menuItem3"
+									"text": "2"
+								} )
+							} )
+						} )
+					} )
+					add( new FormContainer( "javax.swing.JMenu", new FormLayoutManager( class javax.swing.JMenu ) ) {
+						name: "menu5"
+						"text": "Ajouter"
+						add( new FormComponent( "javax.swing.JMenuItem" ) {
+							name: "menuItem4"
+							"text": "Gymnase"
+						} )
+						add( new FormComponent( "javax.swing.JMenuItem" ) {
+							name: "menuItem5"
+							"text": "Association"
+						} )
+						add( new FormContainer( "javax.swing.JMenu", new FormLayoutManager( class javax.swing.JMenu ) ) {
+							name: "menu9"
+							"text": "Personnel"
+							add( new FormComponent( "javax.swing.JMenuItem" ) {
+								name: "menuItem6"
+								"text": "Gardien"
+							} )
+							add( new FormComponent( "javax.swing.JMenuItem" ) {
+								name: "menuItem7"
+								"text": "Logistique"
+							} )
+							add( new FormComponent( "javax.swing.JMenuItem" ) {
+								name: "menuItem8"
+								"text": "Administrateur"
+							} )
+						} )
+					} )
+				} )
+			}, new FormLayoutConstraints( class java.lang.String ) {
+				"value": "First"
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"location": new java.awt.Point( 0, 5 )
+			"size": new java.awt.Dimension( 1160, 600 )
+		} )
+	}
+}
