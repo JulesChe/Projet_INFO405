@@ -213,7 +213,7 @@ public class Gardien extends Utilisateur{
         return gardiensCreneaux;
     }
 
-    public ArrayList<Creneau> setAllIndispoGardien(int idGardien) throws ParseException {
+    public void setAllIndispoGardien(int idGardien) throws ParseException {
 
         Map<Integer, ArrayList<Creneau>> gardiensCreneaux = null;
         gardiensCreneaux = this.getCreneauxGardien();
@@ -227,13 +227,15 @@ public class Gardien extends Utilisateur{
 
 
         }
+        if (gardiensCreneaux.get(idGardien)==null) {
+        }else{
+            this.setIndisponibilites(gardiensCreneaux.get(idGardien));
+        }
 
-        // Ajout de la liste d'indispo à l'instance
-        this.setIndisponibilites(gardiensCreneaux.get(idGardien));
+
 
         res = gardiensCreneaux.get(idGardien);
 
-        return res;
 
     }
 
@@ -242,23 +244,28 @@ public class Gardien extends Utilisateur{
         ArrayList<Creneau> creneaux = (ArrayList<Creneau>) this.getIndisponibilites();
         ArrayList<String> creneauxLibres = new ArrayList<String>();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm");
-
-        for (LocalTime heure = LocalTime.of(8, 0); heure.isBefore(LocalTime.of(20, 0)); heure = heure.plusHours(1)) {
-            LocalDateTime creneauDebut = LocalDateTime.parse(jour + " " + heure.toString(), formatter);
-            LocalDateTime creneauFin = creneauDebut.plusHours(1);
-
-            boolean creneauLibre = true;
-            for (Creneau c : creneaux) {
-                LocalDateTime cDebut = LocalDateTime.parse(c.getDateDebut(), formatter);
-                LocalDateTime cFin = LocalDateTime.parse(c.getDateFin(), formatter);
-                if (cDebut.isBefore(creneauFin) && cFin.isAfter(creneauDebut)) {
-                    creneauLibre = false;
-                    break;
-                }
+        if (creneaux == null){
+            for(String s : this.getTabJour()){
+                creneauxLibres.add(jour+" "+s);
             }
+        }else {
+            for (LocalTime heure = LocalTime.of(8, 0); heure.isBefore(LocalTime.of(20, 0)); heure = heure.plusHours(1)) {
+                LocalDateTime creneauDebut = LocalDateTime.parse(jour + " " + heure.toString(), formatter);
+                LocalDateTime creneauFin = creneauDebut.plusHours(1);
 
-            if (creneauLibre) {
-                creneauxLibres.add(formatter.format(creneauDebut));
+                boolean creneauLibre = true;
+                for (Creneau c : creneaux) {
+                    LocalDateTime cDebut = LocalDateTime.parse(c.getDateDebut(), formatter);
+                    LocalDateTime cFin = LocalDateTime.parse(c.getDateFin(), formatter);
+                    if (cDebut.isBefore(creneauFin) && cFin.isAfter(creneauDebut)) {
+                        creneauLibre = false;
+                        break;
+                    }
+                }
+
+                if (creneauLibre) {
+                    creneauxLibres.add(formatter.format(creneauDebut));
+                }
             }
         }
 

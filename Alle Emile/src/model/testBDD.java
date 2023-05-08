@@ -102,7 +102,7 @@ public class testBDD extends JFrame{
 
         //System.out.print(emilien.getCreneauxLibres("2023/05/07"));
 
-        System.out.print(patrick.getMeilleurDispo("2023/05/07"));
+        System.out.print(patrick.getMostFrequentHours(patrick.getMeilleurDispo("2023/05/07")));
 
 
     }

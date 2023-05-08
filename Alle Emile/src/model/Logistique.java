@@ -6,10 +6,9 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 import crud.*;
 import ressource.PasswordHash;
@@ -408,7 +407,7 @@ public class Logistique extends Utilisateur{
 
             Gardien g = new Gardien();
 
-            System.out.println(g.setAllIndispoGardien(id));
+            g.setAllIndispoGardien(id);
 
 
             ArrayList<String> resInt = g.getCreneauxLibres(jour);
@@ -423,6 +422,35 @@ public class Logistique extends Utilisateur{
 
         return res;
     }
+
+    public static HashMap<String, Integer> getMostFrequentHours(ArrayList<String> dates) {
+        HashMap<String, Integer> frequencyMap = new HashMap<>();
+
+        for (String date : dates) {
+            String[] parts = date.split(" ");
+            String time = parts[1].substring(0, 5);
+            frequencyMap.put(time, frequencyMap.getOrDefault(time, 0) + 1);
+        }
+
+        HashMap<String, Integer> result = new HashMap<>();
+        int maxFrequency = 0;
+
+        for (Map.Entry<String, Integer> entry : frequencyMap.entrySet()) {
+            int frequency = entry.getValue();
+
+            if (frequency > maxFrequency) {
+                maxFrequency = frequency;
+                result.clear();
+                result.put(entry.getKey(), frequency);
+            } else if (frequency == maxFrequency) {
+                result.put(entry.getKey(), frequency);
+            }
+        }
+
+        return result;
+    }
+
+
 
     // METHODES
 	/*
