@@ -160,6 +160,12 @@ public class Gardien extends Utilisateur{
         return res;
     }
 
+    public ArrayList<Creneau> IndispoPersoFinal(int id) throws ParseException {
+        ArrayList<Creneau> res = new ArrayList<Creneau>();
+        res = this.IndispoVac(this.tabIndispo(this.getIndispo(id)));
+        return res;
+    }
+
 
 
     public String toStringCreneaux(ArrayList<Creneau> listeCreneaux) {
