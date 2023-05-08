@@ -140,11 +140,9 @@ public class Creneau {
 
     @Override
     public String toString() {
-        return "Creneau{" +
-                "id = " + id +
-                ", idGardien = " + id_gardien +
-                ", Debut = " + dateDebut +
-                ", Fin = " + dateFin +
-                '}';
+        return
+                " Debut = " + dateDebut +
+                " Fin = " + dateFin +
+                "\n";
     }
 }

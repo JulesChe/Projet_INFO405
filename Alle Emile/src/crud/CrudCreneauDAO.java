@@ -1,7 +1,10 @@
 package crud;
 
 import java.sql.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -50,7 +53,7 @@ public class CrudCreneauDAO {
     }
 
 
-    public Map<Integer, List<Creneau>> getAllGardiensCreneaux() throws SQLException {
+    public Map<Integer, List<Creneau>> getAllGardiensCreneaux() throws SQLException, ParseException {
         Map<Integer, List<Creneau>> result = new HashMap<>();
         String query = "SELECT * FROM creneau ORDER BY id_gardien";
 
@@ -63,8 +66,27 @@ public class CrudCreneauDAO {
 
             creneau.setId(resultSet.getInt("id"));
             creneau.setId_gardien(idGardien);
-            creneau.setDateDebut(String.valueOf(resultSet.getTimestamp("debut")));
-            creneau.setDateFin(String.valueOf(resultSet.getTimestamp("fin")));
+
+
+
+
+            //Mise au bon format des dates
+            SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date date = sdf1.parse(String.valueOf(resultSet.getTimestamp("debut")));
+            SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+            String newDateString = sdf2.format(date);
+
+            creneau.setDateDebut(newDateString);
+
+
+            //Mise au bon format des dates
+            SimpleDateFormat sdf3 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date date2 = sdf3.parse(String.valueOf(resultSet.getTimestamp("fin")));
+            SimpleDateFormat sdf4 = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+            String newDateString2 = sdf4.format(date2);
+
+            creneau.setDateFin(newDateString2);
+
 
             result.computeIfAbsent(idGardien, k -> new ArrayList<>()).add(creneau);
         }

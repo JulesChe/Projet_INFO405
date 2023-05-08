@@ -44,7 +44,7 @@ public class testBDD extends JFrame{
         //patrick.accepterCreneau(15);
         //System.out.println(patrick.getIDAsso("AS FOOT"));
 
-        //Map<Integer, List<Creneau>> gardiensCreneaux = patrick.getCreneauxGardien();
+
 
         /*for (Map.Entry<Integer, List<Creneau>> entry : gardiensCreneaux.entrySet()) {
             System.out.println("Gardien ID: " + entry.getKey());
@@ -78,8 +78,24 @@ public class testBDD extends JFrame{
 
         //patrick.ajoutCreneau("GPROUTE", "tata");
 
+
+
         Gardien emilien = new Gardien("TEST", "test","vzera",1);
-        System.out.print(emilien.toStringCreneaux(emilien.IndispoPersoFinal(1)));
+
+        Map<Integer, List<Creneau>> gardiensCreneaux = emilien.getCreneauxGardien();
+
+        ArrayList<Creneau> lc = emilien.IndispoPersoFinal(1);
+
+        for (Creneau creneau : lc) {
+
+            gardiensCreneaux.get(1).add(creneau);
+
+        }
+
+
+        emilien.setIndisponibilites(emilien.sortCreneaux((ArrayList<Creneau>) gardiensCreneaux.get(1)));
+
+        System.out.print(emilien.getIndisponibilites());
     }
 
 }

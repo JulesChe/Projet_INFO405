@@ -33,13 +33,8 @@ public class WeeklyAgendaApp {
 
                 Login viewCo = new Login();
 
-                //modele.insertTimeSlot(0, "08:00", "09:00","Badminton");
-                //modele.insertTimeSlot(1, "14:00", "15:00","Tennis");
-                //modele.insertTimeSlot(1, "08:00", "09:00","Basketball");
-
                 viewCo.setVisible(true);
 
-                //view.frame.setVisible(true);
 
             } catch (Exception e) {
                 e.printStackTrace();

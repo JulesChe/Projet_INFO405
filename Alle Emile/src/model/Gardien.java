@@ -1,5 +1,6 @@
 package model;
 import crud.CrudCompteAssoDAO;
+import crud.CrudCreneauDAO;
 import crud.CrudGardienDAO;
 
 import java.sql.Connection;
@@ -9,9 +10,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
+import java.util.*;
 
 public class Gardien extends Utilisateur{
     // ATTRIBUTS
@@ -178,6 +177,37 @@ public class Gardien extends Utilisateur{
         }
         return res;
     }
+
+    public Map<Integer, List<Creneau>> getCreneauxGardien() {
+        Map<Integer, List<Creneau>> gardiensCreneaux = null;
+        Connection connection = null;
+        try {
+            // Charger le pilote JDBC
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            // Etablir la connexion avec la base de données
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/allezemile", "allezemile", "nT7");
+            System.out.println("Connexion établie avec succès.");
+            // Créer un objet CreneauDAO
+            CrudCreneauDAO creneauDAO = new CrudCreneauDAO(connection);
+            gardiensCreneaux = creneauDAO.getAllGardiensCreneaux();
+        } catch (ClassNotFoundException e) {
+            System.err.println("Pilote JDBC introuvable.");
+        } catch (SQLException e) {
+            System.err.println("Erreur lors de la connexion à la base de données : " + e.getMessage());
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    System.err.println("Erreur lors de la fermeture de la connexion : " + e.getMessage());
+                }
+            }
+        }
+        return gardiensCreneaux;
+    }
+
 
 
 
