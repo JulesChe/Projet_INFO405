@@ -141,8 +141,9 @@ public class Creneau {
     @Override
     public String toString() {
         return
-                " Debut = " + dateDebut +
-                " Fin = " + dateFin +
+                " Association : " + asso +
+                " Debut : " + dateDebut +
+                " Fin : " + dateFin +
                 "\n";
     }
 }

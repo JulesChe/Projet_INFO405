@@ -1,9 +1,6 @@
 package vue;
 
-import controller.AjouterAssociationListener;
-import controller.DemandeCreneauListener;
-import controller.MeilleurReunionListener;
-import controller.WeeklyAgendaController;
+import controller.*;
 import crud.CrudCompteAssoDAO;
 import crud.CrudGymnaseDAO;
 import model.*;
@@ -162,7 +159,7 @@ public class WeeklyAgendaView {
             for (int i = 0; i < rowCount; i++) {
                 for (int j = 0; j < columnCount; j++) {
                     Creneau c = p.getListeCreneaux().get(i);
-                    data[i][j] = "Début : " + c.getDateDebut() + "   Fin : " + c.getDateFin() + " Asso : " + c.getAsso();
+                    data[i][j] = "Id acceptation : "+ i +" Début : " + c.getDateDebut() + "   Fin : " + c.getDateFin() + " Asso : " + c.getAsso();
                 }
             }
             String[] columnNames = {"Demandes des associations"};
@@ -174,6 +171,8 @@ public class WeeklyAgendaView {
             //Boutton pour accepter et refuser des demandes
             JButton boutonAdd = new JButton("Accepter");
             JButton boutonDel = new JButton("Refuser");
+
+            boutonAdd.addActionListener(new AccepterDemandeListener(data,requestPanelB,p));
 
             // Ajoutez le JScrollPane au JPanel créé à l'étape 1
             requestPanelB.add(scrollPane, BorderLayout.CENTER);

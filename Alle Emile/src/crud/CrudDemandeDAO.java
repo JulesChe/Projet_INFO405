@@ -66,4 +66,25 @@ public class CrudDemandeDAO {
         pstmt3.setInt(1, i);
         pstmt3.executeUpdate();
     }
+
+    public int getIdCreneau(Creneau c) throws SQLException {
+
+        int res = -1;
+
+        PreparedStatement pstmt = connection.prepareStatement("SELECT id FROM demande WHERE debut = ? AND fin = ?");
+        pstmt.setString(1, c.getDateDebut());
+        pstmt.setString(2, c.getDateFin());
+        ResultSet rs = pstmt.executeQuery();
+        if (rs.next()) {
+
+            res = rs.getInt("id");
+
+        }
+        rs.close();
+
+
+
+        return res;
+
+    }
 }
