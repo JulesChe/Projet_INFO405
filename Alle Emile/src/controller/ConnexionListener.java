@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
 
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
@@ -68,6 +69,8 @@ public class ConnexionListener implements ActionListener{
 
             } catch (SQLException e1) {
                 e1.printStackTrace();
+            } catch (ParseException ex) {
+                throw new RuntimeException(ex);
             }
         } else {
             JOptionPane.showMessageDialog(null, "Erreur de saisir!");

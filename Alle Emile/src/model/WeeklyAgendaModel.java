@@ -85,9 +85,9 @@ public class WeeklyAgendaModel {
     }
 
 
-    public static String obtenirHeureMinute(String dateString) {
+    public String obtenirHeureMinute(String dateString) {
         // Formatter pour parser la chaîne
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm");
 
         try {
             // Conversion de la chaîne en objet LocalDateTime
@@ -104,6 +104,7 @@ public class WeeklyAgendaModel {
             return null;
         }
     }
+
 
     public void insertTimeSlot(int dayIndex, String newTimeSlot, String endTime, String taskDescription) {
         if (dayIndex < 0 || dayIndex >= 7) {

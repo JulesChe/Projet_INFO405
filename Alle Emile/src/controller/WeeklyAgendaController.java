@@ -8,6 +8,7 @@ import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
 import java.util.ArrayList;
 
 public class WeeklyAgendaController {
@@ -16,7 +17,7 @@ public class WeeklyAgendaController {
 
 
 
-    public WeeklyAgendaController(WeeklyAgendaView view, WeeklyAgendaModel model) {
+    public WeeklyAgendaController(WeeklyAgendaView view, WeeklyAgendaModel model) throws ParseException {
         this.view = view;
         this.model = model;
 
@@ -31,7 +32,11 @@ public class WeeklyAgendaController {
         view.getPreviousWeekButton().addActionListener(e -> {
             model.goToPreviousWeek();
             updateWeekLabel();
-            updateTasksPanel();
+            try {
+                updateTasksPanel();
+            } catch (ParseException ex) {
+                throw new RuntimeException(ex);
+            }
 
         });
 
@@ -41,7 +46,11 @@ public class WeeklyAgendaController {
         view.getNextWeekButton().addActionListener(e -> {
             model.goToNextWeek();
             updateWeekLabel();
-            updateTasksPanel();
+            try {
+                updateTasksPanel();
+            } catch (ParseException ex) {
+                throw new RuntimeException(ex);
+            }
         });
     }
     public WeeklyAgendaModel getModel() {
@@ -60,7 +69,11 @@ public class WeeklyAgendaController {
             model.goToPreviousWeek();
             updateWeekLabel();
 
-            updateTasksPanel();
+            try {
+                updateTasksPanel();
+            } catch (ParseException ex) {
+                throw new RuntimeException(ex);
+            }
         }
     }
 
@@ -70,7 +83,11 @@ public class WeeklyAgendaController {
             model.goToNextWeek();
             updateWeekLabel();
 
-            updateTasksPanel();
+            try {
+                updateTasksPanel();
+            } catch (ParseException ex) {
+                throw new RuntimeException(ex);
+            }
         }
     }
 
@@ -95,7 +112,7 @@ public class WeeklyAgendaController {
         view.getTasksPanel().revalidate();
         view.getTasksPanel().repaint();
     }
-    private void updateTasksPanel() {
+    private void updateTasksPanel() throws ParseException {
         model.clearDaysTimeSlots();
 
         view.getTasksPanel().removeAll();
@@ -144,14 +161,20 @@ public class WeeklyAgendaController {
         Creneau c1 = new Creneau(p.getDateDuJour(),p.getDateDuJour());
         String lundiWeek = c1.formatDate(model.getFormattedStartDate());
         p.getSemaine(lundiWeek);
+        Logistique patrick = new Logistique();
         ArrayList<Creneau> listeCreneaux = p.listeCreneaux;
+        if (listeCreneaux!=null){
+
+            listeCreneaux = c1.transformCreneau(listeCreneaux);
+        }
+
+        listeCreneaux = patrick.sortCreneaux(listeCreneaux);
         //Ajoutes tous les créneaux de la semaine
         WeeklyAgendaModel modele = new WeeklyAgendaModel(null, null);
 
-        Logistique patrick = new Logistique("Logistique","Patrick","testmdp", 3);
 
         for (Creneau creneau : listeCreneaux) {
-            String jourActuel = creneau.getDayOfWeekSec();
+            String jourActuel = creneau.getDayOfWeek();
             int jourFini = creneau.nbJour(jourActuel);
             String debutCren = creneau.getDateDebut();
             String finCren = creneau.getDateFin();
@@ -215,7 +238,11 @@ public class WeeklyAgendaController {
                 String taskDescription = taskDescriptionField.getText();
                 if (!startTime.isEmpty() && !endTime.isEmpty() && !taskDescription.isEmpty()) {
                     model.insertTimeSlot(selectedDay, startTime, endTime,taskDescription);
-                    updateTasksPanel();
+                    try {
+                        updateTasksPanel();
+                    } catch (ParseException ex) {
+                        throw new RuntimeException(ex);
+                    }
                     dialog.dispose();
                 }
                 int idAsso = patrick.getIDAsso(taskDescription);
