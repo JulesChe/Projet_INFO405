@@ -46,7 +46,7 @@ public class Creneau {
     }
 
     public void setDateDebut(String dateDebut) throws IllegalArgumentException {
-        if (isValidQuarterHour(dateDebut)) {
+        if (estValideQuartdheure(dateDebut)) {
             this.dateDebut = dateDebut;
         } else {
             throw new IllegalArgumentException("Invalid time. Time must be on quarter hours.");
@@ -54,7 +54,7 @@ public class Creneau {
     }
 
     public void setDateFin(String dateFin) throws IllegalArgumentException {
-        if (isValidQuarterHour(dateFin)) {
+        if (estValideQuartdheure(dateFin)) {
             this.dateFin = dateFin;
         } else {
             throw new IllegalArgumentException("Invalid time. Time must be on quarter hours.");
@@ -79,7 +79,7 @@ public class Creneau {
         return dateTime.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.getDefault());
     }
 
-    private boolean isValidQuarterHour(String dateTimeString) {
+    private boolean estValideQuartdheure(String dateTimeString) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm");
         LocalDateTime dateTime = LocalDateTime.parse(dateTimeString, formatter);
         int minutes = dateTime.getMinute();
