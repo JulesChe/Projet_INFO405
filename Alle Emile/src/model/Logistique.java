@@ -413,6 +413,8 @@ public class Logistique extends Utilisateur{
 
                     res.add(s);
 
+
+
                 }
 
 
@@ -427,6 +429,8 @@ public class Logistique extends Utilisateur{
     public ArrayList<String> getCreneauPrioritaire(String jour,ArrayList<Integer> listePrioritaire) throws ParseException {
 
         ArrayList<String> res = new ArrayList<>();
+
+        int nbPrio = 0;
 
 
         for(int id : listePrioritaire){
@@ -443,19 +447,50 @@ public class Logistique extends Utilisateur{
 
                     res.add(s);
 
+
+
                 }
 
 
             }
 
+            nbPrio += 1;
+
         }
 
+        res = triMeilleurCreneauPrio(nbPrio,res);
 
         return res;
     }
 
-    public static HashMap<ArrayList<String>, Integer> getMostFrequentHours(ArrayList<String> dates, ArrayList<String> autre) {
+    private ArrayList<String> triMeilleurCreneauPrio(int nbPrio, ArrayList<String> listeCreneauPrio) {
+
+
+        Map<String, Integer> frequencyMap = new HashMap<>();
+
+        // Calculer la fréquence de chaque créneau
+        for (String slot : listeCreneauPrio) {
+            frequencyMap.put(slot, frequencyMap.getOrDefault(slot, 0) + 1);
+        }
+
+        // Filtrer les créneaux pour ne garder que ceux qui apparaissent exactement le nombre de fois spécifié
+        ArrayList<String> filteredSlots = new ArrayList<>();
+        for (Map.Entry<String, Integer> entry : frequencyMap.entrySet()) {
+            if (entry.getValue() == nbPrio) {
+                filteredSlots.add(entry.getKey());
+            }
+        }
+
+        return filteredSlots;
+
+
+
+    }
+
+    public static HashMap<String, Integer> getMostFrequentHours(ArrayList<String> dates, ArrayList<String> autre) {
         HashMap<String, Integer> frequencyMap = new HashMap<>();
+
+        //System.out.print("\n Creneau autre : " + autre + " Creneau Prioritaire : " + dates);
 
         for (String date : dates) {
             String[] parts = date.split(" ");
@@ -463,23 +498,22 @@ public class Logistique extends Utilisateur{
             frequencyMap.put(time, frequencyMap.getOrDefault(time, 0) + 1);
         }
 
-        HashMap<ArrayList<String>, Integer> result = new HashMap<>();
+        for (String time : autre) {
+            frequencyMap.put(time, frequencyMap.getOrDefault(time, 0) + 1);
+        }
+
+        HashMap<String, Integer> result = new HashMap<>();
         int maxFrequency = 0;
 
-        for (String time : autre) {
-            int frequency = frequencyMap.getOrDefault(time, 0);
+        for (Map.Entry<String, Integer> entry : frequencyMap.entrySet()) {
+            int frequency = entry.getValue();
 
             if (frequency > maxFrequency) {
                 maxFrequency = frequency;
                 result.clear();
-                ArrayList<String> mostFrequentHours = new ArrayList<>();
-                mostFrequentHours.add(time);
-                result.put(mostFrequentHours, frequency);
+                result.put(entry.getKey(), frequency);
             } else if (frequency == maxFrequency) {
-                for (ArrayList<String> hours : result.keySet()) {
-                    hours.add(time);
-                    break; // Ajouté pour éviter l'ajout multiple d'heures
-                }
+                result.put(entry.getKey(), frequency);
             }
         }
 
@@ -488,9 +522,9 @@ public class Logistique extends Utilisateur{
 
 
 
-    public HashMap<ArrayList<String>, Integer> getMeilleurDispo(String jour, ArrayList<String> listeCreneauPrio, ArrayList<String> listCreneauAutrePersonnel) throws ParseException {
+    public HashMap<String, Integer> getMeilleurDispo(String jour, ArrayList<String> listeCreneauPrio, ArrayList<String> listCreneauAutrePersonnel) throws ParseException {
 
-        HashMap<ArrayList<String>, Integer> res = new HashMap<>();
+        HashMap<String, Integer> res = new HashMap<>();
 
         res = getMostFrequentHours(listeCreneauPrio,listCreneauAutrePersonnel);
 
