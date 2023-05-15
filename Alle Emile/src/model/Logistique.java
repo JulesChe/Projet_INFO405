@@ -6,8 +6,6 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 import crud.*;
@@ -395,9 +393,7 @@ public class Logistique extends Utilisateur{
         return resultList;
     }
 
-
-
-    public ArrayList<String> getMeilleurCreneau(String jour) throws ParseException {
+   public ArrayList<String> getCreneauAutrePersonnel(String jour) throws ParseException {
 
         ArrayList<String> res = new ArrayList<>();
 
@@ -409,12 +405,19 @@ public class Logistique extends Utilisateur{
 
             g.setAllIndispoGardien(id);
 
+            Map<Integer, ArrayList<String>> resInt = g.getCreneauxLibres(jour);
 
-            ArrayList<String> resInt = g.getCreneauxLibres(jour);
+            for(Map.Entry mapentry : resInt.entrySet()){
 
-            for(String s : resInt){
+                for(String s : (ArrayList<String>)mapentry.getValue()){
 
-                res.add(s);
+                    res.add(s);
+
+
+
+                }
+
+
             }
 
         }
@@ -423,12 +426,79 @@ public class Logistique extends Utilisateur{
         return res;
     }
 
-    public static HashMap<String, Integer> getMostFrequentHours(ArrayList<String> dates) {
+    public ArrayList<String> getCreneauPrioritaire(String jour,ArrayList<Integer> listePrioritaire) throws ParseException {
+
+        ArrayList<String> res = new ArrayList<>();
+
+        int nbPrio = 0;
+
+
+        for(int id : listePrioritaire){
+
+            Gardien g = new Gardien();
+
+            g.setAllIndispoGardien(id);
+
+            Map<Integer, ArrayList<String>> resInt = g.getCreneauxLibres(jour);
+
+            for(Map.Entry mapentry : resInt.entrySet()){
+
+                for(String s : (ArrayList<String>)mapentry.getValue()){
+
+                    res.add(s);
+
+
+
+                }
+
+
+            }
+
+            nbPrio += 1;
+
+        }
+
+        res = triMeilleurCreneauPrio(nbPrio,res);
+
+        return res;
+    }
+
+    private ArrayList<String> triMeilleurCreneauPrio(int nbPrio, ArrayList<String> listeCreneauPrio) {
+
+
+        Map<String, Integer> frequencyMap = new HashMap<>();
+
+        // Calculer la fréquence de chaque créneau
+        for (String slot : listeCreneauPrio) {
+            frequencyMap.put(slot, frequencyMap.getOrDefault(slot, 0) + 1);
+        }
+
+        // Filtrer les créneaux pour ne garder que ceux qui apparaissent exactement le nombre de fois spécifié
+        ArrayList<String> filteredSlots = new ArrayList<>();
+        for (Map.Entry<String, Integer> entry : frequencyMap.entrySet()) {
+            if (entry.getValue() == nbPrio) {
+                filteredSlots.add(entry.getKey());
+            }
+        }
+
+        return filteredSlots;
+
+
+
+    }
+
+    public static HashMap<String, Integer> getMostFrequentHours(ArrayList<String> dates, ArrayList<String> autre) {
         HashMap<String, Integer> frequencyMap = new HashMap<>();
+
+        //System.out.print("\n Creneau autre : " + autre + " Creneau Prioritaire : " + dates);
 
         for (String date : dates) {
             String[] parts = date.split(" ");
             String time = parts[1].substring(0, 5);
+            frequencyMap.put(time, frequencyMap.getOrDefault(time, 0) + 1);
+        }
+
+        for (String time : autre) {
             frequencyMap.put(time, frequencyMap.getOrDefault(time, 0) + 1);
         }
 
@@ -451,13 +521,12 @@ public class Logistique extends Utilisateur{
     }
 
 
-    public HashMap<String, Integer> getMeilleurDispo(String jour) throws ParseException {
+
+    public HashMap<String, Integer> getMeilleurDispo(String jour, ArrayList<String> listeCreneauPrio, ArrayList<String> listCreneauAutrePersonnel) throws ParseException {
 
         HashMap<String, Integer> res = new HashMap<>();
 
-        ArrayList<String> listcreneau = getMeilleurCreneau(jour);
-
-        res = getMostFrequentHours(listcreneau);
+        res = getMostFrequentHours(listeCreneauPrio,listCreneauAutrePersonnel);
 
         return res;
 

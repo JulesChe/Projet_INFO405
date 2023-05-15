@@ -1,10 +1,16 @@
 package crud;
 
+import model.Creneau;
 import model.Gymnase;
 import model.Utilisateur;
 
 import java.sql.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class CrudUtilisateurDAO {
 
@@ -71,5 +77,47 @@ public class CrudUtilisateurDAO {
         return ids;
     }
 
+    public Map<Integer, ArrayList<Creneau>> getIndispo() throws SQLException, ParseException {
+        Map<Integer, ArrayList<Creneau>> result = new HashMap<>();
+        String query = "SELECT * FROM indisponibilite ORDER BY id_gardien";
+
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        while (resultSet.next()) {
+            int idGardien = resultSet.getInt("id_gardien");
+            Creneau creneau = new Creneau();
+
+            creneau.setId(resultSet.getInt("id"));
+            creneau.setId_gardien(idGardien);
+
+
+
+
+            //Mise au bon format des dates
+            SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            java.util.Date date = sdf1.parse(String.valueOf(resultSet.getTimestamp("debut")));
+            SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+            String newDateString = sdf2.format(date);
+
+            creneau.setDateDebut(newDateString);
+
+
+            //Mise au bon format des dates
+            SimpleDateFormat sdf3 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date date2 = sdf3.parse(String.valueOf(resultSet.getTimestamp("fin")));
+            SimpleDateFormat sdf4 = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+            String newDateString2 = sdf4.format(date2);
+
+            creneau.setDateFin(newDateString2);
+
+
+            result.computeIfAbsent(idGardien, k -> new ArrayList<>()).add(creneau);
+        }
+
+        resultSet.close();
+
+        return result;
+    }
 
 }
