@@ -29,5 +29,8 @@ public class Gymnase {
     }
 
 
+    public Object getName() {
+            return this.nom;
 
+    }
 }

@@ -543,5 +543,10 @@ public class AgendaVue  {
     private JMenuItem menuItem6;
     private JMenuItem menuItem7;
     private JMenuItem menuItem8;
+
+    public void showView() {
+        WIN.setVisible(true
+        );
+    }
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
 }
