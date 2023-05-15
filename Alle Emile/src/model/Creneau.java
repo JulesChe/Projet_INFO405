@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.format.TextStyle;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
@@ -70,7 +71,7 @@ public class Creneau {
         return dateTime.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.getDefault());
     }
 
-    public static String formatDate(String inputDate) {
+    public String formatDate(String inputDate) {
         DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("dd MMMM yyyy", Locale.FRENCH);
         LocalDate date = LocalDate.parse(inputDate, inputFormatter);
         DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
@@ -130,18 +131,29 @@ public class Creneau {
         this.id_gardien = id_gardien;
     }
 
-    public static String transformDate(String dateString) throws ParseException {
-
+    public String transformDate(String dateString) throws ParseException {
+        SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = sdf1.parse(dateString);
         SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy/MM/dd HH:mm");
-        String newDateString = sdf2.format(dateString);
+        String newDateString = sdf2.format(date);
         return newDateString;
+    }
+
+    public ArrayList<Creneau> transformCreneau(ArrayList<Creneau> lc) throws ParseException {
+        ArrayList<Creneau> res = new ArrayList<>();
+        for (Creneau c : lc){
+            Creneau c1 = new Creneau(this.transformDate(c.getDateDebut()),this.transformDate(c.getDateFin()),c.getAsso());
+            res.add(c1);
+        }
+        return res;
     }
 
     @Override
     public String toString() {
         return
-                " Debut = " + dateDebut +
-                " Fin = " + dateFin +
+                " Association : " + asso +
+                " Debut : " + dateDebut +
+                " Fin : " + dateFin +
                 "\n";
     }
 }

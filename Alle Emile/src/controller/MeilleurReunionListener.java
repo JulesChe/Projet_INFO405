@@ -7,8 +7,10 @@ import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DateFormat;
 import java.text.ParseException;
-import java.util.HashMap;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public class MeilleurReunionListener implements ActionListener {
 
@@ -33,13 +35,32 @@ public class MeilleurReunionListener implements ActionListener {
         try {
             HashMap<String, Integer> hashmap = patrick.getMeilleurDispo(jour);
 
-            // Créer un tableau bidimensionnel pour stocker les données
-            String[][] data = new String[hashmap.size()][2];
-            int i = 0;
+            // Stocker les données dans un tableau ArrayList
+            ArrayList<String[]> dataList = new ArrayList<>();
             for (HashMap.Entry<String, Integer> entry : hashmap.entrySet()) {
-                data[i][0] = entry.getKey();
-                data[i][1] = String.valueOf(entry.getValue());
-                i++;
+                dataList.add(new String[]{entry.getKey(), String.valueOf(entry.getValue())});
+            }
+
+            // Trier les données par ordre croissant en utilisant un comparateur personnalisé pour le format hh:mm
+            Collections.sort(dataList, new Comparator<String[]>() {
+                @Override
+                public int compare(String[] o1, String[] o2) {
+                    DateFormat format = new SimpleDateFormat("HH:mm");
+                    try {
+                        Date time1 = format.parse(o1[0]);
+                        Date time2 = format.parse(o2[0]);
+                        return time1.compareTo(time2);
+                    } catch (ParseException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
+            });
+
+            // Convertir les données triées en un tableau bidimensionnel
+            String[][] data = new String[dataList.size()][2];
+            int i = 0;
+            for (String[] rowData : dataList) {
+                data[i++] = rowData;
             }
 
             // Créer un tableau avec des titres de colonne
@@ -61,6 +82,7 @@ public class MeilleurReunionListener implements ActionListener {
         } catch (ParseException ex) {
             throw new RuntimeException(ex);
         }
+
     }
 
  */

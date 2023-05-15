@@ -14,6 +14,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
 
 public class ConnexionListenerAssociation implements ActionListener {
     private Login login;
@@ -62,6 +63,8 @@ public class ConnexionListenerAssociation implements ActionListener {
 
             } catch (SQLException e1) {
                 e1.printStackTrace();
+            } catch (ParseException ex) {
+                throw new RuntimeException(ex);
             }
         } else {
             JOptionPane.showMessageDialog(null, "Erreur de saisir!");
