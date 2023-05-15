@@ -25,6 +25,8 @@ public class MeilleurReunionListener implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+    }
+    /*
         Logistique patrick = new Logistique();
         String jour = dateReu.getText();
 
@@ -60,4 +62,6 @@ public class MeilleurReunionListener implements ActionListener {
             throw new RuntimeException(ex);
         }
     }
+
+ */
 }

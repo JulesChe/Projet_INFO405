@@ -1,4 +1,5 @@
 package model;
+import java.awt.*;
 import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -83,15 +84,9 @@ public class testBDD extends JFrame{
 
         Gardien emilien = new Gardien("TEST", "test","vzera",1);
 
-        Map<Integer, ArrayList<Creneau>> gardiensCreneaux = emilien.getCreneauxGardien();
 
-        ArrayList<Creneau> lc = emilien.IndispoPersoFinal(1);
+        //ArrayList<Creneau> lc = emilien.IndispoPersoFinal(1);
 
-        for (Creneau creneau : lc) {
-
-            gardiensCreneaux.get(1).add(creneau);
-
-        }
 
 
         //emilien.setIndisponibilites(gardiensCreneaux.get(1));
@@ -102,7 +97,13 @@ public class testBDD extends JFrame{
 
         //System.out.print(emilien.getCreneauxLibres("2023/05/07"));
 
-        System.out.print(patrick.getMostFrequentHours(patrick.getMeilleurCreneau("2023/05/07")));
+        ArrayList<Integer> testListePrio = new ArrayList<>();
+
+        testListePrio.add(1);
+        testListePrio.add(2);
+
+
+        System.out.print(patrick.getMostFrequentHours(patrick.getCreneauPrioritaire("2023/05/07",testListePrio),patrick.getCreneauAutrePersonnel("2023/05/07")));
 
 
     }

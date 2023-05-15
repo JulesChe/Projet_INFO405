@@ -2,6 +2,7 @@ package model;
 import crud.CrudCompteAssoDAO;
 import crud.CrudCreneauDAO;
 import crud.CrudGardienDAO;
+import crud.CrudUtilisateurDAO;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -79,8 +80,8 @@ public class Gardien extends Utilisateur{
         return id;
     }
 
-    public ArrayList<Creneau> getIndispo(int id){
-        ArrayList<Creneau> c = null;
+    public Map<Integer, ArrayList<Creneau>> getIndispo(){
+        Map<Integer, ArrayList<Creneau>> listecreneauPersonnel = null;
         Connection connection = null;
         try {
 
@@ -94,19 +95,29 @@ public class Gardien extends Utilisateur{
 
 
             // Créer un objet UtilisateurDAO
-            CrudGardienDAO assoDAO = new CrudGardienDAO(connection);
+            CrudUtilisateurDAO utilisateurDAO = new CrudUtilisateurDAO(connection);
 
             // Ajouter un creneau
 
-            c = assoDAO.getIndispo(id);
+            listecreneauPersonnel = utilisateurDAO.getIndispo();
 
             System.out.println("ID Association trouvé avec succès.");
+
+            for(Map.Entry mapentry : listecreneauPersonnel.entrySet()){
+
+                listecreneauPersonnel.put((Integer) mapentry.getKey(),tabIndispo((ArrayList<Creneau>) mapentry.getValue()));
+
+            }
+
+
 
 
         } catch (ClassNotFoundException e) {
             System.err.println("Pilote JDBC introuvable.");
         } catch (SQLException e) {
             System.err.println("Erreur lors de la connexion à la base de données : " + e.getMessage());
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
         } finally {
             if (connection != null) {
                 try {
@@ -117,7 +128,7 @@ public class Gardien extends Utilisateur{
             }
         }
 
-        return c;
+        return listecreneauPersonnel;
     }
 
     public static String addOneHour(Date date) {
@@ -135,8 +146,8 @@ public class Gardien extends Utilisateur{
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm");
         ArrayList<Creneau> res = new ArrayList<Creneau>();
         for (Creneau c : listeCreneaux){
-            Date debut = sdf.parse(c.transformDate(c.getDateDebut()));
-            Date fin = sdf.parse(c.transformDate(c.getDateFin()));
+            Date debut = sdf.parse(c.getDateDebut());
+            Date fin = sdf.parse(c.getDateFin());
             while (debut.before(fin)) {
                 String dateDebut = sdf.format(debut);
                 String dateFin = this.addOneHour(debut);
@@ -164,11 +175,11 @@ public class Gardien extends Utilisateur{
         return res;
     }
 
-    public ArrayList<Creneau> IndispoPersoFinal(int id) throws ParseException {
+   /* public ArrayList<Creneau> IndispoPersoFinal(int id) throws ParseException {
         ArrayList<Creneau> res = new ArrayList<Creneau>();
-        res = this.IndispoVac(this.tabIndispo(this.getIndispo(id)));
+        res = this.IndispoVac(this.tabIndispo(this.getIndispo()));
         return res;
-    }
+    }*/
 
 
 
@@ -183,8 +194,8 @@ public class Gardien extends Utilisateur{
         return res;
     }
 
-    public Map<Integer, ArrayList<Creneau>> getCreneauxGardien() {
-        Map<Integer, ArrayList<Creneau>> gardiensCreneaux = null;
+    public Map<Integer, ArrayList<Creneau>> getCreneauxPersonnel() {
+        Map<Integer, ArrayList<Creneau>> personnelCreneaux = null;
         Connection connection = null;
         try {
             // Charger le pilote JDBC
@@ -194,7 +205,7 @@ public class Gardien extends Utilisateur{
             System.out.println("Connexion établie avec succès.");
             // Créer un objet CreneauDAO
             CrudCreneauDAO creneauDAO = new CrudCreneauDAO(connection);
-            gardiensCreneaux = creneauDAO.getAllGardiensCreneaux();
+            personnelCreneaux = creneauDAO.getAllGardiensCreneaux();
         } catch (ClassNotFoundException e) {
             System.err.println("Pilote JDBC introuvable.");
         } catch (SQLException e) {
@@ -210,36 +221,41 @@ public class Gardien extends Utilisateur{
                 }
             }
         }
-        return gardiensCreneaux;
+        return personnelCreneaux;
     }
 
     public void setAllIndispoGardien(int idGardien) throws ParseException {
 
         Map<Integer, ArrayList<Creneau>> gardiensCreneaux = null;
-        gardiensCreneaux = this.getCreneauxGardien();
-
+        gardiensCreneaux = this.getCreneauxPersonnel();
+        Map<Integer, ArrayList<Creneau>> listeIndispo = this.getIndispo();
 
 
         //J'ajoute les indisponibilités en plus des creneaux
-        for (Creneau creneau : this.IndispoPersoFinal(idGardien)) {
 
-            gardiensCreneaux.get(idGardien).add(creneau);
+        if(listeIndispo.get(idGardien) != null){
+
+            for (Creneau creneau : listeIndispo.get(idGardien)) {
+
+                gardiensCreneaux.get(idGardien).add(creneau);
 
 
+            }
         }
+
+
         if (gardiensCreneaux.get(idGardien)==null) {
         }else{
             this.setIndisponibilites(gardiensCreneaux.get(idGardien));
+            this.setId(idGardien);
         }
-
-
 
 
 
     }
 
 
-    public ArrayList<String> getCreneauxLibres(String jour) {
+    public HashMap<Integer, ArrayList<String>> getCreneauxLibres(String jour) {
         ArrayList<Creneau> creneaux = (ArrayList<Creneau>) this.getIndisponibilites();
         ArrayList<String> creneauxLibres = new ArrayList<String>();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm");
@@ -268,7 +284,10 @@ public class Gardien extends Utilisateur{
             }
         }
 
-        return creneauxLibres;
+
+        HashMap<Integer, ArrayList<String>> res = new HashMap<>();
+        res.put(this.getID(),creneauxLibres);
+        return res;
     }
 
 

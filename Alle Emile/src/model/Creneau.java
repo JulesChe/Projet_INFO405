@@ -131,10 +131,9 @@ public class Creneau {
     }
 
     public static String transformDate(String dateString) throws ParseException {
-        SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Date date = sdf1.parse(dateString);
+
         SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy/MM/dd HH:mm");
-        String newDateString = sdf2.format(date);
+        String newDateString = sdf2.format(dateString);
         return newDateString;
     }
 

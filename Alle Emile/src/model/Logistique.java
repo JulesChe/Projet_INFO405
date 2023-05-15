@@ -6,8 +6,6 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 import crud.*;
@@ -395,9 +393,7 @@ public class Logistique extends Utilisateur{
         return resultList;
     }
 
-
-
-    public ArrayList<String> getMeilleurCreneau(String jour) throws ParseException {
+   public ArrayList<String> getCreneauAutrePersonnel(String jour) throws ParseException {
 
         ArrayList<String> res = new ArrayList<>();
 
@@ -409,12 +405,17 @@ public class Logistique extends Utilisateur{
 
             g.setAllIndispoGardien(id);
 
+            Map<Integer, ArrayList<String>> resInt = g.getCreneauxLibres(jour);
 
-            ArrayList<String> resInt = g.getCreneauxLibres(jour);
+            for(Map.Entry mapentry : resInt.entrySet()){
 
-            for(String s : resInt){
+                for(String s : (ArrayList<String>)mapentry.getValue()){
 
-                res.add(s);
+                    res.add(s);
+
+                }
+
+
             }
 
         }
@@ -423,7 +424,37 @@ public class Logistique extends Utilisateur{
         return res;
     }
 
-    public static HashMap<String, Integer> getMostFrequentHours(ArrayList<String> dates) {
+    public ArrayList<String> getCreneauPrioritaire(String jour,ArrayList<Integer> listePrioritaire) throws ParseException {
+
+        ArrayList<String> res = new ArrayList<>();
+
+
+        for(int id : listePrioritaire){
+
+            Gardien g = new Gardien();
+
+            g.setAllIndispoGardien(id);
+
+            Map<Integer, ArrayList<String>> resInt = g.getCreneauxLibres(jour);
+
+            for(Map.Entry mapentry : resInt.entrySet()){
+
+                for(String s : (ArrayList<String>)mapentry.getValue()){
+
+                    res.add(s);
+
+                }
+
+
+            }
+
+        }
+
+
+        return res;
+    }
+
+    public static HashMap<ArrayList<String>, Integer> getMostFrequentHours(ArrayList<String> dates, ArrayList<String> autre) {
         HashMap<String, Integer> frequencyMap = new HashMap<>();
 
         for (String date : dates) {
@@ -432,18 +463,23 @@ public class Logistique extends Utilisateur{
             frequencyMap.put(time, frequencyMap.getOrDefault(time, 0) + 1);
         }
 
-        HashMap<String, Integer> result = new HashMap<>();
+        HashMap<ArrayList<String>, Integer> result = new HashMap<>();
         int maxFrequency = 0;
 
-        for (Map.Entry<String, Integer> entry : frequencyMap.entrySet()) {
-            int frequency = entry.getValue();
+        for (String time : autre) {
+            int frequency = frequencyMap.getOrDefault(time, 0);
 
             if (frequency > maxFrequency) {
                 maxFrequency = frequency;
                 result.clear();
-                result.put(entry.getKey(), frequency);
+                ArrayList<String> mostFrequentHours = new ArrayList<>();
+                mostFrequentHours.add(time);
+                result.put(mostFrequentHours, frequency);
             } else if (frequency == maxFrequency) {
-                result.put(entry.getKey(), frequency);
+                for (ArrayList<String> hours : result.keySet()) {
+                    hours.add(time);
+                    break; // Ajouté pour éviter l'ajout multiple d'heures
+                }
             }
         }
 
@@ -451,13 +487,12 @@ public class Logistique extends Utilisateur{
     }
 
 
-    public HashMap<String, Integer> getMeilleurDispo(String jour) throws ParseException {
 
-        HashMap<String, Integer> res = new HashMap<>();
+    public HashMap<ArrayList<String>, Integer> getMeilleurDispo(String jour, ArrayList<String> listeCreneauPrio, ArrayList<String> listCreneauAutrePersonnel) throws ParseException {
 
-        ArrayList<String> listcreneau = getMeilleurCreneau(jour);
+        HashMap<ArrayList<String>, Integer> res = new HashMap<>();
 
-        res = getMostFrequentHours(listcreneau);
+        res = getMostFrequentHours(listeCreneauPrio,listCreneauAutrePersonnel);
 
         return res;
 
