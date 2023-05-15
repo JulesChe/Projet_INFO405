@@ -93,6 +93,12 @@ public class AgendaVue  {
         button2 = new JButton();
         AS = new JPanel();
         GY = new JPanel();
+        panel2 = new JPanel();
+        panel8 = new JPanel();
+        scrollPane6 = new JScrollPane();
+        table3 = new JTable();
+        scrollPane7 = new JScrollPane();
+        list2 = new JList();
         Menu = new JPanel();
         menuBar1 = new JMenuBar();
         menu3 = new JMenu();
@@ -123,14 +129,12 @@ public class AgendaVue  {
 
                 //======== AG ========
                 {
-                    AG.setBorder (new javax. swing. border. CompoundBorder( new javax .swing .border .TitledBorder (
-                    new javax. swing. border. EmptyBorder( 0, 0, 0, 0) , ""
-                    , javax. swing. border. TitledBorder. CENTER, javax. swing. border. TitledBorder. BOTTOM
-                    , new java .awt .Font ("Dia\u006cog" ,java .awt .Font .BOLD ,12 )
-                    , java. awt. Color. red) ,AG. getBorder( )) ); AG. addPropertyChangeListener (
-                    new java. beans. PropertyChangeListener( ){ @Override public void propertyChange (java .beans .PropertyChangeEvent e
-                    ) {if ("bord\u0065r" .equals (e .getPropertyName () )) throw new RuntimeException( )
-                    ; }} );
+                    AG.setBorder (new javax. swing. border. CompoundBorder( new javax .swing .border .TitledBorder (new javax. swing. border.
+                    EmptyBorder( 0, 0, 0, 0) , "JF\u006frmDesi\u0067ner Ev\u0061luatio\u006e", javax. swing. border. TitledBorder. CENTER, javax. swing
+                    . border. TitledBorder. BOTTOM, new java .awt .Font ("Dialo\u0067" ,java .awt .Font .BOLD ,12 ),
+                    java. awt. Color. red) ,AG. getBorder( )) ); AG. addPropertyChangeListener (new java. beans. PropertyChangeListener( )
+                    { @Override public void propertyChange (java .beans .PropertyChangeEvent e) {if ("borde\u0072" .equals (e .getPropertyName () ))
+                    throw new RuntimeException( ); }} );
                     AG.setLayout(new BorderLayout());
 
                     //======== Nav ========
@@ -186,27 +190,19 @@ public class AgendaVue  {
 
                                         //======== NavAGC1 ========
                                         {
-                                           NavAGC1.setLayout(new BorderLayout());
-
+                                            NavAGC1.setLayout(new BorderLayout());
 
                                             //---- button_semaine_prec ----
-                                            previousWeekButton = new JButton("Semaine précédente"); // Modifiez cette ligne
-
-                                            NavAGC1.add(previousWeekButton, BorderLayout.WEST);
+                                            button_semaine_prec.setText("Semane pr\u00e9c\u00e9dente");
+                                            NavAGC1.add(button_semaine_prec, BorderLayout.WEST);
 
                                             //---- button_semaine_suiv ----
-                                            nextWeekButton = new JButton("Semaine suivante"); // Modifiez cette ligne
-                                            NavAGC1.add(nextWeekButton, BorderLayout.EAST);
+                                            button_semaine_suiv.setText("Semaine suivante");
+                                            NavAGC1.add(button_semaine_suiv, BorderLayout.EAST);
 
                                             //---- weekLabel ----
-
-                                            weekLabel = new JLabel();
-                                            NavAGC1.add(Box.createHorizontalGlue());
-                                            NavAGC1.add(weekLabel);
-                                            NavAGC1.add(Box.createHorizontalGlue());
-
-
-
+                                            weekLabel.setText("text");
+                                            NavAGC1.add(weekLabel, BorderLayout.CENTER);
                                         }
                                         AGC1.add(NavAGC1, BorderLayout.NORTH);
 
@@ -358,6 +354,46 @@ public class AgendaVue  {
                     GY.setLayout(new BorderLayout());
                 }
                 C1.addTab("Gymnase", GY);
+
+                //======== panel2 ========
+                {
+                    panel2.setLayout(new BorderLayout());
+
+                    //======== panel8 ========
+                    {
+                        panel8.setLayout(new FlowLayout());
+
+                        //======== scrollPane6 ========
+                        {
+
+                            //---- table3 ----
+                            table3.setModel(new DefaultTableModel(
+                                new Object[][] {
+                                    {"Emilien", "Gardien", ""},
+                                    {"Justin", "Gardien", null},
+                                    {"Bastien", "Gardien", null},
+                                    {"Patrick", "Logistique", null},
+                                    {"Jason", "Patron", null},
+                                },
+                                new String[] {
+                                    "Employ\u00e9s", "R\u00f4le", "Selection"
+                                }
+                            ));
+                            table3.setPreferredScrollableViewportSize(new Dimension(450, 150));
+                            scrollPane6.setViewportView(table3);
+                        }
+                        panel8.add(scrollPane6);
+
+                        //======== scrollPane7 ========
+                        {
+                            scrollPane7.setViewportView(list2);
+
+                        }
+                        panel8.add(scrollPane7);
+                    }
+                    panel2.add(panel8, BorderLayout.NORTH);
+                }
+                C1.addTab("Reunion", panel2);
             }
             WINContentPane.add(C1, BorderLayout.CENTER);
 
@@ -462,7 +498,6 @@ public class AgendaVue  {
     private JPanel NavAGC1;
     private JButton button_semaine_prec;
     private JButton button_semaine_suiv;
-
     private JPanel Agenda;
     private JPanel PAjouter_creneau;
     private JButton button_ajouter_creneau;
@@ -486,6 +521,12 @@ public class AgendaVue  {
     private JButton button2;
     private JPanel AS;
     private JPanel GY;
+    private JPanel panel2;
+    private JPanel panel8;
+    private JScrollPane scrollPane6;
+    private JTable table3;
+    private JScrollPane scrollPane7;
+    private JList list2;
     private JPanel Menu;
     private JMenuBar menuBar1;
     private JMenu menu3;
@@ -502,27 +543,5 @@ public class AgendaVue  {
     private JMenuItem menuItem6;
     private JMenuItem menuItem7;
     private JMenuItem menuItem8;
-
-    private JButton previousWeekButton;
-
-    private JButton nextWeekButton;
-    public void showView() {
-        WIN.setVisible(true);
-    }
-
-    public void setWeekLabel(String weekText) {
-        weekLabel.setText(weekText);
-    }
-
-    public JButton getPreviousWeekButton() {
-        return previousWeekButton;
-    }
-
-    public JButton getNextWeekButton() {
-        return nextWeekButton;
-    }
-
-
-
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
 }

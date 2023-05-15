@@ -45,12 +45,20 @@ public class Creneau {
         return dateFin;
     }
 
-    public void setDateDebut(String dateDebut) {
-        this.dateDebut = dateDebut;
+    public void setDateDebut(String dateDebut) throws IllegalArgumentException {
+        if (isValidQuarterHour(dateDebut)) {
+            this.dateDebut = dateDebut;
+        } else {
+            throw new IllegalArgumentException("Invalid time. Time must be on quarter hours.");
+        }
     }
 
-    public void setDateFin(String dateFin) {
-        this.dateFin = dateFin;
+    public void setDateFin(String dateFin) throws IllegalArgumentException {
+        if (isValidQuarterHour(dateFin)) {
+            this.dateFin = dateFin;
+        } else {
+            throw new IllegalArgumentException("Invalid time. Time must be on quarter hours.");
+        }
     }
 
     public String getDayOfWeek() {
@@ -69,6 +77,13 @@ public class Creneau {
 
         // Récupérer le jour de la semaine sous forme d'une chaîne de caractères
         return dateTime.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.getDefault());
+    }
+
+    private boolean isValidQuarterHour(String dateTimeString) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm");
+        LocalDateTime dateTime = LocalDateTime.parse(dateTimeString, formatter);
+        int minutes = dateTime.getMinute();
+        return minutes % 15 == 0;
     }
 
     public String formatDate(String inputDate) {
