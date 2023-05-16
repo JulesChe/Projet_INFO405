@@ -163,6 +163,10 @@ public class WeeklyAgendaView {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
+        JLabel personnePrio = new JLabel("Ajout de personnes prioritaire :");
+
+        panel.add(personnePrio);
+
         // Parcours des données récupérées
         for (Map.Entry<Integer, ArrayList<String>> entry : data.entrySet()) {
             // Création de la case à cocher
@@ -172,6 +176,23 @@ public class WeeklyAgendaView {
 
             checkboxKeys.put(checkbox, entry.getKey());
         }
+
+        //Ajout des 3 checkboxs de filtre
+
+        JLabel rolePrio = new JLabel("Choisir un role prioritaire :");
+
+        panel.add(rolePrio);
+
+        JCheckBox checkboxGardien = new JCheckBox("Gardien");
+
+        JCheckBox checkboxLogistique = new JCheckBox("Logistique");
+
+        JCheckBox checkboxDirecteur = new JCheckBox("Directeur");
+
+        panel.add(checkboxGardien);
+        panel.add(checkboxLogistique);
+        panel.add(checkboxDirecteur);
+
 
         return panel;
     }

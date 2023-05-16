@@ -84,11 +84,38 @@ public class MeilleurReunionListener implements ActionListener {
         Logistique patrick = new Logistique();
         String jour = dateReu.getText();
 
+        ArrayList<Integer> liste = new ArrayList<>();
+
         try {
 
-            ArrayList<Integer> listePrio = this.recupereIdListePrio(data, checkboxesPanel);
 
-            HashMap<String, Integer> hashmap = patrick.getMeilleurDispo(jour,listePrio);
+            for (Component comp : checkboxesPanel.getComponents()) {
+                if (comp instanceof JCheckBox) {
+                    JCheckBox checkbox = (JCheckBox) comp;
+                    if (checkbox.isSelected()) {
+                        // Récupération de la clé correspondante à partir de la Map
+                        if(checkbox.getText().equals("Gardien")){
+
+                            liste = patrick.getAllIdGardien();
+                        } else if (checkbox.getText().equals("Logistique")) {
+
+                            liste = patrick.getAllIdLogistique();
+                        } else if (checkbox.getText().equals("Directeur")) {
+
+                            liste = patrick.getIdPO();
+                            
+                        } else {
+
+                            liste = this.recupereIdListePrio(data, checkboxesPanel);
+                        }
+
+                    }
+                }
+            }
+
+
+
+            HashMap<String, Integer> hashmap = patrick.getMeilleurDispo(jour,liste);
 
             // Stocker les données dans un tableau ArrayList
             ArrayList<String[]> dataList = new ArrayList<>();
