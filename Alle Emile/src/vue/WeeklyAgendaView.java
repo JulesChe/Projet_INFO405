@@ -6,6 +6,7 @@ import crud.CrudGymnaseDAO;
 import model.*;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -121,8 +122,24 @@ public class WeeklyAgendaView {
 
         if(modele.isPersonnelLog()){
             // Ajout de l'onglet "Reunion"
+            JPanel reunionPanel = new JPanel(new GridBagLayout());
 
-            JPanel reunionPanel = new JPanel();
+            GridBagConstraints gbc = new GridBagConstraints();
+            gbc.fill = GridBagConstraints.BOTH;
+
+            JPanel infosPanel = new JPanel(new FlowLayout());
+            JPanel resultatReuPanel = new JPanel(new BorderLayout());
+
+            gbc.weightx = 1;
+            gbc.weighty = 0.3; // this gives 30% of the space to the infosPanel
+            gbc.gridx = 0;
+            gbc.gridy = 0;
+            reunionPanel.add(infosPanel, gbc);
+
+            gbc.weighty = 0.7; // this gives 70% of the space to the resultatReuPanel
+            gbc.weightx = 0.8;
+            gbc.gridy = 1;
+            reunionPanel.add(resultatReuPanel, gbc);
 
             reunionPanel.setBorder(new TitledBorder("Reunion"));
 
@@ -130,29 +147,40 @@ public class WeeklyAgendaView {
 
             JButton boutonAdd = new JButton("Proposer une reunion");
 
-
             Utilisateur u = new Utilisateur();
 
             HashMap<Integer, ArrayList<String>> data = u.selectAllUtilisateurs();
 
             HashMap<JCheckBox, Integer> checkboxKeys = new HashMap<>();
 
+            JLabel lundi = new JLabel("Lundi : ");
+            JLabel mardi = new JLabel("Mardi : ");
+            JLabel mercredi = new JLabel("Mercredi : ");
+            JLabel jeudi = new JLabel("Jeudi : ");
+            JLabel vendredi = new JLabel("Vendredi : ");
 
-            reunionPanel.add(dateReu);
-            reunionPanel.add(boutonAdd);
+            JPanel jourPanel = new JPanel(new GridLayout(5,2));
+
+            jourPanel.add(lundi);
+            jourPanel.add(mardi);
+            jourPanel.add(mercredi);
+            jourPanel.add(jeudi);
+            jourPanel.add(vendredi);
+
+            resultatReuPanel.add(jourPanel,BorderLayout.CENTER);
+
+            infosPanel.add(dateReu);
+            infosPanel.add(boutonAdd);
 
             // Création du JPanel avec les cases à cocher
             JPanel checkboxesPanel = panelCheckBoxPrioritaire(data,checkboxKeys);
 
             boutonAdd.addActionListener(new MeilleurReunionListener(checkboxesPanel,dateReu,reunionPanel,data,checkboxKeys));
 
-
             // Ajout du JPanel avec les cases à cocher à reunionPanel
-            reunionPanel.add(checkboxesPanel);
+            infosPanel.add(checkboxesPanel);
 
             tabbedPane.addTab("Reunion", null, reunionPanel, "Reunion");
-
-
         }
     }
 

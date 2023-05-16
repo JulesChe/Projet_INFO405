@@ -115,6 +115,7 @@ public class MeilleurReunionListener implements ActionListener {
 
 
 
+
             HashMap<String, Integer> hashmap = patrick.getMeilleurDispo(jour,liste);
 
             // Stocker les données dans un tableau ArrayList
