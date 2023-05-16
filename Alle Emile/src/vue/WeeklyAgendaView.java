@@ -6,7 +6,6 @@ import crud.CrudGymnaseDAO;
 import model.*;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -15,7 +14,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 public class WeeklyAgendaView {
     public JFrame frame;
@@ -116,7 +117,7 @@ public class WeeklyAgendaView {
     }
 
 
-    private void vueReunion(){
+    private void vueReunion() throws SQLException {
 
         if(modele.isPersonnelLog()){
             // Ajout de l'onglet "Reunion"
@@ -129,15 +130,50 @@ public class WeeklyAgendaView {
 
             JButton boutonAdd = new JButton("Proposer une reunion");
 
-            boutonAdd.addActionListener(new MeilleurReunionListener(dateReu,reunionPanel));
+
+            Utilisateur u = new Utilisateur();
+
+            HashMap<Integer, ArrayList<String>> data = u.selectAllUtilisateurs();
+
+            HashMap<JCheckBox, Integer> checkboxKeys = new HashMap<>();
+
 
             reunionPanel.add(dateReu);
             reunionPanel.add(boutonAdd);
+
+            // Création du JPanel avec les cases à cocher
+            JPanel checkboxesPanel = panelCheckBoxPrioritaire(data,checkboxKeys);
+
+            boutonAdd.addActionListener(new MeilleurReunionListener(checkboxesPanel,dateReu,reunionPanel,data,checkboxKeys));
+
+
+            // Ajout du JPanel avec les cases à cocher à reunionPanel
+            reunionPanel.add(checkboxesPanel);
 
             tabbedPane.addTab("Reunion", null, reunionPanel, "Reunion");
 
 
         }
+    }
+
+
+    private JPanel panelCheckBoxPrioritaire(HashMap<Integer, ArrayList<String>> data, HashMap<JCheckBox, Integer> checkboxKeys) throws SQLException {
+
+        // Création du JPanel
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+
+        // Parcours des données récupérées
+        for (Map.Entry<Integer, ArrayList<String>> entry : data.entrySet()) {
+            // Création de la case à cocher
+            JCheckBox checkbox = new JCheckBox(entry.getValue().toString());
+            // Ajout de la case à cocher au panel
+            panel.add(checkbox);
+
+            checkboxKeys.put(checkbox, entry.getKey());
+        }
+
+        return panel;
     }
 
     private void vueDemandeDeCreneau(){

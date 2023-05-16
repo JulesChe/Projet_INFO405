@@ -3,6 +3,7 @@ package crud;
 import model.Creneau;
 import model.Gymnase;
 import model.Utilisateur;
+import ressource.Role;
 
 import java.sql.*;
 import java.text.ParseException;
@@ -118,6 +119,45 @@ public class CrudUtilisateurDAO {
         resultSet.close();
 
         return result;
+    }
+
+
+    public HashMap<Integer,ArrayList<String>> selectAll() throws SQLException{
+        // Création de la requête SQL
+        String query = "SELECT * FROM comptePersonnel";
+
+        // Création de l'objet Statement pour exécuter la requête
+        Statement stmt = connection.createStatement();
+
+        // Exécution de la requête
+        ResultSet rs = stmt.executeQuery(query);
+        HashMap<Integer,ArrayList<String>> liste = new HashMap<>();
+        // Parcours des résultats et ajout des identifiants à l'ArrayList
+
+        while (rs.next()) {
+            String nom = rs.getString("nom");
+            String prenom = rs.getString("prenom");
+            int grade = rs.getInt("grade");
+            int id = rs.getInt("id");
+
+            ArrayList<String> infos = new ArrayList<>();
+            infos.add(nom);
+            infos.add(prenom);
+
+            Role role = new Role();
+
+            infos.add(role.role(grade));
+
+
+            liste.put(id,infos);
+        }
+
+        // Fermeture des ressources
+        rs.close();
+        stmt.close();
+        connection.close();
+
+        return liste;
     }
 
 }

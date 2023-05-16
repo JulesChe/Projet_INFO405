@@ -522,11 +522,15 @@ public class Logistique extends Utilisateur{
 
 
 
-    public HashMap<String, Integer> getMeilleurDispo(String jour, ArrayList<String> listeCreneauPrio, ArrayList<String> listCreneauAutrePersonnel) throws ParseException {
+    public HashMap<String, Integer> getMeilleurDispo(String jour, ArrayList<Integer> listeIdPrioritaire) throws ParseException {
+
+        ArrayList<String> listeCreneauPrio = this.getCreneauPrioritaire(jour,listeIdPrioritaire);
+
+        ArrayList<String> listeAutrePersonnel = this.getCreneauAutrePersonnel(jour);
 
         HashMap<String, Integer> res = new HashMap<>();
 
-        res = getMostFrequentHours(listeCreneauPrio,listCreneauAutrePersonnel);
+        res = getMostFrequentHours(listeCreneauPrio,listeAutrePersonnel);
 
         return res;
 

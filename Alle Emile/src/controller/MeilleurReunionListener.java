@@ -3,7 +3,6 @@ package controller;
 import model.Logistique;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,29 +10,85 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.List;
 
 public class MeilleurReunionListener implements ActionListener {
 
     private JPanel reunionPanel;
     private JTextField dateReu;
 
-    public MeilleurReunionListener(JTextField dateReu, JPanel reunionPanel) {
+    private JPanel checkboxesPanel;
+
+    private HashMap<Integer, ArrayList<String>> data;
+
+    private HashMap<JCheckBox, Integer> checkboxKeys;
+
+    public MeilleurReunionListener(JPanel checkboxesPanel, JTextField dateReu, JPanel reunionPanel, HashMap<Integer, ArrayList<String>> data,HashMap<JCheckBox, Integer> checkboxKeys) {
 
         this.dateReu = dateReu;
 
         this.reunionPanel = reunionPanel;
 
+        this.checkboxesPanel = checkboxesPanel;
+
+        this.data = data;
+
+        this.checkboxKeys = checkboxKeys;
+
+    }
+
+    private List<Integer> getSelectedCheckboxes(JPanel panel) {
+        List<Integer> selectedKeys = new ArrayList<>();
+        for (Component comp : panel.getComponents()) {
+            if (comp instanceof JCheckBox) {
+                JCheckBox checkbox = (JCheckBox) comp;
+                if (checkbox.isSelected()) {
+                    // Récupération de la clé correspondante à partir de la Map
+                    Integer key = checkboxKeys.get(checkbox);
+                    selectedKeys.add(key);
+                }
+            }
+        }
+        return selectedKeys;
+    }
+
+    public ArrayList<Integer> recupereIdListePrio(HashMap<Integer, ArrayList<String>> data, JPanel checkboxesPanel){
+
+        List<Integer> selected = getSelectedCheckboxes(checkboxesPanel);
+
+        ArrayList<Integer> res = new ArrayList<>();
+
+        for(Map.Entry mapentry : data.entrySet()){
+
+
+            for(int id : selected){
+
+                if(mapentry.getKey().equals(id)){
+
+                    res.add(id);
+                }
+            }
+
+        }
+
+        System.out.print(res);
+
+        return res;
+
+
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-    }
-    /*
+
         Logistique patrick = new Logistique();
         String jour = dateReu.getText();
 
         try {
-            HashMap<String, Integer> hashmap = patrick.getMeilleurDispo(jour);
+
+            ArrayList<Integer> listePrio = this.recupereIdListePrio(data, checkboxesPanel);
+
+            HashMap<String, Integer> hashmap = patrick.getMeilleurDispo(jour,listePrio);
 
             // Stocker les données dans un tableau ArrayList
             ArrayList<String[]> dataList = new ArrayList<>();
@@ -45,7 +100,7 @@ public class MeilleurReunionListener implements ActionListener {
             Collections.sort(dataList, new Comparator<String[]>() {
                 @Override
                 public int compare(String[] o1, String[] o2) {
-                    DateFormat format = new SimpleDateFormat("HH:mm");
+                    DateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm");
                     try {
                         Date time1 = format.parse(o1[0]);
                         Date time2 = format.parse(o2[0]);
@@ -67,6 +122,7 @@ public class MeilleurReunionListener implements ActionListener {
             String[] columnNames = {"Heure", "Nombre de personne"};
 
             // Créer une nouvelle JTable avec les données et les titres de colonne
+
             JTable table = new JTable(data, columnNames);
 
             // Ajouter la table à un JScrollPane pour permettre le défilement
@@ -85,5 +141,8 @@ public class MeilleurReunionListener implements ActionListener {
 
     }
 
- */
+
 }
+
+
+
