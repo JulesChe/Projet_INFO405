@@ -102,9 +102,10 @@ public class testBDD extends JFrame{
         testListePrio.add(1);
         testListePrio.add(2);
 
-
-        System.out.print(patrick.getMostFrequentHours(patrick.getCreneauPrioritaire("2023/05/07",testListePrio),patrick.getCreneauAutrePersonnel("2023/05/07")));
-
+       // System.out.println(patrick.getMeilleurDispo("2023/05/07",patrick.getCreneauPrioritaire("2023/05/07",testListePrio),patrick.getCreneauAutrePersonnel("2023/05/07")));
+        System.out.println(patrick.getAllIdGardien());
+        System.out.println(patrick.getAllIdLogistique());
+        System.out.println(patrick.getIdPO());
 
     }
 

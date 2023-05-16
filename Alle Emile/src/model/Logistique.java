@@ -393,6 +393,120 @@ public class Logistique extends Utilisateur{
         return resultList;
     }
 
+    public ArrayList<Integer> getAllIdGardien() {
+
+        Connection connection = null;
+        ArrayList<Integer> resultList = null;
+        try {
+
+            // Charger le pilote JDBC
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            // Etablir la connexion avec la base de données
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/allezemile", "allezemile", "nT7");
+            System.out.println("Connexion établie avec succès.");
+
+            // Créer un objet UtilisateurDAO
+            CrudUtilisateurDAO utilisateurDAO = new CrudUtilisateurDAO(connection);
+
+            // Accepter un creneau
+            resultList = new ArrayList<>();
+            resultList = utilisateurDAO.getIdGardien();
+            System.out.println("Id Gardien récupérée avec succès.");
+
+
+        } catch (ClassNotFoundException e) {
+            System.err.println("Pilote JDBC introuvable.");
+        } catch (SQLException e) {
+            System.err.println("Erreur lors de la connexion à la base de données : " + e.getMessage());
+        } finally {
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    System.err.println("Erreur lors de la fermeture de la connexion : " + e.getMessage());
+                }
+            }
+        }
+        return resultList;
+    }
+
+    public ArrayList<Integer> getAllIdLogistique() {
+
+        Connection connection = null;
+        ArrayList<Integer> resultList = null;
+        try {
+
+            // Charger le pilote JDBC
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            // Etablir la connexion avec la base de données
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/allezemile", "allezemile", "nT7");
+            System.out.println("Connexion établie avec succès.");
+
+            // Créer un objet UtilisateurDAO
+            CrudUtilisateurDAO utilisateurDAO = new CrudUtilisateurDAO(connection);
+
+            // Accepter un creneau
+            resultList = new ArrayList<>();
+            resultList = utilisateurDAO.getIdLogistique();
+            System.out.println("Id Logistique récupérée avec succès.");
+
+
+        } catch (ClassNotFoundException e) {
+            System.err.println("Pilote JDBC introuvable.");
+        } catch (SQLException e) {
+            System.err.println("Erreur lors de la connexion à la base de données : " + e.getMessage());
+        } finally {
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    System.err.println("Erreur lors de la fermeture de la connexion : " + e.getMessage());
+                }
+            }
+        }
+        return resultList;
+    }
+
+    public ArrayList<Integer> getIdPO() {
+
+        Connection connection = null;
+        ArrayList<Integer> resultList = null;
+        try {
+
+            // Charger le pilote JDBC
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            // Etablir la connexion avec la base de données
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/allezemile", "allezemile", "nT7");
+            System.out.println("Connexion établie avec succès.");
+
+            // Créer un objet UtilisateurDAO
+            CrudUtilisateurDAO utilisateurDAO = new CrudUtilisateurDAO(connection);
+
+            // Accepter un creneau
+            resultList = new ArrayList<>();
+            resultList = utilisateurDAO.getIdPO();
+            System.out.println("Id PO récupérée avec succès.");
+
+
+        } catch (ClassNotFoundException e) {
+            System.err.println("Pilote JDBC introuvable.");
+        } catch (SQLException e) {
+            System.err.println("Erreur lors de la connexion à la base de données : " + e.getMessage());
+        } finally {
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    System.err.println("Erreur lors de la fermeture de la connexion : " + e.getMessage());
+                }
+            }
+        }
+        return resultList;
+    }
+
    public ArrayList<String> getCreneauAutrePersonnel(String jour) throws ParseException {
 
         ArrayList<String> res = new ArrayList<>();

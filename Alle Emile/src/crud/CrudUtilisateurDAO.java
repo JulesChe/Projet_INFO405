@@ -160,4 +160,58 @@ public class CrudUtilisateurDAO {
         return liste;
     }
 
+    public ArrayList<Integer> getIdGardien() throws SQLException {
+        ArrayList<Integer> resultList = new ArrayList<>();
+
+        PreparedStatement preparedStatement = connection.prepareStatement("SELECT id FROM `comptePersonnel` WHERE grade = ?");
+        preparedStatement.setInt(1, 1);
+
+        ResultSet rs = preparedStatement.executeQuery();
+
+        while (rs.next()) {
+            resultList.add(rs.getInt("id"));
+        }
+
+        rs.close();
+        preparedStatement.close();
+
+        return resultList;
+    }
+
+    public ArrayList<Integer> getIdLogistique() throws SQLException {
+        ArrayList<Integer> resultList = new ArrayList<>();
+
+        PreparedStatement preparedStatement = connection.prepareStatement("SELECT id FROM `comptePersonnel` WHERE grade = ?");
+        preparedStatement.setInt(1, 2);
+
+        ResultSet rs = preparedStatement.executeQuery();
+
+        while (rs.next()) {
+            resultList.add(rs.getInt("id"));
+        }
+
+        rs.close();
+        preparedStatement.close();
+
+        return resultList;
+    }
+
+    public ArrayList<Integer> getIdPO() throws SQLException {
+        ArrayList<Integer> resultList = new ArrayList<>();
+
+        PreparedStatement preparedStatement = connection.prepareStatement("SELECT id FROM `comptePersonnel` WHERE grade = ?");
+        preparedStatement.setInt(1, 3);
+
+        ResultSet rs = preparedStatement.executeQuery();
+
+        while (rs.next()) {
+            resultList.add(rs.getInt("id"));
+        }
+
+        rs.close();
+        preparedStatement.close();
+
+        return resultList;
+    }
+
 }
