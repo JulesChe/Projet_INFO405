@@ -153,19 +153,10 @@ public class WeeklyAgendaView {
 
             HashMap<JCheckBox, Integer> checkboxKeys = new HashMap<>();
 
-            JLabel lundi = new JLabel("Lundi : ");
-            JLabel mardi = new JLabel("Mardi : ");
-            JLabel mercredi = new JLabel("Mercredi : ");
-            JLabel jeudi = new JLabel("Jeudi : ");
-            JLabel vendredi = new JLabel("Vendredi : ");
+
+
 
             JPanel jourPanel = new JPanel(new GridLayout(5,2));
-
-            jourPanel.add(lundi);
-            jourPanel.add(mardi);
-            jourPanel.add(mercredi);
-            jourPanel.add(jeudi);
-            jourPanel.add(vendredi);
 
             resultatReuPanel.add(jourPanel,BorderLayout.CENTER);
 
@@ -175,7 +166,7 @@ public class WeeklyAgendaView {
             // Création du JPanel avec les cases à cocher
             JPanel checkboxesPanel = panelCheckBoxPrioritaire(data,checkboxKeys);
 
-            boutonAdd.addActionListener(new MeilleurReunionListener(checkboxesPanel,dateReu,reunionPanel,data,checkboxKeys));
+            boutonAdd.addActionListener(new MeilleurReunionListener(checkboxesPanel,dateReu,reunionPanel,data,checkboxKeys,jourPanel));
 
             // Ajout du JPanel avec les cases à cocher à reunionPanel
             infosPanel.add(checkboxesPanel);

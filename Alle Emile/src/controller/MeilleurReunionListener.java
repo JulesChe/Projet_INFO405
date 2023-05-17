@@ -1,14 +1,14 @@
 package controller;
 
+import model.Creneau;
 import model.Logistique;
+import model.WeeklyAgendaModel;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.List;
 
@@ -23,7 +23,10 @@ public class MeilleurReunionListener implements ActionListener {
 
     private HashMap<JCheckBox, Integer> checkboxKeys;
 
-    public MeilleurReunionListener(JPanel checkboxesPanel, JTextField dateReu, JPanel reunionPanel, HashMap<Integer, ArrayList<String>> data,HashMap<JCheckBox, Integer> checkboxKeys) {
+    private JPanel jourPanel;
+
+
+    public MeilleurReunionListener(JPanel checkboxesPanel, JTextField dateReu, JPanel reunionPanel, HashMap<Integer, ArrayList<String>> data, HashMap<JCheckBox, Integer> checkboxKeys, JPanel jourPanel) {
 
         this.dateReu = dateReu;
 
@@ -35,7 +38,10 @@ public class MeilleurReunionListener implements ActionListener {
 
         this.checkboxKeys = checkboxKeys;
 
+        this.jourPanel = jourPanel;
     }
+
+
 
     private List<Integer> getSelectedCheckboxes(JPanel panel) {
         List<Integer> selectedKeys = new ArrayList<>();
@@ -113,55 +119,35 @@ public class MeilleurReunionListener implements ActionListener {
                 }
             }
 
+            jourPanel.removeAll();
+
+            for(int i = 0 ; i < 5; i++){
+
+                WeeklyAgendaModel model = new WeeklyAgendaModel(null,null);
+
+                String chaineJour = model.getWeekDay(i);
+
+                HashMap<String, Integer> listeCreneau = patrick.getMeilleurDispo(jour,liste);
+
+                Map.Entry<String, Integer> firstEntry = listeCreneau.entrySet().iterator().next();
+                String creneau = firstEntry.getKey();
+                Integer nbPersonnes = firstEntry.getValue();
+
+                JLabel jourLabel = new JLabel("Le " +chaineJour + " Il y aura " + nbPersonnes + " personnes à " + creneau );
+                JButton ajouterReu = new JButton("Ajouter Réunion");
+                jourPanel.add(jourLabel);
+                jourPanel.add(ajouterReu);
 
 
 
-            HashMap<String, Integer> hashmap = patrick.getMeilleurDispo(jour,liste);
+                Creneau c = new Creneau();
+                jour = c.ajouterUnJour(jour);
 
-            // Stocker les données dans un tableau ArrayList
-            ArrayList<String[]> dataList = new ArrayList<>();
-            for (HashMap.Entry<String, Integer> entry : hashmap.entrySet()) {
-                dataList.add(new String[]{entry.getKey(), String.valueOf(entry.getValue())});
             }
+            jourPanel.repaint();
+            jourPanel.revalidate();
 
-            // Trier les données par ordre croissant en utilisant un comparateur personnalisé pour le format hh:mm
-            Collections.sort(dataList, new Comparator<String[]>() {
-                @Override
-                public int compare(String[] o1, String[] o2) {
-                    DateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm");
-                    try {
-                        Date time1 = format.parse(o1[0]);
-                        Date time2 = format.parse(o2[0]);
-                        return time1.compareTo(time2);
-                    } catch (ParseException ex) {
-                        throw new RuntimeException(ex);
-                    }
-                }
-            });
 
-            // Convertir les données triées en un tableau bidimensionnel
-            String[][] data = new String[dataList.size()][2];
-            int i = 0;
-            for (String[] rowData : dataList) {
-                data[i++] = rowData;
-            }
-
-            // Créer un tableau avec des titres de colonne
-            String[] columnNames = {"Heure", "Nombre de personne"};
-
-            // Créer une nouvelle JTable avec les données et les titres de colonne
-
-            JTable table = new JTable(data, columnNames);
-
-            // Ajouter la table à un JScrollPane pour permettre le défilement
-            JScrollPane scrollPane = new JScrollPane(table);
-
-            // Ajouter le JScrollPane à la JPanel
-            reunionPanel.add(scrollPane, BorderLayout.CENTER);
-
-            // Mettre à jour l'interface graphique pour refléter les changements
-            reunionPanel.revalidate();
-            reunionPanel.repaint();
 
         } catch (ParseException ex) {
             throw new RuntimeException(ex);

@@ -5,6 +5,7 @@ import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.format.TextStyle;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -136,6 +137,20 @@ public class Creneau {
         LocalDate localDate = LocalDate.parse(date, formatter);
         LocalDate localDatePlus7Jours = localDate.plusDays(7);
         return localDatePlus7Jours.format(formatter);
+    }
+
+    public String ajouterUnJour(String dateStr) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+        Calendar c = Calendar.getInstance();
+        try {
+            Date date = sdf.parse(dateStr);
+            c.setTime(date);
+            c.add(Calendar.DATE, 1);  // Ajout de 1 jour
+            dateStr = sdf.format(c.getTime());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return dateStr;
     }
 
     public void setId(int id) {
