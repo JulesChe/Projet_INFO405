@@ -88,7 +88,9 @@ public class MeilleurReunionListener implements ActionListener {
     public void actionPerformed(ActionEvent e) {
 
         Logistique patrick = new Logistique();
-        String jour = dateReu.getText();
+        String jourBis = dateReu.getText();
+        Creneau c1 = new Creneau();
+        String jour = c1.getDebutSemaine(jourBis);
 
         ArrayList<Integer> liste = new ArrayList<>();
 
@@ -135,6 +137,7 @@ public class MeilleurReunionListener implements ActionListener {
 
                 JLabel jourLabel = new JLabel("Le " +chaineJour + " Il y aura " + nbPersonnes + " personnes à " + creneau );
                 JButton ajouterReu = new JButton("Ajouter Réunion");
+                ajouterReu.addActionListener(new AjouterReuListener(creneau));
                 jourPanel.add(jourLabel);
                 jourPanel.add(ajouterReu);
 

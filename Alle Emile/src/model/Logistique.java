@@ -132,7 +132,7 @@ public class Logistique extends Utilisateur{
         }
     }
 
-    public void ajoutCreneau(String dateDebut, String dateFin, int idAsso,String gymnase) {
+    public void ajoutCreneau(String dateDebut, String dateFin, Integer idAsso, String gymnase) {
 
         Connection connection = null;
         try {
@@ -649,6 +649,22 @@ public class Logistique extends Utilisateur{
         return res;
 
 
+    }
+
+    public String addOneHour(String dateString) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+        try {
+            Date date = sdf.parse(dateString);
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(date);
+            calendar.add(Calendar.HOUR_OF_DAY, 1);
+            Date newDate = calendar.getTime();
+            return sdf.format(newDate);
+        } catch (ParseException e) {
+            // Gérer l'erreur de format de date invalide ici
+            e.printStackTrace();
+        }
+        return null;
     }
 
 

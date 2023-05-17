@@ -131,7 +131,7 @@ public class Gardien extends Utilisateur{
         return listecreneauPersonnel;
     }
 
-    public static String addOneHour(Date date) {
+    public String addOneHour(Date date) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm");
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);

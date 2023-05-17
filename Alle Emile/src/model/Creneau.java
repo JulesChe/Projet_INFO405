@@ -132,6 +132,13 @@ public class Creneau {
         return lundi.format(formatter);
     }
 
+    public String getDebutSemaine(String date) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+        LocalDate inputDate = LocalDate.parse(date, formatter);
+        LocalDate lundi = inputDate.with(DayOfWeek.MONDAY);
+        return lundi.format(formatter);
+    }
+
     public static String ajouter7Jours(String date) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
         LocalDate localDate = LocalDate.parse(date, formatter);
