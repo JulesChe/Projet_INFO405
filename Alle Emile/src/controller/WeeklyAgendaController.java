@@ -157,33 +157,40 @@ public class WeeklyAgendaController {
 
 
         //Récupère les créneaux de la semaine
-        Planning p = new Planning();
-        Creneau c1 = new Creneau(p.getDateDuJour(),p.getDateDuJour());
-        String lundiWeek = c1.formatDate(model.getFormattedStartDate());
-        p.getSemaine(lundiWeek);
+        Planning p = new Planning(); // Crée un planning (liste de créneaux)
+
+        Creneau c1 = new Creneau(p.getDateDuJour(),p.getDateDuJour()); // Crée un créneau à ajouter
+        String lundiWeek = c1.formatDate(model.getFormattedStartDate()); // Récupère le lundi de la semaine actuel
+
+        p.getSemaine(lundiWeek); // Récupère tous les créneaux d'une semaine et les met dans un planning
+
         Logistique patrick = new Logistique();
         ArrayList<Creneau> listeCreneaux = p.listeCreneaux;
-        if (listeCreneaux!=null){
+        if (listeCreneaux!=null){ // ajoute tous ces créneaux à une liste de créneau de la Logistique
 
             listeCreneaux = c1.transformCreneau(listeCreneaux);
         }
 
-        listeCreneaux = patrick.sortCreneaux(listeCreneaux);
+        listeCreneaux = patrick.sortCreneaux(listeCreneaux); // trie les créneaux en fonction de leur date
+
+
         //Ajoutes tous les créneaux de la semaine
-        WeeklyAgendaModel modele = new WeeklyAgendaModel(null, null);
 
+        WeeklyAgendaModel modele = new WeeklyAgendaModel(null, null); // Réinitialise la vue des créneaux au changement de semaine
 
-        for (Creneau creneau : listeCreneaux) {
-            String jourActuel = creneau.getDayOfWeek();
-            int jourFini = creneau.nbJour(jourActuel);
-            String debutCren = creneau.getDateDebut();
-            String finCren = creneau.getDateFin();
-            String asso = creneau.getAsso();
-            model.insertTimeSlot(jourFini, debutCren, finCren,asso);
+        for (Creneau creneau : listeCreneaux) { // Parcours les créneaux de la semaine
+            String jourActuel = creneau.getDayOfWeek(); // jour du créneau
+            int jourFini = creneau.nbJour(jourActuel); // Numéro du jour du créneau ( ex : lundi = 1)
+            String debutCren = creneau.getDateDebut(); // début du créneau
+            String finCren = creneau.getDateFin(); // fin du créneau
+            String asso = creneau.getAsso(); // asso du créneau
+            model.insertTimeSlot(jourFini, debutCren, finCren,asso); // Insert le créneau dans la méthode qui va gérer l'affichage
         }
 
-        view.getTasksPanel().revalidate();
-        view.getTasksPanel().repaint();
+        view.getTasksPanel().revalidate(); // Une fois tous les créneaux de la semaine ajouté
+        view.getTasksPanel().repaint();    // on affiche tous ça.
+
+
 
         // Créer un panneau pour le bouton "Ajouter créneau"
         JPanel addTimeSlotPanel = new JPanel();

@@ -35,6 +35,7 @@ public class CrudPlanningDAO {
     }
 
     public ArrayList<Creneau> getSemaine(Connection connection, String lundi) throws SQLException {
+        // Récupère tous les créneaux d'une semaine en fonction du lundi donné
         ArrayList<Creneau> resultList = new ArrayList<>();
         String debutLundi = lundi+ " 00:00";
         Creneau c = new Creneau(debutLundi,debutLundi);
@@ -58,6 +59,34 @@ public class CrudPlanningDAO {
 
         return resultList;
     }
+
+    public ArrayList<Creneau> getSemaineGymnase(Connection connection, String lundi, String gymnaseNom) throws SQLException {
+        // Récupère tous les créneaux d'une semaine en fonction du lundi donné et de l'ID du gymnase
+        ArrayList<Creneau> resultList = new ArrayList<>();
+        String debutLundi = lundi + " 00:00";
+        Creneau c = new Creneau(debutLundi, debutLundi);
+        String finLundi = c.ajouter7Jours(lundi) + " 00:00";
+
+        String selectSQL = "SELECT creneau.id, creneau.debut, creneau.fin, compteAsso.nom AS nom_asso FROM creneau JOIN compteAsso ON creneau.id_asso = compteAsso.id WHERE creneau.fin >= ? AND creneau.fin <= ? AND creneau.nom_gymnase = ?";
+
+        PreparedStatement preparedStatement = connection.prepareStatement(selectSQL);
+        preparedStatement.setString(1, debutLundi);
+        preparedStatement.setString(2, finLundi);
+        preparedStatement.setString(3, gymnaseNom);
+
+        ResultSet rs = preparedStatement.executeQuery();
+
+        while (rs.next()) {
+            Creneau creneau = new Creneau(rs.getString("debut"), rs.getString("fin"), rs.getString("nom_asso"));
+            resultList.add(creneau);
+        }
+
+        rs.close();
+        preparedStatement.close();
+
+        return resultList;
+    }
+
 
 
 

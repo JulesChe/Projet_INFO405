@@ -107,20 +107,20 @@ public class WeeklyAgendaModel {
 
 
     public void insertTimeSlot(int dayIndex, String newTimeSlot, String endTime, String taskDescription) {
-        if (dayIndex < 0 || dayIndex >= 7) {
+        if (dayIndex < 0 || dayIndex >= 7) { // Vérifie que le jour est bon
             throw new IllegalArgumentException("Index invalide pour le jour");
         }
 
-        DefaultListModel<String> taskListModel = daysTimeSlots.get(dayIndex);
+        DefaultListModel<String> taskListModel = daysTimeSlots.get(dayIndex); // Jour du créneau
         int index = 0;
         for (; index < taskListModel.size(); index++) {
-            String existingTimeSlot = taskListModel.getElementAt(index).substring(0, 5);
+            String existingTimeSlot = taskListModel.getElementAt(index).substring(0, 5); // Vérifie si le créneau existe déjà
             if (newTimeSlot.compareTo(existingTimeSlot) < 0) {
                 break;
             }
         }
         taskListModel.add(index, this.obtenirHeureMinute(newTimeSlot) + " - " + this.obtenirHeureMinute(endTime) + " : " + taskDescription);
-
+        // Ajoute à taskListModel les infos à ajouter.
 
     }
 

@@ -107,8 +107,9 @@ public class testBDD extends JFrame{
         System.out.println(patrick.getAllIdLogistique());
         System.out.println(patrick.getIdPO());*/
 
-        Creneau c1 = new Creneau();
-        System.out.println(c1.getDebutSemaine("2023/05/17"));
+        Planning p = new Planning();
+        p.getSemaineGymnase("2023/05/15","Grand Gymnase");
+        System.out.println(p.listeCreneaux);
 
     }
 
