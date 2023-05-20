@@ -69,7 +69,6 @@ public class CreateGymnaseFrame extends JInternalFrame {
                 {
 
                     //======== AGC1 ========
-                    // .... Début du code, ici on suppose qu'on a accès à une instance de WeeklyAgendaModel nommée "model"
 
                     {
                         AGC1.setBorder(new TitledBorder("Emploi du temps"));
@@ -109,38 +108,65 @@ public class CreateGymnaseFrame extends JInternalFrame {
                             //======== panel6 ========
                             {
                                 panel6.setLayout(new GridBagLayout());
+                                ((GridBagLayout)panel6.getLayout()).columnWidths = new int[] {50, 0, 0, 0, 0, 0, 0, 0}; //largeur de chaque colonne dans panel6
+                                ((GridBagLayout)panel6.getLayout()).rowHeights = new int[] {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}; // hauteur de chaque ligne dans panel6
+                                //Ces lignes définissent comment l'espace supplémentaire doit être réparti entre les colonnes et les lignes lorsque la fenêtre est redimensionnée :
+                                ((GridBagLayout)panel6.getLayout()).columnWeights = new double[] {0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0};
+                                ((GridBagLayout)panel6.getLayout()).rowWeights = new double[] {0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0};
+
                                 GridBagConstraints c = new GridBagConstraints();
                                 c.fill = GridBagConstraints.BOTH;
-                                c.weightx = 1;
-                                c.weighty = 1;
 
                                 // Ajouter les entêtes des jours
-                                for (int i = 0; i < this.model.getWeekDays().length; i++) {
-                                    JLabel dayLabel = new JLabel(this.model.getWeekDays()[i]);
+                                for (int i = 1; i <= this.model.getWeekDays().length; i++) {
+                                    JLabel dayLabel = new JLabel(this.model.getWeekDays()[i-1]);
                                     c.gridx = i;
                                     c.gridy = 0;
+                                    dayLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1)); // Bordure autour de chaque jour
                                     panel6.add(dayLabel, c);
                                 }
+
+                                // Ajouter une colonne vide pour les créneaux horaires
+                                JLabel emptyLabel = new JLabel("");
+                                c.gridx = 0;
+                                c.gridy = 0;
+                                emptyLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1)); // Bordure autour de la colonne vide
+                                panel6.add(emptyLabel, c);
 
                                 // Ajouter les entêtes des créneaux horaires
                                 for (int i = 0; i < this.model.getTimeSlots().length; i++) {
                                     JLabel timeSlotLabel = new JLabel(this.model.getTimeSlots()[i]);
                                     c.gridx = 0;
                                     c.gridy = i + 1;  // Ajout de "+1" pour laisser de la place aux entêtes des jours
+                                    if (i % 4 == 0) {  // Ajouter une bordure aux créneaux horaires entiers
+                                        timeSlotLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1)); // Bordure autour de chaque créneau horaire entier
+                                    } else {
+                                        timeSlotLabel.setBorder(BorderFactory.createEmptyBorder()); // Pas de bordure pour les autres créneaux
+                                    }
                                     panel6.add(timeSlotLabel, c);
                                 }
 
+
+
                                 // Ajouter les panneaux des créneaux horaires
-                                for (int i = 1; i < this.model.getTimeSlots().length; i++) {
-                                    for (int j = 1; j < this.model.getWeekDays().length; j++) {
+                                for (int i = 1; i <= this.model.getTimeSlots().length; i++) {
+                                    for (int j = 1; j <= this.model.getWeekDays().length; j++) {
                                         JPanel timeSlotCell = new JPanel(new BorderLayout());
+                                        if(i % 4 == 0) {  // Ajouter une bordure tous les quatre créneaux
+                                            timeSlotCell.setBorder(BorderFactory.createMatteBorder(2, 0, 0, 1, Color.BLACK)); // Bordure en haut et à droite de chaque heure
+                                        } else {
+                                            timeSlotCell.setBorder(BorderFactory.createMatteBorder(1, 0, 0, 1, Color.GRAY)); // Bordure en haut et à droite pour les autres créneaux
+                                        }
                                         c.gridx = j;
-                                        c.gridy = i;
+                                        c.gridy = i + 1;
                                         panel6.add(timeSlotCell, c);
                                     }
                                 }
+
+
                             }
                             scrollPane5.setViewportView(panel6);
+
                         }
                         AGC1.add(scrollPane5, BorderLayout.CENTER);
                     }
