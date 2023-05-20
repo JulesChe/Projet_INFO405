@@ -2,6 +2,7 @@ package controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyVetoException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,12 +18,13 @@ import model.ConnexionUtilisateur;
 import model.Utilisateur;
 import model.WeeklyAgendaModel;
 import ressource.PasswordHash;
+import vue.AgendaVueFinal;
 import vue.Login;
 import vue.WeeklyAgendaView;
 
 public class ConnexionListener implements ActionListener{
 
-    private Login login;
+    private Login loginView;
     private PreparedStatement ps = null;
     private ResultSet rs = null;
     private Connection connection = null;
@@ -30,10 +32,10 @@ public class ConnexionListener implements ActionListener{
     private JPasswordField tpass;
 
 
-    public ConnexionListener(JTextField tpseudo, JPasswordField tpass, Login login) {
+    public ConnexionListener(JTextField tpseudo, JPasswordField tpass, Login loginView) {
         this.tpseudo = tpseudo;
         this.tpass = tpass;
-        this.login = login;
+        this.loginView = loginView;
     }
 
     @Override
@@ -48,20 +50,16 @@ public class ConnexionListener implements ActionListener{
                 while (rs.next()) {
                     String hashMdp = rs.getString("mdp");
                     if(PasswordHash.isPasswordValid(tpass.getText(),hashMdp)){
-                        JOptionPane.showMessageDialog(null, "Connexion réussi");
                         Utilisateur utilisateur = new Utilisateur(tpseudo.getText(),"prenom",tpass.getText(),rs.getInt("grade"));
                         WeeklyAgendaModel modele = new WeeklyAgendaModel(null,utilisateur);
 
-                        WeeklyAgendaView view = new WeeklyAgendaView(modele);
-                        WeeklyAgendaController controller = new WeeklyAgendaController(view, modele);
+                        // Creating an instance of AgendaVueFinal instead of WeeklyAgendaView
+                        AgendaVueFinal agendaVue = new AgendaVueFinal(modele);
+                        agendaVue.showView();
 
-                        login.dispose();
-                        view.frame.setVisible(true);
-
-
-                        // Créer une instance de WeeklyAgendaApp et lancer l'application
-
+                        loginView.frame.dispose();
                     }
+
                     else {
                         JOptionPane.showMessageDialog(null, "Connexion refusée!");
                     }
@@ -69,7 +67,7 @@ public class ConnexionListener implements ActionListener{
 
             } catch (SQLException e1) {
                 e1.printStackTrace();
-            } catch (ParseException ex) {
+            } catch (PropertyVetoException ex) {
                 throw new RuntimeException(ex);
             }
         } else {

@@ -1,4 +1,4 @@
-JFDML JFormDesigner: "8.0.4.0.266" Java: "17.0.6" encoding: "UTF-8"
+JFDML JFormDesigner: "8.0.3.0.246" Java: "17.0.6" encoding: "UTF-8"
 
 new FormModel {
 	contentType: "form/swing"
@@ -76,14 +76,7 @@ new FormModel {
 												"value": "Center"
 											} )
 										}, new FormLayoutConstraints( class java.lang.String ) {
-											"value": "North"
-										} )
-										add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridLayout ) {
-											"columns": 7
-										} ) {
-											name: "Agenda"
-										}, new FormLayoutConstraints( class java.lang.String ) {
-											"value": "Center"
+											"value": "First"
 										} )
 										add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.FlowLayout ) ) {
 											name: "PAjouter_creneau"
@@ -92,7 +85,18 @@ new FormModel {
 												"text": "Ajouter créneau"
 											} )
 										}, new FormLayoutConstraints( class java.lang.String ) {
-											"value": "South"
+											"value": "Last"
+										} )
+										add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
+											name: "scrollPane5"
+											add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridLayout ) {
+												"columns": 7
+												"rows": 96
+											} ) {
+												name: "panel6"
+											} )
+										}, new FormLayoutConstraints( class java.lang.String ) {
+											"value": "Center"
 										} )
 									}, new FormLayoutConstraints( null ) {
 										"title": "Agenda"

@@ -20,15 +20,14 @@ public class TestAgendaVue {
 
     }
 
-
     public static void main(String[] args) throws PropertyVetoException, SQLException {
-         try {
-                UIManager.setLookAndFeel(new FlatLightLaf());
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-                AgendaVueFinal agendaVue = new AgendaVueFinal(model);
-                agendaVue.showView();
-            }
+        try {
+            UIManager.setLookAndFeel(new FlatLightLaf());
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
+        Login loginView = new Login();
+    }
+
+}

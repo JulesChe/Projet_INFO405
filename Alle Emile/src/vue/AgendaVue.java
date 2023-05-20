@@ -1,7 +1,7 @@
 /*
  * Created by JFormDesigner on Mon May 08 14:01:05 CEST 2023
  */
-
+/*
 package vue;
 
 import javax.swing.table.*;
@@ -38,9 +38,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 
-/**
- * @author baptisteaudinet
- */
+
 
 
 public class AgendaVue  {
@@ -54,7 +52,7 @@ public class AgendaVue  {
 
     private void initComponents() throws PropertyVetoException {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
-        // Generated using JFormDesigner Evaluation license - baptiste audinet
+        // Generated using JFormDesigner Evaluation license - baptiste
         WIN = new JFrame();
         C1 = new JTabbedPane();
         AG = new JPanel();
@@ -70,9 +68,10 @@ public class AgendaVue  {
         button_semaine_prec = new JButton();
         button_semaine_suiv = new JButton();
         weekLabel = new JLabel();
-        Agenda = new JPanel();
         PAjouter_creneau = new JPanel();
         button_ajouter_creneau = new JButton();
+        scrollPane5 = new JScrollPane();
+        panel6 = new JPanel();
         DCG1 = new JPanel();
         scrollPane2 = new JScrollPane();
         table1 = new JTable();
@@ -129,12 +128,11 @@ public class AgendaVue  {
 
                 //======== AG ========
                 {
-                    AG.setBorder (new javax. swing. border. CompoundBorder( new javax .swing .border .TitledBorder (new javax. swing. border.
-                    EmptyBorder( 0, 0, 0, 0) , "JF\u006frmDesi\u0067ner Ev\u0061luatio\u006e", javax. swing. border. TitledBorder. CENTER, javax. swing
-                    . border. TitledBorder. BOTTOM, new java .awt .Font ("Dialo\u0067" ,java .awt .Font .BOLD ,12 ),
-                    java. awt. Color. red) ,AG. getBorder( )) ); AG. addPropertyChangeListener (new java. beans. PropertyChangeListener( )
-                    { @Override public void propertyChange (java .beans .PropertyChangeEvent e) {if ("borde\u0072" .equals (e .getPropertyName () ))
-                    throw new RuntimeException( ); }} );
+                    AG.setBorder (new javax. swing. border. CompoundBorder( new javax .swing .border .TitledBorder (new javax. swing. border. EmptyBorder(
+                    0, 0, 0, 0) , "JF\u006frm\u0044es\u0069gn\u0065r \u0045va\u006cua\u0074io\u006e", javax. swing. border. TitledBorder. CENTER, javax. swing. border. TitledBorder
+                    . BOTTOM, new java .awt .Font ("D\u0069al\u006fg" ,java .awt .Font .BOLD ,12 ), java. awt. Color.
+                    red) ,AG. getBorder( )) ); AG. addPropertyChangeListener (new java. beans. PropertyChangeListener( ){ @Override public void propertyChange (java .
+                    beans .PropertyChangeEvent e) {if ("\u0062or\u0064er" .equals (e .getPropertyName () )) throw new RuntimeException( ); }} );
                     AG.setLayout(new BorderLayout());
 
                     //======== Nav ========
@@ -204,13 +202,7 @@ public class AgendaVue  {
                                             weekLabel.setText("text");
                                             NavAGC1.add(weekLabel, BorderLayout.CENTER);
                                         }
-                                        AGC1.add(NavAGC1, BorderLayout.NORTH);
-
-                                        //======== Agenda ========
-                                        {
-                                            Agenda.setLayout(new GridLayout(1, 7));
-                                        }
-                                        AGC1.add(Agenda, BorderLayout.CENTER);
+                                        AGC1.add(NavAGC1, BorderLayout.PAGE_START);
 
                                         //======== PAjouter_creneau ========
                                         {
@@ -220,7 +212,18 @@ public class AgendaVue  {
                                             button_ajouter_creneau.setText("Ajouter cr\u00e9neau");
                                             PAjouter_creneau.add(button_ajouter_creneau);
                                         }
-                                        AGC1.add(PAjouter_creneau, BorderLayout.SOUTH);
+                                        AGC1.add(PAjouter_creneau, BorderLayout.PAGE_END);
+
+                                        //======== scrollPane5 ========
+                                        {
+
+                                            //======== panel6 ========
+                                            {
+                                                panel6.setLayout(new GridLayout(96, 7));
+                                            }
+                                            scrollPane5.setViewportView(panel6);
+                                        }
+                                        AGC1.add(scrollPane5, BorderLayout.CENTER);
                                     }
                                     tPC1.addTab("Agenda", AGC1);
 
@@ -387,7 +390,6 @@ public class AgendaVue  {
                         //======== scrollPane7 ========
                         {
                             scrollPane7.setViewportView(list2);
-
                         }
                         panel8.add(scrollPane7);
                     }
@@ -483,7 +485,7 @@ public class AgendaVue  {
     }
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables  @formatter:off
-    // Generated using JFormDesigner Evaluation license - baptiste audinet
+    // Generated using JFormDesigner Evaluation license - baptiste
     private JFrame WIN;
     private JTabbedPane C1;
     private JPanel AG;
@@ -498,9 +500,11 @@ public class AgendaVue  {
     private JPanel NavAGC1;
     private JButton button_semaine_prec;
     private JButton button_semaine_suiv;
-    private JPanel Agenda;
+    private JLabel weekLabel;
     private JPanel PAjouter_creneau;
     private JButton button_ajouter_creneau;
+    private JScrollPane scrollPane5;
+    private JPanel panel6;
     private JPanel DCG1;
     private JScrollPane scrollPane2;
     private JTable table1;
@@ -543,10 +547,6 @@ public class AgendaVue  {
     private JMenuItem menuItem6;
     private JMenuItem menuItem7;
     private JMenuItem menuItem8;
-
-    public void showView() {
-        WIN.setVisible(true
-        );
-    }
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
 }
+*/

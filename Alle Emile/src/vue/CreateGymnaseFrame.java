@@ -14,12 +14,14 @@ public class CreateGymnaseFrame extends JInternalFrame {
 
     private JLabel weekLabel;
     private WeeklyAgendaModel model;
+
+
     public CreateGymnaseFrame(WeeklyAgendaModel model) throws PropertyVetoException, SQLException {
         this.model = model;
-        initComponents();
+        initComponents(model);
     }
 
-    private void initComponents() throws PropertyVetoException, SQLException {
+    private void initComponents(WeeklyAgendaModel modele) throws PropertyVetoException, SQLException {
         //======== Calendrier1 ========
 
 
@@ -43,7 +45,9 @@ public class CreateGymnaseFrame extends JInternalFrame {
         panel1 = new JPanel();
         panel3 = new JPanel();
         panel4 = new JPanel();
+        panel6 = new JPanel();
         scrollPane4 = new JScrollPane();
+        scrollPane5 = new JScrollPane();
         list1 = new JList<>();
         panel5 = new JPanel();
         label1 = new JLabel();
@@ -65,6 +69,8 @@ public class CreateGymnaseFrame extends JInternalFrame {
                 {
 
                     //======== AGC1 ========
+                    // .... Début du code, ici on suppose qu'on a accès à une instance de WeeklyAgendaModel nommée "model"
+
                     {
                         AGC1.setBorder(new TitledBorder("Emploi du temps"));
                         AGC1.setLayout(new BorderLayout());
@@ -74,7 +80,7 @@ public class CreateGymnaseFrame extends JInternalFrame {
                             NavAGC1.setLayout(new BorderLayout());
 
                             //---- button_semaine_prec ----
-                            button_semaine_prec.setText("Semane pr\u00e9c\u00e9dente");
+                            button_semaine_prec.setText("Semane précédente");
                             NavAGC1.add(button_semaine_prec, BorderLayout.WEST);
 
                             //---- button_semaine_suiv ----
@@ -85,23 +91,58 @@ public class CreateGymnaseFrame extends JInternalFrame {
                             weekLabel.setText("text");
                             NavAGC1.add(weekLabel, BorderLayout.CENTER);
                         }
-                        AGC1.add(NavAGC1, BorderLayout.NORTH);
-
-                        //======== Agenda ========
-                        {
-                            Agenda.setLayout(new GridLayout(1, 7));
-                        }
-                        AGC1.add(Agenda, BorderLayout.CENTER);
+                        AGC1.add(NavAGC1, BorderLayout.PAGE_START);
 
                         //======== PAjouter_creneau ========
                         {
                             PAjouter_creneau.setLayout(new FlowLayout());
 
                             //---- button_ajouter_creneau ----
-                            button_ajouter_creneau.setText("Ajouter cr\u00e9neau");
+                            button_ajouter_creneau.setText("Ajouter créneau");
                             PAjouter_creneau.add(button_ajouter_creneau);
                         }
-                        AGC1.add(PAjouter_creneau, BorderLayout.SOUTH);
+                        AGC1.add(PAjouter_creneau, BorderLayout.PAGE_END);
+
+                        //======== scrollPane5 ========
+                        {
+
+                            //======== panel6 ========
+                            {
+                                panel6.setLayout(new GridBagLayout());
+                                GridBagConstraints c = new GridBagConstraints();
+                                c.fill = GridBagConstraints.BOTH;
+                                c.weightx = 1;
+                                c.weighty = 1;
+
+                                // Ajouter les entêtes des jours
+                                for (int i = 0; i < this.model.getWeekDays().length; i++) {
+                                    JLabel dayLabel = new JLabel(this.model.getWeekDays()[i]);
+                                    c.gridx = i;
+                                    c.gridy = 0;
+                                    panel6.add(dayLabel, c);
+                                }
+
+                                // Ajouter les entêtes des créneaux horaires
+                                for (int i = 0; i < this.model.getTimeSlots().length; i++) {
+                                    JLabel timeSlotLabel = new JLabel(this.model.getTimeSlots()[i]);
+                                    c.gridx = 0;
+                                    c.gridy = i + 1;  // Ajout de "+1" pour laisser de la place aux entêtes des jours
+                                    panel6.add(timeSlotLabel, c);
+                                }
+
+                                // Ajouter les panneaux des créneaux horaires
+                                for (int i = 1; i < this.model.getTimeSlots().length; i++) {
+                                    for (int j = 1; j < this.model.getWeekDays().length; j++) {
+                                        JPanel timeSlotCell = new JPanel(new BorderLayout());
+                                        c.gridx = j;
+                                        c.gridy = i;
+                                        panel6.add(timeSlotCell, c);
+                                    }
+                                }
+                            }
+                            scrollPane5.setViewportView(panel6);
+                        }
+                        AGC1.add(scrollPane5, BorderLayout.CENTER);
                     }
                     tPC1.addTab("Agenda", AGC1);
 
@@ -242,7 +283,9 @@ public class CreateGymnaseFrame extends JInternalFrame {
     private JPanel panel1;
     private JPanel panel3;
     private JPanel panel4;
+    private JPanel panel6;
     private JScrollPane scrollPane4;
+    private JScrollPane scrollPane5;
     private JList<String> list1;
     private JPanel panel5;
     private JLabel label1;

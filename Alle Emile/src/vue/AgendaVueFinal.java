@@ -394,6 +394,7 @@ public class AgendaVueFinal  {
     private JPanel panel1;
     private JPanel panel3;
     private JPanel panel4;
+
     private JScrollPane scrollPane4;
     private JList<String> list1;
     private JPanel panel5;
