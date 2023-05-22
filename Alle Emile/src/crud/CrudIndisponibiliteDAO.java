@@ -5,6 +5,7 @@ import model.Indisponibilite;
 import model.Utilisateur;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class CrudIndisponibiliteDAO {
 
@@ -42,6 +43,56 @@ public class CrudIndisponibiliteDAO {
         preparedStatement.setInt(6, nouvIndispo.getGardien());
         preparedStatement.executeUpdate();
     }
+
+    public ArrayList<Indisponibilite> getIndispos() throws SQLException {
+        ArrayList<Indisponibilite> resultList = new ArrayList<>();
+        PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM `indisponibilite`");
+        ResultSet rs = preparedStatement.executeQuery();
+        while (rs.next()) {
+            Indisponibilite indispo = new Indisponibilite(rs.getString("motif"),rs.getDate("debut"),rs.getDate("fin"),rs.getInt("id_gardien"));
+            indispo.setId(rs.getInt("id"));
+            resultList.add(indispo);
+        }
+
+        rs.close();
+        preparedStatement.close();
+
+        return resultList;
     }
+
+    public void ValiderIndispo(Indisponibilite indispo) throws SQLException {
+        PreparedStatement preparedStatement = connection.prepareStatement("UPDATE `indisponibilite` SET `valide`= 1 WHERE debut = (?) AND fin = (?) AND id_gardien = (?)");
+        preparedStatement.setString(1, indispo.getMotif());
+        preparedStatement.setString(2, String.valueOf(indispo.getDebut()));
+        preparedStatement.setString(3, String.valueOf(indispo.getFin()));
+        preparedStatement.executeUpdate();
+    }
+
+    public void RefuserIndispo(Indisponibilite indispo) throws SQLException {
+        PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM `indisponibilite` WHERE debut = (?) AND fin = (?) AND id_gardien = (?)");
+        preparedStatement.setString(1, indispo.getMotif());
+        preparedStatement.setString(2, String.valueOf(indispo.getDebut()));
+        preparedStatement.setString(3, String.valueOf(indispo.getFin()));
+        preparedStatement.executeUpdate();
+    }
+
+    public ArrayList<Indisponibilite> GetIndiposGardien(Gardien g) throws SQLException {
+        ArrayList<Indisponibilite> resultList = new ArrayList<>();
+        PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM `indisponibilite` WHERE `id_gardien` = (?)");
+        preparedStatement.setInt(1, g.getID());
+        ResultSet rs = preparedStatement.executeQuery();
+        while (rs.next()) {
+            Indisponibilite indispo = new Indisponibilite(rs.getString("motif"),rs.getDate("debut"),rs.getDate("fin"),rs.getInt("id_gardien"));
+            indispo.setId(rs.getInt("id"));
+            resultList.add(indispo);
+        }
+
+        rs.close();
+        preparedStatement.close();
+
+        return resultList;
+    }
+}
+
 
 
