@@ -30,12 +30,12 @@ public class WeeklyAgendaController {
 
     }
 
-    public void addPreviousWeekButtonActionListener(CreateGymnaseFrame createGymnaseFrame) {
+    public void addPreviousWeekButtonActionListener(CreateGymnaseFrame createGymnaseFrame, Gymnase gymnaseSelectionne) {
         createGymnaseFrame.getPreviousWeekButton().addActionListener(e -> {
             model.goToPreviousWeek();
             updateWeekLabel(createGymnaseFrame);
             try {
-                updateTasksPanel();
+                updateTasksPanel(createGymnaseFrame, gymnaseSelectionne);
             } catch (ParseException ex) {
                 throw new RuntimeException(ex);
             }
@@ -44,12 +44,12 @@ public class WeeklyAgendaController {
 
     }
 
-    public void addNextWeekButtonActionListener(CreateGymnaseFrame createGymnaseFrame) {
+    public void addNextWeekButtonActionListener(CreateGymnaseFrame createGymnaseFrame, Gymnase gymnaseSelectionne) {
         createGymnaseFrame.getNextWeekButton().addActionListener(e -> {
             model.goToNextWeek();
             updateWeekLabel(createGymnaseFrame);
             try {
-                updateTasksPanel();
+                updateTasksPanel(createGymnaseFrame,gymnaseSelectionne);
             } catch (ParseException ex) {
                 throw new RuntimeException(ex);
             }
@@ -68,7 +68,103 @@ public class WeeklyAgendaController {
 
 
 
-    private void updateTasksPanel() throws ParseException {
+    public void updateTasksPanel(CreateGymnaseFrame createGymnaseFrame, Gymnase gymnaseSelectionne) throws ParseException {
+
+
+
+        Planning p = new Planning(); // Crée un planning (liste de créneaux)
+        Creneau c1 = new Creneau(p.getDateDuJour(),p.getDateDuJour()); // Crée un créneau à ajouter
+        String lundiWeek = c1.formatDate(model.getFormattedStartDate()); // Récupère le lundi de la semaine actuel
+        p.getSemaineGymnase(lundiWeek, gymnaseSelectionne.getNom());
+        ArrayList<Creneau> listeCreneaux = p.getListeCreneaux();
+
+        // Parcourir chaque créneau de la liste
+        for (Creneau creneau : listeCreneaux) {
+            System.out.println(creneau);
+            // Assurez-vous que la date est dans le bon format avant de l'envoyer à getDayOfWeek
+            String correctedDateDebut = convertDateFormat(creneau.getDateDebut());
+
+            String jourActuel = creneau.getDayOfWeek(correctedDateDebut);
+
+            int jourFini = creneau.nbJour(jourActuel); // Numéro du jour du créneau ( ex : lundi = 1)
+            String debutCren = convertDateFormat(creneau.getDateDebut()); // début du créneau
+            String finCren = convertDateFormat(creneau.getDateFin()); // fin du créneau
+            String asso = creneau.getAsso(); // asso du créneau
+
+            // Convertir les heures de début et de fin en index de créneau horaire
+            int debutIndex = convertHourToTimeSlotIndex(debutCren);  // Vous devez implémenter cette méthode
+            int finIndex = convertHourToTimeSlotIndex(finCren);  // Vous devez implémenter cette méthode
+
+            model.insertTimeSlot(jourFini, debutCren, finCren,asso); // Insert le créneau dans la méthode qui va gérer l'affichage
+        }
+
+        // Rafraîchir le panel pour voir les changements
+        createGymnaseFrame.refreshPanel6();
+    }
+
+    private boolean isTimeSlotFilled(String dayOfWeek, String timeSlot) {
+        // Vérifiez ici si le créneau horaire pour le jour de la semaine "dayOfWeek" et le créneau horaire "timeSlot" est rempli
+        // Utilisez vos données existantes ou ajoutez une logique personnalisée pour déterminer si le créneau est pris
+        // Par exemple, vous pouvez parcourir votre liste de créneaux et vérifier si le créneau correspondant existe pour ce jour de la semaine et ce créneau horaire
+
+        // Exemple de logique pour vérifier si le créneau est rempli
+        Planning p = new Planning(); // Remplacez par votre objet de planification existant
+        for (Creneau creneau : p.getListeCreneaux()) { // Remplacez par votre liste de créneaux existante
+            // Assurez-vous que la date est dans le bon format avant de l'envoyer à getDayOfWeek
+            String correctedDateDebut = convertDateFormat(creneau.getDateDebut());
+            String jourActuel = creneau.getDayOfWeek(correctedDateDebut);
+
+            // Vérifiez si le créneau correspond au jour de la semaine et au créneau horaire
+            if (jourActuel.equals(dayOfWeek) && creneau.getDateDebut().equals(timeSlot)) {
+                return true; // Le créneau est rempli
+            }
+        }
+
+        return false; // Le créneau n'est pas rempli
+    }
+
+
+
+    public int convertHourToTimeSlotIndex(String hourString) {
+
+        int hour = Integer.parseInt(getHour(hourString));
+        int minutes = Integer.parseInt(getMinute(hourString));
+
+        int index = hour * 4 + minutes / 15;
+
+        index -= 8 * 4;
+
+        if (index < 0 || index >= TIME_SLOTS.length) {
+            throw new IllegalArgumentException("The time provided is outside the range of time slots.");
+        }
+
+        return index;
+    }
+
+    public static String getHour(String dateString) {
+        String[] parts = dateString.split(" ")[1].split(":");
+        String hours = parts[0];
+        return hours;
+    }
+
+    public static String getMinute(String dateString) {
+        String[] parts = dateString.split(" ")[1].split(":");
+        String minutes = parts[1];
+        return minutes;
+    }
+    public String convertDateFormat(String inputDate) {
+        DateTimeFormatter inputFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        DateTimeFormatter outputFormat = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+
+        LocalDateTime date = LocalDateTime.parse(inputDate, inputFormat);
+
+        return outputFormat.format(date);
+    }
+
+
+
+
+
         /*
         model.clearDaysTimeSlots();
 
@@ -183,4 +279,3 @@ public class WeeklyAgendaController {
     }*/
     }
 
-    }

@@ -77,7 +77,8 @@ public class CreerGymnaseListener {
         if (gymnaseSelectionne != null) {
             // Gymnase sélectionné
             System.out.println("Gymnase sélectionné: " + gymnaseSelectionne.getNom() + "INFO : " + gymnaseSelectionne.getLieux());
-            CreateGymnaseFrame nouveauCalendrier = new CreateGymnaseFrame(model, controller );
+
+            CreateGymnaseFrame nouveauCalendrier = new CreateGymnaseFrame(model, controller, gymnaseSelectionne );
 
 
 

@@ -14,7 +14,7 @@ import java.time.temporal.ChronoUnit;
 public class WeeklyAgendaModel {
     private LocalDate startOfWeek;
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd MMMM yyyy", Locale.FRENCH);
-    private static final String[] WEEK_DAYS = {"Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"};
+    public static final String[] WEEK_DAYS = {"Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"};
     public static final String[] TIME_SLOTS = {
             "08:00", "08:15", "08:30", "08:45",
             "09:00", "09:15", "09:30", "09:45",
@@ -99,7 +99,7 @@ public class WeeklyAgendaModel {
 
     public String obtenirHeureMinute(String dateString) {
         // Formatter pour parser la chaîne
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
 
         try {
             // Conversion de la chaîne en objet LocalDateTime

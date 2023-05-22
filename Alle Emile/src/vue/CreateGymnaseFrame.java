@@ -1,13 +1,13 @@
 package vue;
 
 import controller.WeeklyAgendaController;
+import model.Gymnase;
 import model.WeeklyAgendaModel;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.awt.event.ActionListener;
 import java.beans.PropertyVetoException;
 import java.sql.SQLException;
 
@@ -18,12 +18,14 @@ public class CreateGymnaseFrame extends JInternalFrame {
     private WeeklyAgendaModel model;
 
     private WeeklyAgendaController controller;
+    private Gymnase gymnaseSelectionne;
 
-
-    public CreateGymnaseFrame(WeeklyAgendaModel model,WeeklyAgendaController controller) throws PropertyVetoException, SQLException {
+    public CreateGymnaseFrame(WeeklyAgendaModel model, WeeklyAgendaController controller, Gymnase gymnaseSelectionne) throws PropertyVetoException, SQLException {
         this.model = model;
         this.controller = controller;
+        this.gymnaseSelectionne = gymnaseSelectionne;
         initComponents(model, controller);
+
     }
 
     private void initComponents(WeeklyAgendaModel modele,WeeklyAgendaController controller) throws PropertyVetoException, SQLException {
@@ -86,12 +88,12 @@ public class CreateGymnaseFrame extends JInternalFrame {
 
                             button_semaine_prec.setText("Semane précédente");
                             NavAGC1.add(button_semaine_prec, BorderLayout.WEST);
-                            controller.addPreviousWeekButtonActionListener(this);
+                            controller.addPreviousWeekButtonActionListener(this, gymnaseSelectionne);
 
 
                             button_semaine_suiv.setText("Semaine suivante");
                             NavAGC1.add(button_semaine_suiv, BorderLayout.EAST);
-                            controller.addNextWeekButtonActionListener(this);
+                            controller.addNextWeekButtonActionListener(this, gymnaseSelectionne);
 
                             controller.updateWeekLabel(this);
                             NavAGC1.add(weekLabel, BorderLayout.CENTER);
@@ -168,8 +170,6 @@ public class CreateGymnaseFrame extends JInternalFrame {
                                         panel6.add(timeSlotCell, c);
                                     }
                                 }
-
-
                             }
                             scrollPane5.setViewportView(panel6);
 
@@ -315,7 +315,7 @@ public class CreateGymnaseFrame extends JInternalFrame {
     private JPanel panel1;
     private JPanel panel3;
     private JPanel panel4;
-    private JPanel panel6;
+    public JPanel panel6;
     private JScrollPane scrollPane4;
     private JScrollPane scrollPane5;
     private JList<String> list1;
@@ -337,6 +337,13 @@ public class CreateGymnaseFrame extends JInternalFrame {
     public void setWeekLabel(String weekText) {
         weekLabel.setText(weekText);
     }
+
+    public void refreshPanel6() {
+        panel6.revalidate();
+        panel6.repaint();
+    }
+
+
 
 }
 

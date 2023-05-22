@@ -62,14 +62,15 @@ public class Creneau {
         }
     }
 
-    public String getDayOfWeek() {
+    public String getDayOfWeek(String dateDebut) {
         // Créer un objet LocalDateTime en parsant la chaîne de caractères
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
         LocalDateTime dateTime = LocalDateTime.parse(dateDebut, formatter);
 
         // Récupérer le jour de la semaine sous forme d'une chaîne de caractères
         return dateTime.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.getDefault());
     }
+
 
     public String getDayOfWeekSec() {
         // Créer un objet LocalDateTime en parsant la chaîne de caractères
