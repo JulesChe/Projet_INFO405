@@ -62,17 +62,17 @@ public class CrudIndisponibiliteDAO {
 
     public void ValiderIndispo(Indisponibilite indispo) throws SQLException {
         PreparedStatement preparedStatement = connection.prepareStatement("UPDATE `indisponibilite` SET `valide`= 1 WHERE debut = (?) AND fin = (?) AND id_gardien = (?)");
-        preparedStatement.setString(1, indispo.getMotif());
-        preparedStatement.setString(2, String.valueOf(indispo.getDebut()));
-        preparedStatement.setString(3, String.valueOf(indispo.getFin()));
+        preparedStatement.setString(1, String.valueOf(indispo.getDebut()));
+        preparedStatement.setString(2, String.valueOf(indispo.getFin()));
+        preparedStatement.setInt(3, indispo.getGardien());
         preparedStatement.executeUpdate();
     }
 
     public void RefuserIndispo(Indisponibilite indispo) throws SQLException {
         PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM `indisponibilite` WHERE debut = (?) AND fin = (?) AND id_gardien = (?)");
-        preparedStatement.setString(1, indispo.getMotif());
-        preparedStatement.setString(2, String.valueOf(indispo.getDebut()));
-        preparedStatement.setString(3, String.valueOf(indispo.getFin()));
+        preparedStatement.setString(1, String.valueOf(indispo.getDebut()));
+        preparedStatement.setString(2, String.valueOf(indispo.getFin()));
+        preparedStatement.setInt(3, indispo.getGardien());
         preparedStatement.executeUpdate();
     }
 
