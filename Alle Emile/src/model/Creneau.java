@@ -9,7 +9,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-public class Creneau {
+public class    Creneau {
     // ATTRIBUTS
     private String dateDebut;
     private String dateFin;

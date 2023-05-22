@@ -4,7 +4,17 @@ import model.*;
 import vue.AgendaVueFinal;
 import vue.CreateGymnaseFrame;
 
+import javax.swing.*;
+import java.awt.*;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Arrays;
+
+import static model.WeeklyAgendaModel.TIME_SLOTS;
+import static model.WeeklyAgendaModel.WEEK_DAYS;
 
 public class WeeklyAgendaController {
     private WeeklyAgendaModel model;
