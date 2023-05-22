@@ -1,37 +1,29 @@
 package controller;
 
 import model.*;
-import vue.WeeklyAgendaView;
+import vue.AgendaVueFinal;
+import vue.CreateGymnaseFrame;
 
-import javax.swing.*;
-import javax.swing.border.TitledBorder;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.text.ParseException;
-import java.util.ArrayList;
 
 public class WeeklyAgendaController {
     private WeeklyAgendaModel model;
-    private WeeklyAgendaView view;
+    private CreateGymnaseFrame view2;
+    private AgendaVueFinal view;
 
 
 
-    public WeeklyAgendaController(WeeklyAgendaView view, WeeklyAgendaModel model) throws ParseException {
-        this.view = view;
+    public WeeklyAgendaController(CreateGymnaseFrame view2, WeeklyAgendaModel model,AgendaVueFinal view) throws ParseException {
+        this.view2 = view2;
         this.model = model;
+        this.view = view;
 
-        updateWeekLabel();
-        updateTasksPanel();
-
-        addPreviousWeekButtonActionListener();
-        addNextWeekButtonActionListener();
     }
 
-    private void addPreviousWeekButtonActionListener() {
-        view.getPreviousWeekButton().addActionListener(e -> {
+    public void addPreviousWeekButtonActionListener(CreateGymnaseFrame createGymnaseFrame) {
+        createGymnaseFrame.getPreviousWeekButton().addActionListener(e -> {
             model.goToPreviousWeek();
-            updateWeekLabel();
+            updateWeekLabel(createGymnaseFrame);
             try {
                 updateTasksPanel();
             } catch (ParseException ex) {
@@ -42,10 +34,10 @@ public class WeeklyAgendaController {
 
     }
 
-    private void addNextWeekButtonActionListener() {
-        view.getNextWeekButton().addActionListener(e -> {
+    public void addNextWeekButtonActionListener(CreateGymnaseFrame createGymnaseFrame) {
+        createGymnaseFrame.getNextWeekButton().addActionListener(e -> {
             model.goToNextWeek();
-            updateWeekLabel();
+            updateWeekLabel(createGymnaseFrame);
             try {
                 updateTasksPanel();
             } catch (ParseException ex) {
@@ -54,107 +46,21 @@ public class WeeklyAgendaController {
         });
     }
     public WeeklyAgendaModel getModel() {
-
         return model;
     }
 
-    public WeeklyAgendaView getView() {
-        return view;
-    }
-
-
-    private class PreviousWeekButtonListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            model.goToPreviousWeek();
-            updateWeekLabel();
-
-            try {
-                updateTasksPanel();
-            } catch (ParseException ex) {
-                throw new RuntimeException(ex);
-            }
-        }
-    }
-
-    private class NextWeekButtonListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            model.goToNextWeek();
-            updateWeekLabel();
-
-            try {
-                updateTasksPanel();
-            } catch (ParseException ex) {
-                throw new RuntimeException(ex);
-            }
-        }
-    }
-
-    private void updateWeekLabel() {
+    public void updateWeekLabel(CreateGymnaseFrame createGymnaseFrame) {
         String weekText = String.format("Semaine du %s au %s",
                 model.getFormattedStartDate(),
                 model.getFormattedEndDate());
-        view.setWeekLabel(weekText);
+        createGymnaseFrame.setWeekLabel(weekText);
     }
 
 
-    private void updateViewTimeSlots() {
-        view.getTasksPanel().removeAll();
 
-        for (int dayIndex = 0; dayIndex < model.getWeekDays().length; dayIndex++) {
-            JList<String> timeSlotList = new JList<>(model.getDaysTimeSlots().get(dayIndex));
-            JScrollPane scrollPane = new JScrollPane(timeSlotList);
-            scrollPane.setBorder(new TitledBorder(model.getWeekDay(dayIndex)));
-            view.getTasksPanel().add(scrollPane);
-        }
-
-        view.getTasksPanel().revalidate();
-        view.getTasksPanel().repaint();
-    }
     private void updateTasksPanel() throws ParseException {
+        /*
         model.clearDaysTimeSlots();
-
-        view.getTasksPanel().removeAll();
-
-
-        JPanel mainPanel = new JPanel(new BorderLayout());
-
-
-        view.getTasksPanel().add(mainPanel);
-
-        // Création de la grille avec heures etc
-        for (int i = 0; i < 7; i++) {
-            JPanel dayPanel = new JPanel(new BorderLayout());
-            String dayTitle = model.getWeekDay(i) + " " + model.getFormattedDateAt(i);
-            dayPanel.setBorder(new TitledBorder(dayTitle));
-            view.getTasksPanel().add(dayPanel);
-
-            JPanel hourPanel = new JPanel(new GridLayout(19, 1));
-            for (int hour = 0; hour < 19; hour++) {
-                JPanel hourCell = new JPanel(new BorderLayout());
-                String hourtitle = hour + " : 00";
-                hourCell.setBorder(new TitledBorder(hourtitle));
-                hourCell.setBorder(BorderFactory.createLineBorder(Color.GRAY));
-
-                hourPanel.add(hourCell);
-            }
-
-            dayPanel.add(new JScrollPane(hourPanel), BorderLayout.CENTER);
-            dayPanel.setBorder(new TitledBorder(dayTitle));
-            view.getTasksPanel().add(dayPanel);
-
-            DefaultListModel<String> taskListModel = model.getDaysTimeSlots().get(i);
-            JList<String> timeSlotList = new JList<>(taskListModel);
-            timeSlotList.setCellRenderer(new TimeSlotCellRenderer());
-            JScrollPane scrollPane = new JScrollPane(timeSlotList);
-            dayPanel.add(scrollPane, BorderLayout.CENTER);
-
-        }
-
-        view.getTasksPanel().revalidate();
-        view.getTasksPanel().repaint();
-
 
         //Récupère les créneaux de la semaine
         Planning p = new Planning(); // Crée un planning (liste de créneaux)
@@ -264,7 +170,7 @@ public class WeeklyAgendaController {
             dialog.setLocationRelativeTo(view.getFrame());
             dialog.setVisible(true);
         });
+    }*/
     }
 
-
-}
+    }

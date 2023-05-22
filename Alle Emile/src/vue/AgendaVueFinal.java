@@ -36,6 +36,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
 
 
 /**
@@ -47,12 +48,16 @@ public class AgendaVueFinal  {
 
     private JLabel weekLabel;
     private WeeklyAgendaModel modele;
-    public AgendaVueFinal(WeeklyAgendaModel modele) throws PropertyVetoException, SQLException {
+
+    private WeeklyAgendaController controller;
+
+    public AgendaVueFinal(WeeklyAgendaModel modele,WeeklyAgendaController controller) throws PropertyVetoException, SQLException {
         this.modele = modele;
-        initComponents();
+        this.controller = controller;
+        initComponents(modele, controller);
     }
 
-    private void initComponents() throws PropertyVetoException, SQLException {
+    private void initComponents(WeeklyAgendaModel modele,WeeklyAgendaController controller) throws PropertyVetoException, SQLException {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
         // Generated using JFormDesigner Evaluation license - baptiste audinet
         WIN = new JFrame();
@@ -147,13 +152,13 @@ public class AgendaVueFinal  {
                         //======== scrollPane1 ========
                         {
                             // Créez une instance de CreerGymnaseController
-                            CreerGymnaseListener controller = new CreerGymnaseListener(Frame, modele, AG );
+                            CreerGymnaseListener listener = new CreerGymnaseListener(Frame, modele, AG, controller );
                             //---- Arborescence ----
 
                             //---- Arborescence ----
                             Arborescence.setMinimumSize(new Dimension(150, 0));
                             DefaultMutableTreeNode rootNode = new DefaultMutableTreeNode("Gymnases");
-                            for (Gymnase g : controller.getGymnasesFromDB()) {
+                            for (Gymnase g : listener.getGymnasesFromDB()) {
                                 rootNode.add(new DefaultMutableTreeNode(g.getName()));
                             }
                             Arborescence.setModel(new DefaultTreeModel(rootNode));
@@ -174,7 +179,7 @@ public class AgendaVueFinal  {
                                         String nodeName = node.toString();
                                         // Appel à la méthode du contrôleur
                                         try {
-                                            controller.handleGymnaseSelection(nodeName);
+                                            listener.handleGymnaseSelection(nodeName);
                                         } catch (SQLException | PropertyVetoException ex) {
                                             throw new RuntimeException(ex);
                                         }
@@ -308,7 +313,7 @@ public class AgendaVueFinal  {
                         menu5.add(menuItem4);
                         // Ajouter un ActionListener à votre bouton 'Ajouter'
                         // Ajouter un ActionListener à votre bouton 'Ajouter'
-                        CreerGymnaseListener controller = new CreerGymnaseListener(Frame, modele, AG);
+                        CreerGymnaseListener listener = new CreerGymnaseListener(Frame, modele, AG, controller);
                         menuItem4.addActionListener(new ActionListener() {
                             public void actionPerformed(ActionEvent e) {
                                 // Affiche une boîte de dialogue d'entrée pour obtenir le nom de l'agenda
@@ -319,7 +324,7 @@ public class AgendaVueFinal  {
                                 // Crée un nouveau gymnase avec le nom de l'agenda
                                 Gymnase nouveauGymnase = null;
                                 try {
-                                    nouveauGymnase = controller.creerGymnase(gymnaseName, gymnaseLieu);
+                                    nouveauGymnase = listener.creerGymnase(gymnaseName, gymnaseLieu);
                                 } catch (SQLException ex) {
                                     throw new RuntimeException(ex);
                                 }

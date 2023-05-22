@@ -51,7 +51,7 @@ public class ConnexionListenerAssociation implements ActionListener {
                         Association associationLog = new Association(tpseudo.getText(),tpass.getText());
                         WeeklyAgendaModel modele = new WeeklyAgendaModel(associationLog, null);
                         WeeklyAgendaView view = new WeeklyAgendaView(modele);
-                        WeeklyAgendaController controller = new WeeklyAgendaController(view, modele);
+                        //WeeklyAgendaController controller = new WeeklyAgendaController(view, modele);
                         login.dispose();
                         view.frame.setVisible(true);
 
@@ -63,8 +63,6 @@ public class ConnexionListenerAssociation implements ActionListener {
 
             } catch (SQLException e1) {
                 e1.printStackTrace();
-            } catch (ParseException ex) {
-                throw new RuntimeException(ex);
             }
         } else {
             JOptionPane.showMessageDialog(null, "Erreur de saisir!");

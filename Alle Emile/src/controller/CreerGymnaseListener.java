@@ -4,6 +4,7 @@ import crud.CrudGymnaseDAO;
 import model.Gymnase;
 import model.WeeklyAgendaModel;
 import vue.CreateGymnaseFrame;
+import vue.WeeklyAgendaView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,15 +19,18 @@ public class CreerGymnaseListener {
     private List<Gymnase> gymnases = new ArrayList<>();
     private static WeeklyAgendaModel model;
 
+    private WeeklyAgendaController controller;
+
     private JDesktopPane frame;
     private JPanel AG;
 
 
 
-    public CreerGymnaseListener(JDesktopPane frame, WeeklyAgendaModel model, JPanel AG) throws SQLException {
+    public CreerGymnaseListener(JDesktopPane frame, WeeklyAgendaModel model, JPanel AG,WeeklyAgendaController controller) throws SQLException {
         this.frame = frame;
         this.model = model;
         this.AG = AG;
+        this.controller = controller;
 
 
         Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/allezemile", "allezemile", "nT7");
@@ -50,6 +54,7 @@ public class CreerGymnaseListener {
         gymnaseDAO.create(nouveauGymnase);
         gymnases.add(nouveauGymnase);
         return nouveauGymnase;
+
     }
 
 
@@ -72,7 +77,7 @@ public class CreerGymnaseListener {
         if (gymnaseSelectionne != null) {
             // Gymnase sélectionné
             System.out.println("Gymnase sélectionné: " + gymnaseSelectionne.getNom() + "INFO : " + gymnaseSelectionne.getLieux());
-            CreateGymnaseFrame nouveauCalendrier = new CreateGymnaseFrame(model);
+            CreateGymnaseFrame nouveauCalendrier = new CreateGymnaseFrame(model, controller );
 
 
 

@@ -67,7 +67,7 @@ public class ConnexionListener implements ActionListener{
 
             } catch (SQLException e1) {
                 e1.printStackTrace();
-            } catch (PropertyVetoException ex) {
+            } catch (PropertyVetoException | ParseException ex) {
                 throw new RuntimeException(ex);
             }
         } else {
