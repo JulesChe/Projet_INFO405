@@ -6,11 +6,11 @@ public class Indisponibilite {
 
     private int id;
     private String motif;
-    private Date debut;
-    private Date fin;
+    private String debut;
+    private String fin;
     private int gardien;
 
-    public Indisponibilite(String motif,Date debut,Date fin,int gardien) {
+    public Indisponibilite(String motif,String debut,String fin,int gardien) {
         this.motif = motif;
         this.debut = debut;
         this.fin = fin;
@@ -33,19 +33,19 @@ public class Indisponibilite {
         this.motif = motif;
     }
 
-    public Date getDebut() {
+    public String getDebut() {
         return debut;
     }
 
-    public void setDebut(Date debut) {
+    public void setDebut(String debut) {
         this.debut = debut;
     }
 
-    public Date getFin() {
+    public String getFin() {
         return fin;
     }
 
-    public void setFin(Date fin) {
+    public void setFin(String fin) {
         this.fin = fin;
     }
 
@@ -56,14 +56,4 @@ public class Indisponibilite {
     public void setGardien(int gardien) {
         this.gardien = gardien;
     }
-
-    public String toString() {
-        return
-                "  motif : '" + motif + '\'' +
-                ", debut : " + debut +
-                ", fin : " + fin
-               ;
-    }
-
-
 }

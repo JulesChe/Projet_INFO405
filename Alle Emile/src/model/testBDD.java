@@ -110,6 +110,10 @@ public class testBDD extends JFrame{
         Creneau c1 = new Creneau();
         System.out.println(c1.getDebutSemaine("2023/05/17"));
 
+
+        Indisponibilite i = new Indisponibilite("absence","2023-05-06 16:00:00","2023-05-07 16:00:00",1);
+        patrick.accepterIndispo(i);
+
     }
 
 }

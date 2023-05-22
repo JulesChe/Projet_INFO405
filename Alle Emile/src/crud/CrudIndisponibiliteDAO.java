@@ -49,7 +49,7 @@ public class CrudIndisponibiliteDAO {
         PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM `indisponibilite`");
         ResultSet rs = preparedStatement.executeQuery();
         while (rs.next()) {
-            Indisponibilite indispo = new Indisponibilite(rs.getString("motif"),rs.getDate("debut"),rs.getDate("fin"),rs.getInt("id_gardien"));
+            Indisponibilite indispo = new Indisponibilite(rs.getString("motif"),rs.getString("debut"),rs.getString("fin"),rs.getInt("id_gardien"));
             indispo.setId(rs.getInt("id"));
             resultList.add(indispo);
         }
@@ -62,16 +62,16 @@ public class CrudIndisponibiliteDAO {
 
     public void ValiderIndispo(Indisponibilite indispo) throws SQLException {
         PreparedStatement preparedStatement = connection.prepareStatement("UPDATE `indisponibilite` SET `valide`= 1 WHERE debut = (?) AND fin = (?) AND id_gardien = (?)");
-        preparedStatement.setString(1, String.valueOf(indispo.getDebut()));
-        preparedStatement.setString(2, String.valueOf(indispo.getFin()));
+        preparedStatement.setString(1,indispo.getDebut());
+        preparedStatement.setString(2, indispo.getFin());
         preparedStatement.setInt(3, indispo.getGardien());
         preparedStatement.executeUpdate();
     }
 
     public void RefuserIndispo(Indisponibilite indispo) throws SQLException {
         PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM `indisponibilite` WHERE debut = (?) AND fin = (?) AND id_gardien = (?)");
-        preparedStatement.setString(1, String.valueOf(indispo.getDebut()));
-        preparedStatement.setString(2, String.valueOf(indispo.getFin()));
+        preparedStatement.setString(1, indispo.getDebut());
+        preparedStatement.setString(2, indispo.getFin());
         preparedStatement.setInt(3, indispo.getGardien());
         preparedStatement.executeUpdate();
     }
@@ -82,7 +82,7 @@ public class CrudIndisponibiliteDAO {
         preparedStatement.setInt(1, g.getID());
         ResultSet rs = preparedStatement.executeQuery();
         while (rs.next()) {
-            Indisponibilite indispo = new Indisponibilite(rs.getString("motif"),rs.getDate("debut"),rs.getDate("fin"),rs.getInt("id_gardien"));
+            Indisponibilite indispo = new Indisponibilite(rs.getString("motif"),rs.getString("debut"),rs.getString("fin"),rs.getInt("id_gardien"));
             indispo.setId(rs.getInt("id"));
             resultList.add(indispo);
         }
