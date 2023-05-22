@@ -54,7 +54,8 @@ public class ConnexionListener implements ActionListener{
                         WeeklyAgendaModel modele = new WeeklyAgendaModel(null,utilisateur);
 
                         // Creating an instance of AgendaVueFinal instead of WeeklyAgendaView
-                        AgendaVueFinal agendaVue = new AgendaVueFinal(modele);
+                        WeeklyAgendaController controller = new WeeklyAgendaController(modele);
+                        AgendaVueFinal agendaVue = new AgendaVueFinal(modele, controller);
                         agendaVue.showView();
 
                         loginView.frame.dispose();

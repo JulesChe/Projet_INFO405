@@ -20,6 +20,16 @@ public class WeeklyAgendaController {
 
     }
 
+    public WeeklyAgendaController(WeeklyAgendaModel model) throws ParseException {
+
+        this.model = model;
+
+    }
+
+    public WeeklyAgendaController() throws ParseException {
+
+    }
+
     public void addPreviousWeekButtonActionListener(CreateGymnaseFrame createGymnaseFrame) {
         createGymnaseFrame.getPreviousWeekButton().addActionListener(e -> {
             model.goToPreviousWeek();
