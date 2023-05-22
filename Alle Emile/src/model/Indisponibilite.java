@@ -56,4 +56,14 @@ public class Indisponibilite {
     public void setGardien(int gardien) {
         this.gardien = gardien;
     }
+
+    public String toString() {
+        return
+                "  motif : '" + motif + '\'' +
+                ", debut : " + debut +
+                ", fin : " + fin
+               ;
+    }
+
+
 }

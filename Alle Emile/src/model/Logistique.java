@@ -37,6 +37,158 @@ public class Logistique extends Utilisateur{
         return listePrio;
     }
 
+
+    public void accepterIndispo(Indisponibilite indispo){
+
+        Connection connection = null;
+
+        try {
+
+            // Charger le pilote JDBC
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            // Etablir la connexion avec la base de données
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/allezemile", "allezemile", "nT7");
+            System.out.println("Connexion établie avec succès.");
+
+            // Créer un objet CrudCompteAssoDAO
+            CrudIndisponibiliteDAO indisponibiliteDAO = new CrudIndisponibiliteDAO(connection);
+
+            indisponibiliteDAO.ValiderIndispo(indispo);
+            System.out.println("Creneau supprimer avec succès.");
+
+
+        } catch (ClassNotFoundException e) {
+            System.err.println("Pilote JDBC introuvable.");
+        } catch (SQLException e) {
+            System.err.println("Erreur lors de la connexion à la base de données : " + e.getMessage());
+        } finally {
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    System.err.println("Erreur lors de la fermeture de la connexion : " + e.getMessage());
+                }
+            }
+        }
+
+    }
+
+    public void refuserIndispo(Indisponibilite indispo){
+
+        Connection connection = null;
+
+        try {
+
+            // Charger le pilote JDBC
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            // Etablir la connexion avec la base de données
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/allezemile", "allezemile", "nT7");
+            System.out.println("Connexion établie avec succès.");
+
+            // Créer un objet CrudCompteAssoDAO
+            CrudIndisponibiliteDAO indisponibiliteDAO = new CrudIndisponibiliteDAO(connection);
+
+            indisponibiliteDAO.RefuserIndispo(indispo);
+            System.out.println("Creneau supprimer avec succès.");
+
+
+        } catch (ClassNotFoundException e) {
+            System.err.println("Pilote JDBC introuvable.");
+        } catch (SQLException e) {
+            System.err.println("Erreur lors de la connexion à la base de données : " + e.getMessage());
+        } finally {
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    System.err.println("Erreur lors de la fermeture de la connexion : " + e.getMessage());
+                }
+            }
+        }
+
+    }
+
+
+    public ArrayList<Indisponibilite> getAllIndispo(){
+
+        Connection connection = null;
+
+        ArrayList<Indisponibilite> liste = new ArrayList<>();
+
+        try {
+
+            // Charger le pilote JDBC
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            // Etablir la connexion avec la base de données
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/allezemile", "allezemile", "nT7");
+            System.out.println("Connexion établie avec succès.");
+
+            // Créer un objet CrudCompteAssoDAO
+            CrudIndisponibiliteDAO indisponibiliteDAO = new CrudIndisponibiliteDAO(connection);
+
+            liste = indisponibiliteDAO.getIndispos();
+            System.out.println("Creneau supprimer avec succès.");
+
+
+        } catch (ClassNotFoundException e) {
+            System.err.println("Pilote JDBC introuvable.");
+        } catch (SQLException e) {
+            System.err.println("Erreur lors de la connexion à la base de données : " + e.getMessage());
+        } finally {
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    System.err.println("Erreur lors de la fermeture de la connexion : " + e.getMessage());
+                }
+            }
+        }
+
+        return liste;
+    }
+
+
+    public ArrayList<Gymnase> getAllGymnases(){
+        Connection connection = null;
+
+        ArrayList<Gymnase> liste = new ArrayList<>();
+
+        try {
+
+            // Charger le pilote JDBC
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            // Etablir la connexion avec la base de données
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/allezemile", "allezemile", "nT7");
+            System.out.println("Connexion établie avec succès.");
+
+            // Créer un objet CrudCompteAssoDAO
+            CrudGymnaseDAO gymnaseDAO = new CrudGymnaseDAO(connection);
+
+            liste = gymnaseDAO.getGymnase();
+            System.out.println("Creneau supprimer avec succès.");
+
+
+        } catch (ClassNotFoundException e) {
+            System.err.println("Pilote JDBC introuvable.");
+        } catch (SQLException e) {
+            System.err.println("Erreur lors de la connexion à la base de données : " + e.getMessage());
+        } finally {
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    System.err.println("Erreur lors de la fermeture de la connexion : " + e.getMessage());
+                }
+            }
+        }
+
+        return liste;
+    }
+
     public void modifierCreneau(String debut, String fin){
 
         Connection connection = null;

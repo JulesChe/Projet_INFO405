@@ -111,8 +111,38 @@ public class WeeklyAgendaView {
         if(modele.isPersonnelLog()){
             // Ajout de l'onglet "Incidents"
             JPanel incidentPanel = new JPanel();
-            incidentPanel.setBorder(new TitledBorder("Incidents"));
-            tabbedPane.addTab("Incidents", null, incidentPanel, "Incidents");
+            incidentPanel.setBorder(new TitledBorder("Indisponibilités"));
+            incidentPanel.setLayout(new BoxLayout(incidentPanel, BoxLayout.Y_AXIS));
+            tabbedPane.addTab("Indisponibilités", null, incidentPanel, "Indisponibilités");
+
+            Logistique patrick = new Logistique();
+
+            ArrayList<Indisponibilite> liste = patrick.getAllIndispo();
+
+            // Parcours de la liste d'indisponibilités
+            for (Indisponibilite indisponibilite : liste) {
+                // Création d'un JLabel contenant la représentation String de l'indisponibilite
+                JLabel indisponibiliteLabel = new JLabel(indisponibilite.toString());
+
+                JButton accepterIndispo = new JButton("Accepter");
+
+                accepterIndispo.addActionListener(new AccepterIndispoListener(indisponibilite));
+
+                JButton refuserIndispo = new JButton("Refuser");
+
+                refuserIndispo.addActionListener(new RefuserIndispoListener(indisponibilite));
+
+
+                incidentPanel.add(indisponibiliteLabel);
+                incidentPanel.add(accepterIndispo);
+                incidentPanel.add(refuserIndispo);
+
+
+            }
+
+            // Forcing the panel to refresh its contents
+            incidentPanel.revalidate();
+            incidentPanel.repaint();
         }
 
     }
