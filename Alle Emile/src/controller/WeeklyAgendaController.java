@@ -195,31 +195,59 @@ public class WeeklyAgendaController {
         addTimeSlotButton.addActionListener(e -> {
             // Afficher un dialogue personnalisé avec des champs pour sélectionner le jour, l'heure de début et l'heure de fin
             JDialog dialog = new JDialog(view.getFrame(), "Ajouter créneau", true);
-            dialog.setLayout(new GridLayout(4, 2));
+            dialog.setLayout(new GridLayout(5, 2));
+
+            dialog.setLayout(new GridBagLayout());
+            GridBagConstraints constraints = new GridBagConstraints();
+            constraints.anchor = GridBagConstraints.WEST;
+            constraints.insets = new Insets(5, 5, 5, 5);
+
+// Label et champ de texte pour la date
+            JLabel dateLabel = new JLabel("Jour (format : yyyy/mm/dd) :");
+            JTextField dateField = new JTextField(15);
+            constraints.gridx = 0;
+            constraints.gridy = 0;
+            dialog.add(dateLabel, constraints);
+            constraints.gridx = 1;
+            dialog.add(dateField, constraints);
+
+// Label et champ de texte pour l'heure de début
+            JLabel startTimeLabel = new JLabel("Heure de début (format 24h, ex: 19:00):");
+            JTextField startTimeField = new JTextField(10);
+            constraints.gridx = 0;
+            constraints.gridy = 1;
+            dialog.add(startTimeLabel, constraints);
+            constraints.gridx = 1;
+            dialog.add(startTimeField, constraints);
+
+// Label et champ de texte pour l'heure de fin
+            JLabel endTimeLabel = new JLabel("Heure de fin (format 24h, ex: 20:00):");
+            JTextField endTimeField = new JTextField(10);
+            constraints.gridx = 0;
+            constraints.gridy = 2;
+            dialog.add(endTimeLabel, constraints);
+            constraints.gridx = 1;
+            dialog.add(endTimeField, constraints);
+
+// Label et champ de texte pour le nom de l'association
+            JLabel associationLabel = new JLabel("Nom de l'asso :");
+            JTextField associationField = new JTextField(15);
+            constraints.gridx = 0;
+            constraints.gridy = 3;
+            dialog.add(associationLabel, constraints);
+            constraints.gridx = 1;
+            dialog.add(associationField, constraints);
+
+// Label et champ de texte pour le gymnase
+            JLabel gymnaseLabel = new JLabel("Gymnase :");
+            JTextField gymnaseField = new JTextField(15);
+            constraints.gridx = 0;
+            constraints.gridy = 4;
+            dialog.add(gymnaseLabel, constraints);
+            constraints.gridx = 1;
+            dialog.add(gymnaseField, constraints);
 
 
-
-            dialog.add(new JLabel("Jour (format : yyyy/mm/dd) :"));
-            JTextField dateField = new JTextField();
-            dialog.add(dateField);
-
-
-
-            dialog.add(new JLabel("Heure de début (format 24h, ex: 19:00):"));
-            JTextField startTimeField = new JTextField();
-            dialog.add(startTimeField);
-
-            dialog.add(new JLabel("Heure de fin (format 24h, ex: 20:00):"));
-            JTextField endTimeField = new JTextField();
-            dialog.add(endTimeField);
-
-            dialog.add(new JLabel("Nom de l'asso :"));
-            JTextField taskDescriptionField = new JTextField();
-            dialog.add(taskDescriptionField);
-
-            dialog.add(new JLabel("Gymnase :"));
-            JTextField gymnaseField = new JTextField();
-            dialog.add(gymnaseField);
 
             JButton addButton = new JButton("Ajouter");
             addButton.addActionListener(addEvent -> {
@@ -235,7 +263,7 @@ public class WeeklyAgendaController {
                 int selectedDay = c.nbJour(jour);
                 System.out.println(selectedDay);
 
-                String taskDescription = taskDescriptionField.getText();
+                String taskDescription = associationField.getText();
                 if (!startTime.isEmpty() && !endTime.isEmpty() && !taskDescription.isEmpty()) {
                     model.insertTimeSlot(selectedDay, startTime, endTime,taskDescription);
                     try {
