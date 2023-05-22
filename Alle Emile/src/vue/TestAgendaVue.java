@@ -1,4 +1,4 @@
-package vue;
+/*package vue;
 
 import javax.swing.*;
 import java.beans.PropertyVetoException;
@@ -32,3 +32,4 @@ public class TestAgendaVue {
             }
         }
 
+*/

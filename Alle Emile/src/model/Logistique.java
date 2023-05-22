@@ -14,13 +14,28 @@ import ressource.PasswordHash;
 public class Logistique extends Utilisateur{
     // ATTRIBUTS
 
+    private ArrayList<String> listePrio;
+
     // CONSTRUCTEUR
     public Logistique(String nom,String prenom,String mdp ,int niveau) {
         super(nom,prenom,mdp,niveau);
     }
 
-    public Logistique(){}
+    public Logistique(){
+        this.listePrio = new ArrayList<>();
+    }
     SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+
+    public void setListePrio(ArrayList<String> liste){
+
+        listePrio = liste;
+    }
+
+    public ArrayList<String> getListePrio(){
+
+        return listePrio;
+    }
 
     public void modifierCreneau(String debut, String fin){
 
@@ -639,6 +654,8 @@ public class Logistique extends Utilisateur{
     public HashMap<String, Integer> getMeilleurDispo(String jour, ArrayList<Integer> listeIdPrioritaire) throws ParseException {
 
         ArrayList<String> listeCreneauPrio = this.getCreneauPrioritaire(jour,listeIdPrioritaire);
+
+        this.setListePrio(listeCreneauPrio);
 
         ArrayList<String> listeAutrePersonnel = this.getCreneauAutrePersonnel(jour);
 

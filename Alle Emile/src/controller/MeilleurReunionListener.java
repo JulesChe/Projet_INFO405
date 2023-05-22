@@ -131,11 +131,18 @@ public class MeilleurReunionListener implements ActionListener {
 
                 HashMap<String, Integer> listeCreneau = patrick.getMeilleurDispo(jour,liste);
 
+
                 Map.Entry<String, Integer> firstEntry = listeCreneau.entrySet().iterator().next();
                 String creneau = firstEntry.getKey();
                 Integer nbPersonnes = firstEntry.getValue();
 
                 JLabel jourLabel = new JLabel("Le " +chaineJour + " Il y aura " + nbPersonnes + " personnes à " + creneau );
+
+                if(patrick.getListePrio().isEmpty()){
+
+                    jourLabel.setText("La personne prioritaire n'est pas présente / " + " Il y aura " + nbPersonnes + " personnes à " + creneau);
+                }
+
                 JButton ajouterReu = new JButton("Ajouter Réunion");
                 ajouterReu.addActionListener(new AjouterReuListener(creneau));
                 jourPanel.add(jourLabel);
